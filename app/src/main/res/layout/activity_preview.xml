@@ -5,35 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".PreviewActivity">
+
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/where"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="D-Easel"
-        android:textAlignment="center"
-        android:textSize="36sp"
+        android:layout_weight="0"
+        android:text="where" />
 
-        android:textStyle="bold|italic" />
-
-    <ImageButton
-        android:id="@+id/jinjinjarajujuyoung"
+    <ImageView
+        android:id="@+id/mean_shift"
         android:layout_width="match_parent"
-        android:layout_height="385dp"
-        android:background="@drawable/vila"
-         />
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/vila" />
+
+    <ImageView
+        android:id="@+id/edge_canvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
     <Button
-        android:id="@+id/go_sketch"
+        android:id="@+id/start_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="스케치" />
 
-    <Button
-        android:id="@+id/go_master"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="내작품" />
+        android:text="START" />
 
 </LinearLayout>
