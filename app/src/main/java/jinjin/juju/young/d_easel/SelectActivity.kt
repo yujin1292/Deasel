@@ -132,7 +132,7 @@ class SelectActivity : AppCompatActivity() {
 
                 original = imageBitmap
 
-                if (original!= null) { // 가져온 이미지가 null 이 아니면 엣지 디텍팅
+                if (original!= null) {
 
                     goPreview("From camera")
 
@@ -147,7 +147,7 @@ class SelectActivity : AppCompatActivity() {
 
                 val path = getImagePathFromURI(data!!.data)
                 val options = BitmapFactory.Options()
-                options.inSampleSize = 4
+                options.inSampleSize = 5
                 original = BitmapFactory.decodeFile(path, options)
 
                 if (original != null) { // 가져온 이미지가 null 이 아니면 엣지 디텍팅
@@ -176,15 +176,6 @@ class SelectActivity : AppCompatActivity() {
         }
     }
 
-
-    public override fun onDestroy() {
-        super.onDestroy()
-        /*
-        input.recycle();
-        if (input != null) {
-            input = null;
-        }*/
-    }
 
 
 }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //갤러리 호출
+        //마스터 피스 엑티비티 호출
         go_master.setOnClickListener { view ->
 
         }
