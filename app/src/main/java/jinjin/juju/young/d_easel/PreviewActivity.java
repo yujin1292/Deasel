@@ -46,7 +46,7 @@ public class PreviewActivity extends AppCompatActivity {
         Mat src = new Mat();
         Utils.bitmapToMat(meanshift_p, src);
         Mat mean = new Mat();
-        MeanShiftFilteringJNI(src.getNativeObjAddr(), mean.getNativeObjAddr(), 11, 31);
+        MeanShiftFilteringJNI(src.getNativeObjAddr(), mean.getNativeObjAddr(), 3, 10);
         Utils.matToBitmap(mean, meanshift_p);
 
         // 처리한 이미지 변경
@@ -89,7 +89,10 @@ public class PreviewActivity extends AppCompatActivity {
 
         // 원본 이미지 가져오기
         byte[] bytes = intent.getByteArrayExtra("image");
+
         if(bytes != null){
+
+
             original_p = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
             // 카피
@@ -103,6 +106,8 @@ public class PreviewActivity extends AppCompatActivity {
             ProcessingUsingJNL();
 
         }
+
+
 
     }
 
