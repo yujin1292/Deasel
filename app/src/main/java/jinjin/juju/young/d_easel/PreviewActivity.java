@@ -8,7 +8,9 @@ import android.graphics.BitmapFactory;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -37,20 +39,34 @@ public class PreviewActivity extends AppCompatActivity {
         System.loadLibrary("opencv_java4");
         System.loadLibrary("native-lib");
     }
-    public void ProcessingUsingJNL(){
+    public void ProcessingUsingJNL(int i, int j ){
         if (!mIsOpenCVReady) {
             return;
         }
-        //mean shift 연산
+        if( i == 0 ){
+            textView.setText("original img");
+            meanshift_p = original_p.copy(original_p.getConfig(),true);
+            meanshift.setImageBitmap(meanshift_p);
+        }
+        else{
 
-        Mat src = new Mat();
-        Utils.bitmapToMat(meanshift_p, src);
-        Mat mean = new Mat();
-        MeanShiftFilteringJNI(src.getNativeObjAddr(), mean.getNativeObjAddr(), 3, 10);
-        Utils.matToBitmap(mean, meanshift_p);
+            int sp = 2;
+            int sr = 6;
+            sp *=i;
+            sr *=j;
+            textView.setText("sp : " + sp + " sr : " + sr);
 
-        // 처리한 이미지 변경
-        meanshift.setImageBitmap(meanshift_p);
+            //mean shift 연산
+            Mat src = new Mat();
+            Utils.bitmapToMat(original_p, src);
+            Mat mean = new Mat();
+            MeanShiftFilteringJNI(src.getNativeObjAddr(), mean.getNativeObjAddr(), sp, sr);
+            Utils.matToBitmap(mean, meanshift_p);
+
+            // 처리한 이미지 변경
+            meanshift.setImageBitmap(meanshift_p);
+
+        }
 
         //edge detect 연산
 
@@ -87,7 +103,7 @@ public class PreviewActivity extends AppCompatActivity {
         //스트링 데이터 가져오기
         String s = intent.getStringExtra("where");
 
-        // 원본 이미지 가져오기
+        // 원본 이미지 가져오기 & 이미지 처리
         byte[] bytes = intent.getByteArrayExtra("image");
 
         if(bytes != null){
@@ -103,8 +119,50 @@ public class PreviewActivity extends AppCompatActivity {
             meanshift.setImageBitmap(meanshift_p);
 
             //이미지 처리
-            ProcessingUsingJNL();
+            ProcessingUsingJNL(3, 3);
 
+        }
+
+
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        final SeekBar seekBar2 = findViewById(R.id.seekBar2);
+
+        if (seekBar != null && seekBar2 != null) {
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    // Write code to perform some action when progress is changed.
+                     ProcessingUsingJNL(progress, seekBar2.getProgress());
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // Write code to perform some action when touch is started.
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // Write code to perform some action when touch is stopped.
+                   // Toast.makeText(PreviewActivity.this, "Current value is " + seekBar.getProgress() , Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    ProcessingUsingJNL(seekBar.getProgress(), progress);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
         }
 
 

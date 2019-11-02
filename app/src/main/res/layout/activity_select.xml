@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context=".SelectActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
