@@ -6,7 +6,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 
-set(pathPROJECT C:/Users/pp/AndroidStudioProjects/Deasel)
+set(pathPROJECT C:/Users/sofod/AndroidStudioProjects/Deasel)
 set(pathOPENCV ${pathPROJECT}/opencv)
 set(pathLIBOPENCV_JAVA ${pathPROJECT}/opencv/native/libs/${ANDROID_ABI}/libopencv_java4.so)
 

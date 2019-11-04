@@ -1,18 +1,24 @@
 package jinjin.juju.young.d_easel
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
+    private var permissionsRequired = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val PERMISSION_CALLBACK_CONSTANT = 987
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         //카메라
         go_sketch.setOnClickListener { view ->
@@ -25,14 +31,16 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    }
 
+        jinjinjarajujuyoung.setOnClickListener{view->
 
-    companion object {
-
-        // Used to load the 'native-lib' library on application startup.
-        init {
-            System.loadLibrary("native-lib")
         }
+
+
+        ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+
+
     }
+
+
 }
