@@ -15,23 +15,47 @@
         android:layout_weight="0"
         android:text="where" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:max="5"
-        android:progress="2" />
+        android:orientation="horizontal">
 
-    <SeekBar
-        android:id="@+id/seekBar2"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:max="5"
-        android:progress="2" />
+        <Button
+            android:id="@+id/button_o"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="원본" />
+
+        <Button
+            android:id="@+id/button_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/button_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="B" />
+
+        <Button
+            android:id="@+id/button_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="C" />
+
+        <Button
+            android:id="@+id/button_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="D" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/mean_shift"

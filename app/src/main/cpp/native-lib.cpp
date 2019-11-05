@@ -35,7 +35,7 @@ JNIEXPORT void JNICALL
 Java_jinjin_juju_young_d_1easel_PreviewActivity_MeanShiftFilteringJNI(JNIEnv *env, jobject thiz,
                                                                       jlong input_image,
                                                                       jlong output_image,
-                                                                      jint sp, jint sr) {
+                                                                      jdouble sp, jdouble sr) {
     // TODO: implement MeanShiftFilteringJNI()
     cv::Mat &inputMat = *(cv::Mat *) input_image;
     cv::Mat &outputMat = *(cv::Mat *) output_image;

@@ -7,9 +7,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -32,13 +35,13 @@ public class PreviewActivity extends AppCompatActivity {
     //엣지 디텍트
     public native void detectEdgeJNI(long inputImage, long outputImage, int th1, int th2);
 
-    public native void MeanShiftFilteringJNI(long inputImage,  long outputImage,  int sp, int sr);
+    public native void MeanShiftFilteringJNI(long inputImage,  long outputImage,  double sp, double sr);
 
     static {
         System.loadLibrary("opencv_java4");
         System.loadLibrary("native-lib");
     }
-    public void ProcessingUsingJNL(int i, int j ){
+    public void ProcessingUsingJNL(double i, double j ){
         if (!mIsOpenCVReady) {
             return;
         }
@@ -49,10 +52,8 @@ public class PreviewActivity extends AppCompatActivity {
         }
         else{
 
-            int sp = 2;
-            int sr = 6;
-            sp *=i;
-            sr *=j;
+            double sp = i;
+            double sr = j;
             textView.setText("sp : " + sp + " sr : " + sr);
 
             //mean shift 연산
@@ -72,7 +73,7 @@ public class PreviewActivity extends AppCompatActivity {
         Mat src2 = new Mat();
         Utils.bitmapToMat(meanshift_p, src2);
         Mat edge = new Mat();
-        detectEdgeJNI(src2.getNativeObjAddr(), edge.getNativeObjAddr(), 50, 150);
+        detectEdgeJNI(src2.getNativeObjAddr(), edge.getNativeObjAddr(), 75, 175);
         Utils.matToBitmap(edge, canvas_p);
 
         //처리한 이미지로 변경
@@ -118,56 +119,80 @@ public class PreviewActivity extends AppCompatActivity {
             meanshift.setImageBitmap(meanshift_p);
 
             //이미지 처리
-            ProcessingUsingJNL(3, 3);
+            ProcessingUsingJNL(3, 20.0);
+
 
         }
 
 
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        final SeekBar seekBar2 = findViewById(R.id.seekBar2);
+        //원본이미지에서 엣지
+        Button buttonO = (Button) findViewById(R.id.button_o) ;
+        buttonO.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        if (seekBar != null && seekBar2 != null) {
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    // Write code to perform some action when progress is changed.
-                     ProcessingUsingJNL(progress, seekBar2.getProgress());
+                meanshift_p = original_p.copy(original_p.getConfig(),true);
+
+                meanshift.setImageBitmap(meanshift_p);
+
+                Mat src2 = new Mat();
+                Utils.bitmapToMat(meanshift_p, src2);
+                Mat edge = new Mat();
+                detectEdgeJNI(src2.getNativeObjAddr(), edge.getNativeObjAddr(), 75, 175);
+                Utils.matToBitmap(edge, canvas_p);
+
+                //처리한 이미지로 변경
+                canvas.setImageBitmap(canvas_p);
+                textView.setText("original");
+
+            }
+        }) ;
+
+
+        Button buttonA = (Button) findViewById(R.id.button_a) ;
+        buttonA.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(original_p != null){
+                    ProcessingUsingJNL(1, 20);
                 }
+            }
+        }) ;
 
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // Write code to perform some action when touch is started.
+
+        Button buttonB = (Button) findViewById(R.id.button_b) ;
+        buttonB.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(original_p != null){
+                    ProcessingUsingJNL(3, 20);
                 }
+            }
+        }) ;
 
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    // Write code to perform some action when touch is stopped.
-                   // Toast.makeText(PreviewActivity.this, "Current value is " + seekBar.getProgress() , Toast.LENGTH_SHORT).show();
+
+        Button buttonC = (Button) findViewById(R.id.button_c) ;
+        buttonC.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(original_p != null){
+                    ProcessingUsingJNL(6, 20.0);
                 }
-            });
+            }
+        }) ;
 
-            seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    ProcessingUsingJNL(seekBar.getProgress(), progress);
+
+        Button buttonD = (Button) findViewById(R.id.button_d) ;
+        buttonD.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(original_p != null){
+                    ProcessingUsingJNL(9, 20.0);
                 }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
-        }
-
-
+            }
+        }) ;
 
     }
-
 
 
 }
