@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_masterpiece.*
 class MasterpieceActivity : AppCompatActivity() {
 
     var realm = Realm.getDefaultInstance()
+    private val SELECT = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,11 +25,11 @@ class MasterpieceActivity : AppCompatActivity() {
         MasterpieceList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val intent = Intent(this,PaintingActivity::class.java)
             var imageInfo = gridAdapter.getItem(position)
-            var backgroundimage = imageInfo?.image
             var id = imageInfo?.id
-            intent.putExtra("image", backgroundimage)
             intent.putExtra("id",id)
             startActivity(intent)
         }
     }
+
+
 }

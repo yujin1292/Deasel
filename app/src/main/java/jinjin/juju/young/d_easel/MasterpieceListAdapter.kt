@@ -22,7 +22,7 @@ class MasterpieceListAdapter (realmResults: OrderedRealmCollection<ImageDB>):Rea
         }
         if(adapterData!=null){
             val item = adapterData!![position]
-            val arr = item.image
+            val arr = item.background
             var image = BitmapFactory.decodeByteArray(arr, 0, arr.size)
             vh.piece.setImageBitmap(image)
         }

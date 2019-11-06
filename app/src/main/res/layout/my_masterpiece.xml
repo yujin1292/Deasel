@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp">
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/masterpieceImage"/>
+        android:id="@+id/imageView"
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+
+        android:layout_margin="5dp"
+        app:srcCompat="@color/design_default_color_primary" />
+
+    <ImageView
+        android:id="@+id/masterpieceImage"
+        android:layout_width="195dp"
+        android:layout_height="195dp"
+
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
 </RelativeLayout>

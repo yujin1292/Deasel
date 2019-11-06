@@ -31,17 +31,17 @@ class PaintingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        getWindow().setFlags(
+        window.setFlags(
             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         setContentView(R.layout.activity_painting)
 
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
-        val arr = getIntent().getByteArrayExtra("image")
         val id = getIntent().getIntExtra("id",-1)
-        var backgroundimage = BitmapFactory.decodeByteArray(arr, 0, arr.size)
-        val background = findViewById(R.id.backgroundView) as ImageView
+        var canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
+        var backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.background, 0, canvasImage?.background!!.size)
+        val background = findViewById<ImageView>(R.id.backgroundView)
         background.setImageBitmap(backgroundimage)
 
         delete_btn.setOnClickListener {
@@ -93,45 +93,13 @@ class PaintingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-       /* //줌 컨텐츠
-        val v = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-            R.id.Frame,
-            null,
-            false
-        )
-        val layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-
-        //줌 뷰 객체생성하고 줌컨텐츠를 줌뷰에 넣어줌
-        val zoomView = ZoomView(this)
-        zoomView.addView(v)
-        zoomView.layoutParams = layoutParams
-
-        //미니맵
-        zoomView.isMiniMapEnabled = true // 좌측 상단 검은색 미니맵 설정
-        zoomView.maxZoom = 4f // 줌 Max 배율 설정  1f 로 설정하면 줌 안됩니다.
-        zoomView.miniMapCaption = "Mini Map Test" //미니 맵 내용
-        zoomView.miniMapCaptionSize = 20f // 미니 맵 내용 글씨 크기 설정
-
-        //줌뷰를 Frame에 붙여준다
-        val FrameOne = findViewById<View>(R.id.Frame) as FrameLayout
-        FrameOne.addView(zoomView)
-
-        //개별적 움직임 테스트
-        val point = findViewById<View>(R.id.Frame)  as FrameLayout
-        point.x = 200F
-        point.y = 200F
-        point.animate().setDuration(4000).alpha(0F)
-*/
     }
 
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         if (hasFocus && drawLine == null) {
             //그리기 뷰가 보여질(나타날) 레이아웃 찾기..
-            val Canvas = findViewById(R.id.Canvas) as FrameLayout
+            val Canvas = findViewById<FrameLayout>(R.id.Canvas)
             if (Canvas != null)
             //그리기 뷰가 보여질 레이아웃이 있으면...
             {

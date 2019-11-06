@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val byteArray = stream.toByteArray()
             newImage.image = byteArray
+            newImage.background = byteArray
             realm.commitTransaction()
 
 
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             sendBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2)
             val byteArray2 = stream2.toByteArray()
             newImage2.image = byteArray2
+            newImage2.background=byteArray2
             realm.commitTransaction()
         }
 
@@ -72,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
 
         jinjinjarajujuyoung.setOnClickListener{view->
-
+            Toast.makeText(this, "비밀인데,..", Toast.LENGTH_SHORT).show()
         }
 
 

@@ -16,7 +16,13 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
+import java.io.ByteArrayOutputStream;
+
+import io.realm.Realm;
+
 public class PreviewActivity extends AppCompatActivity {
+
+    private Realm realm = Realm.getDefaultInstance();
 
     private static final String TAG = "AndroidOpenCv";
 
@@ -29,6 +35,7 @@ public class PreviewActivity extends AppCompatActivity {
     private TextView textView;
 
     private boolean mIsOpenCVReady = false;
+    private int SELECT = 100;
 
     //엣지 디텍트
     public native void detectEdgeJNI(long inputImage, long outputImage, int th1, int th2);
@@ -125,7 +132,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         // 이미지 처리 버튼 리스너들
 
-        Button buttonO = (Button) findViewById(R.id.button_o) ;
+        Button buttonO = findViewById(R.id.button_o);
         buttonO.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +155,7 @@ public class PreviewActivity extends AppCompatActivity {
         }) ;
 
 
-        Button buttonA = (Button) findViewById(R.id.button_a) ;
+        Button buttonA = findViewById(R.id.button_a);
         buttonA.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,7 +166,7 @@ public class PreviewActivity extends AppCompatActivity {
         }) ;
 
 
-        Button buttonB = (Button) findViewById(R.id.button_b) ;
+        Button buttonB = findViewById(R.id.button_b);
         buttonB.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,7 +177,7 @@ public class PreviewActivity extends AppCompatActivity {
         }) ;
 
 
-        Button buttonC = (Button) findViewById(R.id.button_c) ;
+        Button buttonC = findViewById(R.id.button_c);
         buttonC.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +188,7 @@ public class PreviewActivity extends AppCompatActivity {
         }) ;
 
 
-        Button buttonD = (Button) findViewById(R.id.button_d) ;
+        Button buttonD = findViewById(R.id.button_d);
         buttonD.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,10 +201,35 @@ public class PreviewActivity extends AppCompatActivity {
 
         // start 버튼
 
-        Button startBtn = (Button) findViewById(R.id.start_btn);
+        Button startBtn = findViewById(R.id.start_btn);
         startBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                realm.beginTransaction();
+                Number maxValue = realm.where(ImageDB.class).max("id");
+                long pk = (maxValue != null) ? maxValue.longValue() + 1 : 0;
+                ImageDB imageDB = realm.createObject(ImageDB.class, pk);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                original_p.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bytes = stream.toByteArray();
+                imageDB.setImage(bytes);
+
+                ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
+                meanshift_p.compress(Bitmap.CompressFormat.JPEG, 100, stream1);
+                byte[] bytes1 = stream1.toByteArray();
+                imageDB.setMean_shift(bytes1);
+
+                ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+                canvas_p.compress(Bitmap.CompressFormat.JPEG, 100, stream2);
+                byte[] bytes2 = stream2.toByteArray();
+                imageDB.setBackground(bytes2);
+
+                realm.commitTransaction();
+
+                Intent intent = new Intent(PreviewActivity.this, MasterpieceActivity.class);
+                intent.putExtra("id", pk);
+                startActivity(intent);
 
             }
         }) ;
