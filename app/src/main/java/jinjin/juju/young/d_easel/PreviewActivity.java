@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -125,7 +123,8 @@ public class PreviewActivity extends AppCompatActivity {
         }
 
 
-        //원본이미지에서 엣지
+        // 이미지 처리 버튼 리스너들
+
         Button buttonO = (Button) findViewById(R.id.button_o) ;
         buttonO.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -189,6 +188,17 @@ public class PreviewActivity extends AppCompatActivity {
                 if(original_p != null){
                     ProcessingUsingJNL(9, 20.0);
                 }
+            }
+        }) ;
+
+
+        // start 버튼
+
+        Button startBtn = (Button) findViewById(R.id.start_btn);
+        startBtn.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         }) ;
 
