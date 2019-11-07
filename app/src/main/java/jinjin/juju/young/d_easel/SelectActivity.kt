@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -47,8 +49,6 @@ class SelectActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_SELECT_IMAGE)
 
     }
-
-
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
@@ -128,24 +128,61 @@ class SelectActivity : AppCompatActivity() {
             val temp = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
             // original = temp
 
+
+            val ei2 : ExifInterface = ExifInterface(mCurrentPhotoPath)
+            val orientation2 = ei2.getAttributeInt(ExifInterface.TAG_ORIENTATION , ExifInterface.ORIENTATION_UNDEFINED)
+            var rotatedBitmap2 : Bitmap? = null
+
+            when (orientation2) {
+
+                ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap2 = rotateImage(temp!!, 90)
+
+                ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap2 = rotateImage(temp!!,   180)
+
+                ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap2 = rotateImage(temp!!,  270)
+
+                ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap2 = temp!!
+
+                else -> rotatedBitmap2 = temp!!
+            }
+
+
+            // 저장명 설정
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             val imageFileName = "DEASEL_" + timeStamp + "_"
-
-            val imageSaveUri = MediaStore.Images.Media.insertImage(contentResolver,temp,imageFileName,"saved from d-easel")
+            // 이미지 저장
+            val imageSaveUri = MediaStore.Images.Media.insertImage(contentResolver,rotatedBitmap2,imageFileName,"saved from d-easel")
             val uri = Uri.parse(imageSaveUri)
             sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,uri))
 
+            //저장한 이미지 다시가져오기
             val path = getImagePathFromURI(uri)
             val options = BitmapFactory.Options()
             options.inSampleSize = 2
             original = BitmapFactory.decodeFile(path, options)
 
-
+            //회전 확인
+            val ei : ExifInterface = ExifInterface(path)
+            val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION , ExifInterface.ORIENTATION_UNDEFINED)
+            var rotatedBitmap : Bitmap? = null
 
             if (original!= null) {
 
-                goPreview("From Camera")
+                when (orientation) {
 
+                    ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap = rotateImage(original!!, 90)
+
+                    ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap = rotateImage(original!!,  180)
+
+                    ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap = rotateImage(original!!,  270)
+
+                    ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = original!!
+
+                    else -> rotatedBitmap = original!!
+                }
+
+                original = rotatedBitmap
+                goPreview("From Camera")
             }
         }
 
@@ -157,8 +194,28 @@ class SelectActivity : AppCompatActivity() {
                 options.inSampleSize = 2
                 original = BitmapFactory.decodeFile(path, options)
 
+                val ei : ExifInterface = ExifInterface(path)
+                val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION , ExifInterface.ORIENTATION_UNDEFINED)
+                var rotatedBitmap : Bitmap? = null
+
                 if (original != null) { // 가져온 이미지가 null 이 아니면 엣지 디텍팅
-                    goPreview("From Gallery")
+
+                    when (orientation) {
+
+                        ExifInterface.ORIENTATION_ROTATE_90 -> rotatedBitmap = rotateImage(original!!, 90)
+
+                        ExifInterface.ORIENTATION_ROTATE_180 -> rotatedBitmap = rotateImage(original!!,  180)
+
+                        ExifInterface.ORIENTATION_ROTATE_270 -> rotatedBitmap = rotateImage(original!!,  270)
+
+                        ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap = original!!
+
+                        else -> rotatedBitmap = original!!
+                    }
+
+                    original = rotatedBitmap
+
+                    goPreview("From Camera")
                 }
 
 
@@ -186,6 +243,15 @@ class SelectActivity : AppCompatActivity() {
         }
     }
 
+
+    fun rotateImage(source: Bitmap, angle: Int): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(angle.toFloat())
+        return Bitmap.createBitmap(
+            source, 0, 0, source.width, source.height,
+            matrix, true
+        )
+    }
 
 
 }

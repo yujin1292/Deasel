@@ -231,10 +231,12 @@ public class PreviewActivity extends AppCompatActivity {
                 intent.putExtra("id", pk);
                 startActivity(intent);
 
+
+
+
             }
         }) ;
 
     }
-
 
 }
