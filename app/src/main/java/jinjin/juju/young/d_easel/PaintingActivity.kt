@@ -13,15 +13,19 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.SeekBar
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.alpha
+import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_painting.*
 import java.io.ByteArrayOutputStream
 
 
-class PaintingActivity : AppCompatActivity() {
-
+class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
+    val DIALOG_DEFAULT_ID = 100
     var drawLine:DrawLine? = null
     var rect:Rect? = null
     val realm = Realm.getDefaultInstance()
@@ -39,7 +43,10 @@ class PaintingActivity : AppCompatActivity() {
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
         val id = getIntent().getIntExtra("id",-1)
+        //id로 db에서 찾아냄
         var canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
+
+        //이미지를 가져와서 바꿈
         var backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.background, 0, canvasImage?.background!!.size)
         val background = findViewById<ImageView>(R.id.backgroundView)
         background.setImageBitmap(backgroundimage)
@@ -52,8 +59,14 @@ class PaintingActivity : AppCompatActivity() {
         }
         pen_setting_btn.setOnClickListener {
             drawLine?.line?.setPen()
-            var intent: Intent = Intent(this,PensettingActivity::class.java)
-            startActivity(intent)
+
+            ColorPickerDialog.newBuilder()
+                .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
+                .setAllowPresets(false)
+                .setDialogId(DIALOG_DEFAULT_ID)
+                .setColor(Color.BLACK)
+                .setShowAlphaSlider(true)
+                .show(this)
 
         }
 
@@ -93,6 +106,21 @@ class PaintingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        pen_thickness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                drawLine?.line?.setLineWidth(p1.toFloat())
+            }
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+
+        })
+
+
+
     }
 
 
@@ -117,5 +145,21 @@ class PaintingActivity : AppCompatActivity() {
         }
 
         super.onWindowFocusChanged(hasFocus)
+    }
+
+
+    override fun onColorSelected(dialogId: Int, color: Int) {
+        //Todo
+        color_check.setBackgroundColor(color)
+        drawLine?.line?.setLineColor(color)
+        drawLine?.line?.setLineAlpha(color.alpha)
+    }
+
+    /*
+    * @brif : Color picker dismiss 호출되는 리스너
+    * @param dialogld : 종료된 대화상자 고유아이디
+    */
+    override fun onDialogDismissed(dialogld: Int) {
+        //Todo..
     }
 }

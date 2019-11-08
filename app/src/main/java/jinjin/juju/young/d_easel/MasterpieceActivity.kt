@@ -18,7 +18,7 @@ class MasterpieceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_masterpiece)
 
         val realmResults = realm.where<ImageDB>().findAll()
-        val gridAdapter = MasterpieceListAdapter(realmResults)
+        val gridAdapter = MasterpieceListAdapter(realmResults!!)
         MasterpieceList.adapter = gridAdapter
 
         //리스트에서 아이템 선택시,,해당 이미지 정보 넘겨서 페인팅 액티비티에 전달

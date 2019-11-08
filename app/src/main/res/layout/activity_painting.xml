@@ -7,63 +7,108 @@
         android:layout_height="match_parent"
         tools:context=".PaintingActivity" android:orientation="vertical">
 
+    <ImageButton
+        android:id="@+id/color_check"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1"
+        app:srcCompat="@color/design_default_color_primary" />
+
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_weight="0">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
         <Button
-                android:text="Delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/delete_btn" android:layout_weight="0"
-        />
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Delete" />
+
         <Switch
-                android:text="Background"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/background_switch" android:layout_weight="0"/>
+            android:id="@+id/background_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Background" />
+
         <Space
-                android:layout_width="74dp"
-                android:layout_height="wrap_content" android:layout_weight="0"/>
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
+
         <ImageButton
-                android:src="@android:drawable/ic_menu_save"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content" android:id="@+id/result_btn" android:layout_weight="0"
-        />
+            android:id="@+id/result_btn"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@android:drawable/ic_menu_save" />
     </LinearLayout>
+
     <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_weight="0" android:id="@+id/Frame">
+        android:id="@+id/Frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" app:srcCompat="@android:color/background_light"
-                android:id="@+id/backgroundView"/>
+            android:id="@+id/backgroundView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:color/background_light" />
+
         <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="460dp" android:id="@+id/Canvas">
-        </FrameLayout>
-    </FrameLayout>
-    <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/Canvas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="460dp"></FrameLayout>
+    </FrameLayout>
+
+    <SeekBar
+        android:id="@+id/pen_thickness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:progress="10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
         <ImageButton
-                android:src="@android:drawable/ic_menu_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/pen_setting_btn" android:layout_weight="0"/>
+            android:id="@+id/pen_setting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@android:drawable/ic_menu_edit" />
+
         <ImageButton
-                android:src="@android:drawable/btn_dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/eraser_btn" android:layout_weight="0"/>
+            android:id="@+id/eraser_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@android:drawable/btn_dialog" />
+
         <Space
-                android:layout_width="154dp"
-                android:layout_height="wrap_content" android:layout_weight="0"/>
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0" />
+
         <ImageButton
-                android:src="@android:drawable/ic_media_rew"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/prev_btn" android:layout_weight="0"/>
+            android:id="@+id/prev_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@android:drawable/ic_media_rew" />
+
         <ImageButton
-                android:src="@android:drawable/ic_media_ff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/next_btn" android:layout_weight="0"/>
+            android:id="@+id/next_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:src="@android:drawable/ic_media_ff" />
     </LinearLayout>
 </LinearLayout>
