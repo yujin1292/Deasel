@@ -2,6 +2,7 @@ package jinjin.juju.young.d_easel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +22,8 @@ import java.io.ByteArrayOutputStream;
 import io.realm.Realm;
 
 public class PreviewActivity extends AppCompatActivity {
+
+    ProgressDialog dlg ;
 
     private Realm realm = Realm.getDefaultInstance();
 
@@ -47,6 +50,8 @@ public class PreviewActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
     public void ProcessingUsingJNL(double i, double j ){
+
+
         if (!mIsOpenCVReady) {
             return;
         }
@@ -94,6 +99,9 @@ public class PreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
+        dlg = new ProgressDialog(this);
+        dlg.setMessage("Loading...");
+        dlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         if (OpenCVLoader.initDebug()) {
             mIsOpenCVReady = true;
@@ -136,20 +144,17 @@ public class PreviewActivity extends AppCompatActivity {
         buttonO.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dlg.show();
+                new Thread(new Runnable() {
+                    @Override public void run()
+                    { // TODOAuto-generated method stub
+                        if(original_p != null){
+                            ProcessingUsingJNL(0, 20.0);
+                        }
+                        dlg.dismiss();
+                    }
+                }).start();
 
-                meanshift_p = original_p.copy(original_p.getConfig(),true);
-
-                meanshift.setImageBitmap(meanshift_p);
-
-                Mat src2 = new Mat();
-                Utils.bitmapToMat(meanshift_p, src2);
-                Mat edge = new Mat();
-                detectEdgeJNI(src2.getNativeObjAddr(), edge.getNativeObjAddr(), 75, 175);
-                Utils.matToBitmap(edge, canvas_p);
-
-                //처리한 이미지로 변경
-                canvas.setImageBitmap(canvas_p);
-                textView.setText("original");
 
             }
         }) ;
@@ -159,9 +164,17 @@ public class PreviewActivity extends AppCompatActivity {
         buttonA.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(original_p != null){
-                    ProcessingUsingJNL(1, 20);
-                }
+                dlg.show();
+                new Thread(new Runnable() {
+                    @Override public void run()
+                    { // TODOAuto-generated method stub
+                        if(original_p != null){
+                            ProcessingUsingJNL(3, 20.0);
+                        }
+                        dlg.dismiss();
+                    }
+                }).start();
+
             }
         }) ;
 
@@ -170,9 +183,17 @@ public class PreviewActivity extends AppCompatActivity {
         buttonB.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(original_p != null){
-                    ProcessingUsingJNL(3, 20);
-                }
+                dlg.show();
+                new Thread(new Runnable() {
+                    @Override public void run()
+                    { // TODOAuto-generated method stub
+                        if(original_p != null){
+                            ProcessingUsingJNL(6, 20.0);
+                        }
+                        dlg.dismiss();
+                    }
+                }).start();
+
             }
         }) ;
 
@@ -181,9 +202,17 @@ public class PreviewActivity extends AppCompatActivity {
         buttonC.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(original_p != null){
-                    ProcessingUsingJNL(6, 20.0);
-                }
+                dlg.show();
+                new Thread(new Runnable() {
+                    @Override public void run()
+                    { // TODOAuto-generated method stub
+                        if(original_p != null){
+                            ProcessingUsingJNL(9 ,20.0);
+                        }
+                        dlg.dismiss();
+                    }
+                }).start();
+
             }
         }) ;
 
@@ -192,9 +221,18 @@ public class PreviewActivity extends AppCompatActivity {
         buttonD.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(original_p != null){
-                    ProcessingUsingJNL(9, 20.0);
-                }
+                dlg.show();
+                new Thread(new Runnable() {
+                    @Override public void run()
+                    { // TODOAuto-generated method stub
+                        if(original_p != null){
+                            ProcessingUsingJNL(12, 20.0);
+                        }
+                        dlg.dismiss();
+                    }
+                }).start();
+
+
             }
         }) ;
 
@@ -238,6 +276,7 @@ public class PreviewActivity extends AppCompatActivity {
         }) ;
 
     }
+
 
 
 }
