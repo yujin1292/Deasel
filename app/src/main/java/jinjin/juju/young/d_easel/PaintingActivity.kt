@@ -47,7 +47,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         var canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
 
         //이미지를 가져와서 바꿈
-        var backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.background, 0, canvasImage?.background!!.size)
+        var backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.image, 0, canvasImage?.image!!.size)
         val background = findViewById<ImageView>(R.id.backgroundView)
         background.setImageBitmap(backgroundimage)
 

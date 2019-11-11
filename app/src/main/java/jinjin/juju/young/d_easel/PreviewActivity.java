@@ -247,22 +247,24 @@ public class PreviewActivity extends AppCompatActivity {
                 Number maxValue = realm.where(ImageDB.class).max("id");
                 long pk = (maxValue != null) ? maxValue.longValue() + 1 : 0;
                 ImageDB imageDB = realm.createObject(ImageDB.class, pk);
-
+                //원본 이미지 저장
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 original_p.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] bytes = stream.toByteArray();
-                imageDB.setImage(bytes);
-
+                imageDB.setOriginal(bytes);
+                //mean_shift 처리 영상 저장
                 ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
                 meanshift_p.compress(Bitmap.CompressFormat.JPEG, 100, stream1);
                 byte[] bytes1 = stream1.toByteArray();
                 imageDB.setMean_shift(bytes1);
-
+                //edge 영상 저장
                 ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
                 canvas_p.compress(Bitmap.CompressFormat.JPEG, 100, stream2);
                 byte[] bytes2 = stream2.toByteArray();
                 imageDB.setBackground(bytes2);
 
+                //그림그린 영상 저장
+                imageDB.setImage(bytes2);
                 realm.commitTransaction();
 
                 Intent intent = new Intent(PreviewActivity.this, MasterpieceActivity.class);
