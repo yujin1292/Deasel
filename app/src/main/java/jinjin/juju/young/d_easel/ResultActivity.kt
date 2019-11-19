@@ -56,7 +56,8 @@ class ResultActivity : AppCompatActivity() {
         val out : FileOutputStream = FileOutputStream(pathname)
         newbitmap?.compress(Bitmap.CompressFormat.PNG, 100, out)
         out.close()
-        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,pathname.toUri()))
+        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.parse("file://"+pathname)))
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
