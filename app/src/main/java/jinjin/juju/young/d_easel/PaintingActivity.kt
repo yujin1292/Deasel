@@ -43,8 +43,10 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
         val id = getIntent().getIntExtra("id",-1)
+
         //id로 db에서 찾아냄
         var canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
+
 
         //이미지를 가져와서 바꿈
         var backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.image, 0, canvasImage?.image!!.size)
@@ -86,10 +88,11 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         result_btn.setOnClickListener {
             //뷰 내용 캡쳐해서 ByteArray로 변환
             container.buildDrawingCache()
+
             var captureView = container.drawingCache
             val sendBitmap = captureView
             val stream = ByteArrayOutputStream()
-            sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val byteArray = stream.toByteArray()
 
             //데이터베이스에 이미지 업데이트
@@ -102,7 +105,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
             //결과 액티비티에 결과 이미지 전달
             var intent:Intent = Intent(this,ResultActivity::class.java)
-            intent.putExtra("image", byteArray)
+            intent.putExtra("id", id)
             startActivity(intent)
         }
 

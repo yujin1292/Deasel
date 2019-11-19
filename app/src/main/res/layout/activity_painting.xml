@@ -52,16 +52,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
+        <FrameLayout
+            android:id="@+id/Canvas"
+            android:layout_width="match_parent"
+            android:layout_height="460dp"></FrameLayout>
+
         <ImageView
             android:id="@+id/backgroundView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@android:color/background_light" />
 
-        <FrameLayout
-            android:id="@+id/Canvas"
-            android:layout_width="match_parent"
-            android:layout_height="460dp"></FrameLayout>
     </FrameLayout>
 
     <SeekBar

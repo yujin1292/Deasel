@@ -1,11 +1,10 @@
 package jinjin.juju.young.d_easel
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Path
-import android.graphics.Rect
+import android.graphics.*
 import android.view.MotionEvent
 import android.view.View
+import org.opencv.android.Utils
+import org.opencv.core.Mat
 
 //그림 그리는 거를 관리하는 클래스
 
@@ -23,7 +22,9 @@ class DrawLine : View
 
     constructor(context: Context, rect: Rect):super(context){
         bitmap = Bitmap.createBitmap(rect.width(), rect.height(),Bitmap.Config.ARGB_8888)
+        //setmatrix 이용해서
         canvas = Canvas(bitmap)
+
         path = Path()
         line = Line()
         line?.setPen()

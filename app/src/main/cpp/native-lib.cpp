@@ -1,7 +1,10 @@
 #include <jni.h>
 #include <string>
+#include <vector>
 
 #include <opencv2/opencv.hpp>
+
+using namespace cv;
 
 
 extern "C"
@@ -29,6 +32,7 @@ Java_jinjin_juju_young_d_1easel_PreviewActivity_detectEdgeJNI(JNIEnv *env, jobje
     cvtColor(inputMat, outputMat, cv::COLOR_RGB2GRAY);
     Canny(outputMat, outputMat, th1, th2);
     bitwise_not(outputMat, outputMat);
+
 }
 extern "C"
 JNIEXPORT void JNICALL
