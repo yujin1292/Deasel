@@ -16,6 +16,12 @@ import io.realm.kotlin.where
 
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.ByteArrayOutputStream
+import android.preference.PreferenceManager.getDefaultSharedPreferences
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.preference.PreferenceManager
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +35,37 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//  Declare a new thread to do a preference check
+        val t = Thread(Runnable {
+            //  Initialize SharedPreferences
+            val getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(baseContext)
+
+            //  Create a new boolean and preference and set it to true
+            val isFirstStart = getPrefs.getBoolean("firstStart", true)
+
+            //  If the activity has never started before...
+            if (isFirstStart) {
+
+                //  Launch app intro
+                val i = Intent(this@MainActivity, MyIntro::class.java)
+
+                runOnUiThread { startActivity(i) }
+
+                //  Make a new preferences editor
+                val e = getPrefs.edit()
+
+                //  Edit preference to make it false because we don't want this to run again
+                e.putBoolean("firstStart", false)
+
+                //  Apply changes
+                e.apply()
+            }
+        })
+
+        // Start the thread
+        t.start()
+
 
 
 
@@ -79,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+        //ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
 
 
     }
