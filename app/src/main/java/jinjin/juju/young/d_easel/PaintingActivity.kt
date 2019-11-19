@@ -29,6 +29,8 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
     var drawLine:DrawLine? = null
     var rect:Rect? = null
     val realm = Realm.getDefaultInstance()
+    var backgroundimage:Bitmap? = null
+    var background:ImageView? = null
 
     @SuppressLint("ResourceType")
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -42,16 +44,16 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
-        val id = getIntent().getIntExtra("id",-1)
+        var id = getIntent().getIntExtra("id",-1)
 
         //id로 db에서 찾아냄
         var canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
 
 
         //이미지를 가져와서 바꿈
-        var backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.image, 0, canvasImage?.image!!.size)
-        val background = findViewById<ImageView>(R.id.backgroundView)
-        background.setImageBitmap(backgroundimage)
+        backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.image, 0, canvasImage?.image!!.size)
+        background = findViewById<ImageView>(R.id.backgroundView)
+        //background.setImageBitmap(backgroundimage)
 
         delete_btn.setOnClickListener {
 
@@ -76,12 +78,12 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         background_switch.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked == true) {
                 //백그라운드 체크하면 이미지 띄우기
-                background.imageAlpha = 255
+                background?.imageAlpha = 255
             }
             else {
                 //백그라운드 해제하면 배경흰색으로 설정하고 투명도를 0으로
-                background.setBackgroundColor(Color.WHITE)
-                background.imageAlpha = 0
+                background?.setBackgroundColor(Color.WHITE)
+                background?.imageAlpha = 0
             }
         }
         var container = findViewById<FrameLayout>(R.id.Frame)
@@ -126,8 +128,10 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     }
 
-
+//고쳐지긴했는데 그거 그냥 painting activity에서 제일바깥에 framerlayout을 match parent로 고쳐서 그런건지
+//코드 순서바꿔서 그런건진 모르겠다 ㅋㅎㅋㅎ....
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+        background?.setImageBitmap(backgroundimage)
         if (hasFocus && drawLine == null) {
             //그리기 뷰가 보여질(나타날) 레이아웃 찾기..
             val Canvas = findViewById<FrameLayout>(R.id.Canvas)

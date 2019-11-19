@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="Background" />
+            android:text="Background"
+            />
 
         <Space
             android:layout_width="74dp"
@@ -49,19 +50,21 @@
     <FrameLayout
         android:id="@+id/Frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="10">
 
         <FrameLayout
             android:id="@+id/Canvas"
             android:layout_width="match_parent"
-            android:layout_height="460dp"></FrameLayout>
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/backgroundView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:color/background_light" />
+            <ImageView
+                android:id="@+id/backgroundView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:color/background_light" />
+        </FrameLayout>
 
     </FrameLayout>
 
