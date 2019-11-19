@@ -7,22 +7,36 @@
         android:layout_height="match_parent"
         tools:context=".ResultActivity" android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:srcCompat="@android:color/transparent"
-            android:id="@+id/resultImage"
-            android:layout_weight="1"/>
+        android:id="@+id/resultImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:color/transparent" />
+
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:orientation="horizontal">
+
         <Button
-                android:text="close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/close_btn" android:layout_weight="0"/>
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="close" />
+
         <Button
-                android:text="SAVE"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/save_btn" android:layout_weight="0"/>
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE" />
     </LinearLayout>
 </LinearLayout>

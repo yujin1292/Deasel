@@ -21,6 +21,7 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.preference.PreferenceManager
+import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity() {
@@ -117,6 +118,10 @@ class MainActivity : AppCompatActivity() {
 
 
         //ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+
+
+
+
 
 
     }
