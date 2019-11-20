@@ -22,6 +22,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_painting.*
+import pl.polidea.view.ZoomView
 import java.io.ByteArrayOutputStream
 
 
@@ -44,6 +45,24 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         setContentView(R.layout.activity_painting)
 
+        val v = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+            R.layout.zoom_item,
+            null,
+            false
+        )
+        val layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+
+        val zoomView = ZoomView(this)
+        zoomView.addView(v)
+        zoomView.layoutParams = layoutParams
+        zoomView.maxZoom = 4f // 줌 Max 배율 설정  1f 로 설정하면 줌 안됩니다.
+
+        val zoomFrame = findViewById<View>(R.id.Frame) as FrameLayout
+        zoomFrame.addView(zoomView)
+
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
         var id = getIntent().getIntExtra("id",-1)
@@ -57,9 +76,6 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         background = findViewById<ImageView>(R.id.backgroundView)
         //background.setImageBitmap(backgroundimage)
 
-        delete_btn.setOnClickListener {
-
-        }
         eraser_btn.setOnClickListener {
             drawLine?.line?.setErase()
         }
@@ -76,18 +92,6 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         }
 
-        background_switch.isChecked = true
-        background_switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked == true) {
-                //백그라운드 체크하면 이미지 띄우기
-                background?.imageAlpha = 255
-            }
-            else {
-                //백그라운드 해제하면 배경흰색으로 설정하고 투명도를 0으로
-                background?.setBackgroundColor(Color.WHITE)
-                background?.imageAlpha = 0
-            }
-        }
         var container = findViewById<FrameLayout>(R.id.Frame)
         result_btn.setOnClickListener {
             //뷰 내용 캡쳐해서 ByteArray로 변환
@@ -109,6 +113,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
                 realm.beginTransaction()
                 var updateImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
                 updateImage?.lines = byteArray
+                updateImage?.image = byteArray
                 realm.commitTransaction()
             }
 
@@ -135,8 +140,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     }
 
-//고쳐지긴했는데 그거 그냥 painting activity에서 제일바깥에 framerlayout을 match parent로 고쳐서 그런건지
-//코드 순서바꿔서 그런건진 모르겠다 ㅋㅎㅋㅎ....
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         background?.setImageBitmap(backgroundimage)
         if (hasFocus && drawLine == null) {

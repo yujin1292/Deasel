@@ -89,12 +89,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         canvas.setImageBitmap(canvas_p);
 
-        //배경을 투명하게 만듬 canvas_p_a에 저장
-      /*  Mat src3 = new Mat();
-        Utils.bitmapToMat(canvas_p, src3);
-        Mat alphaEdge = src3.clone();
-        alphaJNI(src3.getNativeObjAddr(), alphaEdge.getNativeObjAddr());
-        Utils.matToBitmap(alphaEdge, canvas_p_a);*/
+
         int sW = canvas_p.getWidth();
         int sH = canvas_p.getHeight();
 
@@ -104,6 +99,7 @@ public class PreviewActivity extends AppCompatActivity {
             if (pixels[jj] == Color.WHITE)
                 pixels[jj] = Color.TRANSPARENT;
         }
+
         canvas_p_a  = Bitmap.createBitmap(pixels, 0, sW, sW, sH, Bitmap.Config.ARGB_8888);
 
         //처리한 이미지로 변경
