@@ -22,7 +22,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_painting.*
-import pl.polidea.view.ZoomView
+//import pl.polidea.view.ZoomView
 import java.io.ByteArrayOutputStream
 
 
@@ -34,6 +34,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
     var backgroundimage:Bitmap? = null
     var background:ImageView? = null
     var canvasImage : ImageDB = ImageDB()
+    var stop : Boolean = false;
 
     @SuppressLint("ResourceType")
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -45,6 +46,9 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         setContentView(R.layout.activity_painting)
 
+
+
+        //zoom view
         val v = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
             R.layout.zoom_item,
             null,
@@ -62,6 +66,10 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         val zoomFrame = findViewById<View>(R.id.Frame) as FrameLayout
         zoomFrame.addView(zoomView)
+
+        //zoom veiw
+
+
 
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
@@ -137,6 +145,11 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         })
 
 
+        stop_btn.setOnClickListener { view ->
+
+
+
+        }
 
     }
 
