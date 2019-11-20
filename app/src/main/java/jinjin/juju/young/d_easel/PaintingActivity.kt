@@ -1,5 +1,6 @@
 package jinjin.juju.young.d_easel
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -31,6 +32,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
     val realm = Realm.getDefaultInstance()
     var backgroundimage:Bitmap? = null
     var background:ImageView? = null
+    var canvasImage : ImageDB = ImageDB()
 
     @SuppressLint("ResourceType")
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -47,7 +49,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         var id = getIntent().getIntExtra("id",-1)
 
         //id로 db에서 찾아냄
-        var canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
+        canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()!!
 
 
         //이미지를 가져와서 바꿈
@@ -89,9 +91,14 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         var container = findViewById<FrameLayout>(R.id.Frame)
         result_btn.setOnClickListener {
             //뷰 내용 캡쳐해서 ByteArray로 변환
+
+            //캡처
             container.buildDrawingCache()
 
             var captureView = container.drawingCache
+
+
+
             val sendBitmap = captureView
             val stream = ByteArrayOutputStream()
             sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -101,7 +108,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
             if(id!=-1){
                 realm.beginTransaction()
                 var updateImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
-                updateImage?.image = byteArray
+                updateImage?.lines = byteArray
                 realm.commitTransaction()
             }
 
@@ -144,7 +151,11 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
                     Canvas.measuredWidth, Canvas.measuredHeight
                 )
                 //그리기 뷰 초기화..
-                drawLine = DrawLine(this, rect!!)
+
+                var temp = BitmapFactory.decodeByteArray(canvasImage?.lines, 0, canvasImage?.lines!!.size)
+                var temp2  = temp.copy(temp.getConfig(), true)
+                drawLine = DrawLine(this, rect!! , temp2 )
+
                 //그리기 뷰를 그리기 뷰 레이아웃에 넣기 -- 이렇게 하면 그리기 뷰가 화면에 보여지게 됨.
                 Canvas.addView(drawLine)
             }

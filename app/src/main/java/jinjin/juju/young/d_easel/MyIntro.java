@@ -21,7 +21,7 @@ public class MyIntro extends AppIntro {
 
         AppIntroFragment first_fragment = AppIntroFragment.newInstance("welcome!", "first page", R.drawable.paper,Color.parseColor("#3F51B5"));
         AppIntroFragment second_fragment= AppIntroFragment.newInstance("First", "second page", R.drawable.b,Color.parseColor("#3F51B5"));
-        AppIntroFragment third_fragment= AppIntroFragment.newInstance("second", "third page", R.drawable.vila,Color.parseColor("#3F51B5"));
+        AppIntroFragment third_fragment= AppIntroFragment.newInstance("second", "third page\n접근을 허용해주세요!", R.drawable.vila,Color.parseColor("#3F51B5"));
         AppIntroFragment fourth_fragment= AppIntroFragment.newInstance("Show What you got", "fourth page", R.drawable.icon,Color.parseColor("#3F51B5"));
 
 
@@ -60,9 +60,9 @@ public class MyIntro extends AppIntro {
         setVibrateIntensity(30);
 
         // Animations -- use only one of the below. Using both could cause errors.
-        //setFadeAnimation(); // OR
+        setFadeAnimation(); // OR
       //  setZoomAnimation(); // OR
-        setFlowAnimation(); // OR
+      // setFlowAnimation(); // OR
      //   setSlideOverAnimation(); // OR
      //   setDepthAnimation(); // OR
       //  setCustomTransformer(yourCustomTransformer);

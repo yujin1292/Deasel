@@ -3,26 +3,18 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageView
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_result.*
-import java.text.SimpleDateFormat
-import java.util.*
-import android.R.attr.bitmap
 import android.graphics.Bitmap
 import android.graphics.Color
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Environment
-import android.provider.LiveFolders
-import android.widget.TextView
-import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ResultActivity : AppCompatActivity() {
@@ -30,9 +22,13 @@ class ResultActivity : AppCompatActivity() {
     val realm = Realm.getDefaultInstance()
 
     fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) {
+        val format1 = SimpleDateFormat("MM-dd HH:mm:ss")
+        val time = Date()
+        val time1 = format1.format(time)
+
         val ex_stroage = Environment.getExternalStorageDirectory().getAbsolutePath();
         val folder_name = "/"+folder +"/"
-        val file_name  = name +".png"
+        val file_name  = name +"-"+time1+".png"
         val string_path  = ex_stroage+folder_name
 
         var file_path :File
@@ -68,12 +64,18 @@ class ResultActivity : AppCompatActivity() {
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val id = getIntent().getIntExtra("id",-1)
 
-        //id로 db에서 찾아냄
-        var saveImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
 
-        var image = BitmapFactory.decodeByteArray(saveImage?.image, 0, saveImage?.image?.size!!)
+
+        //id로 db에서 찾아냄
+        var savedDB = realm.where<ImageDB>().equalTo("id",id).findFirst()
+
+
+
+        var lines = BitmapFactory.decodeByteArray(savedDB?.lines, 0, savedDB?.lines?.size!!)
+
+
         val imageView = findViewById(R.id.resultImage) as ImageView
-        imageView.setImageBitmap(image)
+        imageView.setImageBitmap(lines)
 
         close_btn.setOnClickListener {
             //여기서 main이나 내 작품 액티비티로 가야될 것 같음 이유는..회의 때 회의,,
@@ -81,7 +83,7 @@ class ResultActivity : AppCompatActivity() {
         }
         save_btn.setOnClickListener {
             //갤러리에 이미지 저장하는 코드 넣어줘야됨
-            saveBitmaptoPNG(image,"DCIM/My_Painting","DEASEL_${id}")
+            saveBitmaptoPNG(lines,"DCIM/My_Painting","DEASEL_${id}")
 
             var intent: Intent = Intent(this,MainActivity::class.java)
             startActivity(intent)

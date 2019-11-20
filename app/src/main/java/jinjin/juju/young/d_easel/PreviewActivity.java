@@ -286,9 +286,21 @@ public class PreviewActivity extends AppCompatActivity {
                 byte[] bytes2 = stream2.toByteArray();
                 imageDB.setBackground(bytes2);
 
+                //lines 투명 값
+                ByteArrayOutputStream stream3 = new ByteArrayOutputStream();
+                Bitmap temp = Bitmap.createBitmap(canvas_p_a.getWidth(), canvas_p_a.getHeight(),Bitmap.Config.ARGB_8888);
+                temp.compress(Bitmap.CompressFormat.PNG, 100, stream3);
+                byte[] bytes3 = stream3.toByteArray();
+                imageDB.setLines(bytes3);
+
+
                 //그림그린 영상 저장
                 imageDB.setImage(bytes2);
+
+
                 realm.commitTransaction();
+
+
 
                 Intent intent = new Intent(PreviewActivity.this, MasterpieceActivity.class);
                 intent.putExtra("id", pk);
