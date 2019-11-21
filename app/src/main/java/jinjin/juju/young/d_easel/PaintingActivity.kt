@@ -22,9 +22,8 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_painting.*
-import kotlinx.android.synthetic.main.zoom_item.*
-//import pl.polidea.view.ZoomView
 import java.io.ByteArrayOutputStream
+import java.lang.Thread.sleep
 
 
 class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
@@ -35,7 +34,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
     var backgroundimage:Bitmap? = null
     var background:ImageView? = null
     var canvasImage : ImageDB = ImageDB()
-    var stop : Boolean = false;
+    var stop : Boolean = false
 
     @SuppressLint("ResourceType")
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -81,7 +80,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
 
         //이미지를 가져와서 바꿈
-        backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.background, 0, canvasImage?.background!!.size)
+        backgroundimage = BitmapFactory.decodeByteArray(canvasImage.background, 0, canvasImage.background.size)
         background = findViewById<ImageView>(R.id.backgroundView)
         //backgroundView.setImageBitmap(backgroundimage)
 
@@ -112,7 +111,9 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
             //뷰 내용 캡쳐해서 ByteArray로 변환
 
             //캡처 준비
+            zoomView.zoomTo(1.0f,0f,0f)
             container.buildDrawingCache()
+           // sleep(3)
             //캡처
             var captureView = container.drawingCache
             //바이트 어레이로 변환
@@ -172,7 +173,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
                 //그리기 뷰 초기화..
 
                 //지금까지 그린걸 추가해서 그리기뷰 생성해야 지울수있음
-                var temp = BitmapFactory.decodeByteArray(canvasImage?.lines, 0, canvasImage?.lines!!.size)
+                var temp = BitmapFactory.decodeByteArray(canvasImage.lines, 0, canvasImage.lines.size)
 
                 var temp2  = temp.copy(temp.config, true)
 
