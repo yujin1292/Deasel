@@ -8,9 +8,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
-public class MyIntro extends AppIntro {
+public class MyIntro extends AppIntro2 {
 
 
     @Override
@@ -42,7 +43,7 @@ public class MyIntro extends AppIntro {
 
         // Override bar/separator color
         setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        //setSeparatorColor(Color.parseColor("#2196F3"));
 
         // SHOW or HIDE the statusbar
         showStatusBar(true);
@@ -51,7 +52,7 @@ public class MyIntro extends AppIntro {
         //setNavBarColor(Color.parseColor("#3F51B5"));
 
         // Hide Skip/Done button
-        showSkipButton(true);
+        showSkipButton(false);
         showDoneButton(true);
 
         // Turn vibration on and set intensity
