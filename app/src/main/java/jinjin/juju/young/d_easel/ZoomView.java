@@ -434,4 +434,5 @@ public class ZoomView extends FrameLayout {
         invalidate();
         // }
     }
-}
+
+    }

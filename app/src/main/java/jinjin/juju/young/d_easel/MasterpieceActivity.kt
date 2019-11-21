@@ -29,6 +29,13 @@ class MasterpieceActivity : AppCompatActivity() {
             intent.putExtra("id",id)
             startActivity(intent)
         }
+
+        val intent = Intent(this,DelMasterpieceActivity::class.java)
+        MasterpieceList.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
+            val intent = Intent(this,DelMasterpieceActivity::class.java)
+            startActivity(intent)
+            true
+        }
     }
 
 

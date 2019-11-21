@@ -266,13 +266,13 @@ public class PreviewActivity extends AppCompatActivity {
 
                 //원본 이미지 저장
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                original_p.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                original_p.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] bytes = stream.toByteArray();
                 imageDB.setOriginal(bytes);
 
                 //mean_shift 처리 영상 저장
                 ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
-                meanshift_p.compress(Bitmap.CompressFormat.JPEG, 100, stream1);
+                meanshift_p.compress(Bitmap.CompressFormat.PNG, 100, stream1);
                 byte[] bytes1 = stream1.toByteArray();
                 imageDB.setMean_shift(bytes1);
 

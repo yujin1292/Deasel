@@ -25,10 +25,19 @@
          />
 
     <Button
-        android:id="@+id/go_sketch"
+        android:id="@+id/take_pic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="스케치" />
+
+        android:onClick="TakePicClicked"
+        android:text="촬영" />
+
+    <Button
+        android:id="@+id/get_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="GetPicClicked"
+        android:text="갤러리" />
 
     <Button
         android:id="@+id/go_master"

@@ -22,6 +22,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_painting.*
+import kotlinx.android.synthetic.main.zoom_item.*
 //import pl.polidea.view.ZoomView
 import java.io.ByteArrayOutputStream
 
@@ -80,15 +81,18 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
 
         //이미지를 가져와서 바꿈
-        backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.image, 0, canvasImage?.image!!.size)
+        backgroundimage = BitmapFactory.decodeByteArray(canvasImage?.background, 0, canvasImage?.background!!.size)
         background = findViewById<ImageView>(R.id.backgroundView)
-        //background.setImageBitmap(backgroundimage)
+        //backgroundView.setImageBitmap(backgroundimage)
 
         eraser_btn.setOnClickListener {
             drawLine?.line?.setErase()
         }
         pen_setting_btn.setOnClickListener {
             drawLine?.line?.setPen()
+        }
+
+        pen_setting_btn.setOnLongClickListener{
 
             ColorPickerDialog.newBuilder()
                 .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
@@ -98,23 +102,25 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
                 .setShowAlphaSlider(true)
                 .show(this)
 
+
+            true
         }
+
 
         var container = findViewById<FrameLayout>(R.id.Frame)
         result_btn.setOnClickListener {
             //뷰 내용 캡쳐해서 ByteArray로 변환
 
-            //캡처
+            //캡처 준비
             container.buildDrawingCache()
-
+            //캡처
             var captureView = container.drawingCache
-
-
-
+            //바이트 어레이로 변환
             val sendBitmap = captureView
             val stream = ByteArrayOutputStream()
             sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val byteArray = stream.toByteArray()
+
 
             //데이터베이스에 이미지 업데이트
             if(id!=-1){
@@ -144,18 +150,14 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         })
 
-
-        stop_btn.setOnClickListener { view ->
-
-
-
-        }
-
     }
 
 
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
+
         background?.setImageBitmap(backgroundimage)
+
         if (hasFocus && drawLine == null) {
             //그리기 뷰가 보여질(나타날) 레이아웃 찾기..
             val Canvas = findViewById<FrameLayout>(R.id.Canvas)
@@ -169,8 +171,11 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
                 )
                 //그리기 뷰 초기화..
 
+                //지금까지 그린걸 추가해서 그리기뷰 생성해야 지울수있음
                 var temp = BitmapFactory.decodeByteArray(canvasImage?.lines, 0, canvasImage?.lines!!.size)
-                var temp2  = temp.copy(temp.getConfig(), true)
+
+                var temp2  = temp.copy(temp.config, true)
+
                 drawLine = DrawLine(this, rect!! , temp2 )
 
                 //그리기 뷰를 그리기 뷰 레이아웃에 넣기 -- 이렇게 하면 그리기 뷰가 화면에 보여지게 됨.

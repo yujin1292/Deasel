@@ -7,7 +7,7 @@ import org.opencv.android.Utils
 import org.opencv.core.Mat
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View.OnUnhandledKeyEventListener
-
+import androidx.core.graphics.scale
 
 
 //그림 그리는 거를 관리하는 클래스
@@ -35,9 +35,9 @@ class DrawLine : View
         this.rect = rect
     }
 
-    constructor(context: Context, rect: Rect , bitmap: Bitmap):super(context){
+    constructor(context: Context, rect: Rect , edge: Bitmap):super(context){
 
-        this.bitmap = bitmap
+        bitmap = edge.scale(rect.width(),rect.height(),true)
         //setmatrix 이용해서
         canvas = Canvas(bitmap)
 

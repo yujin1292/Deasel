@@ -8,20 +8,11 @@
     tools:context=".PaintingActivity" android:orientation="vertical">
 
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
 
         android:id="@+id/Frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="10">
-
-        <ImageView
-            android:id="@+id/backgroundView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@android:color/background_light" />
 
         <FrameLayout
             android:id="@+id/Canvas"
@@ -29,6 +20,13 @@
             android:layout_height="match_parent">
 
         </FrameLayout>
+
+        <ImageView
+            android:id="@+id/backgroundView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            app:srcCompat="@android:color/background_light" />
 
     </FrameLayout>
 
