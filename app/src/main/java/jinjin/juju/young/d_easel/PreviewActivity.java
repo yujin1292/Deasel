@@ -259,6 +259,9 @@ public class PreviewActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 realm.beginTransaction();
                 Number maxValue = realm.where(ImageDB.class).max("id");
                 long pk = (maxValue != null) ? maxValue.longValue() + 1 : 0;
