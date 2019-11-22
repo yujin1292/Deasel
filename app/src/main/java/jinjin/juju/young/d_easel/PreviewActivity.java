@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ import java.io.ByteArrayOutputStream;
 
 import io.realm.Realm;
 
-public class PreviewActivity extends AppCompatActivity {
+public class PreviewActivity extends BaseActivity {
 
     ProgressDialog dlg ;
 
@@ -115,9 +116,18 @@ public class PreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
+
+
+        Log.d("List","Befor"+ getactList().toString());
+        getactList().add(this);
+
+        Log.d("List",getactList().toString());
+
+
         dlg = new ProgressDialog(this);
         dlg.setMessage("Loading...");
         dlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
 
         if (OpenCVLoader.initDebug()) {
             mIsOpenCVReady = true;
@@ -302,7 +312,11 @@ public class PreviewActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(PreviewActivity.this, MasterpieceActivity.class);
+
                 intent.putExtra("id", pk);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(intent);
 
 
@@ -315,6 +329,14 @@ public class PreviewActivity extends AppCompatActivity {
 
 
 
+    @Override
+    protected void onDestroy() {
+
+        Log.d("List","distroy"+ getactList().toString());
+        super.onDestroy();
+        getactList().remove(this);
+        realm.close();
+    }
 }
 
 

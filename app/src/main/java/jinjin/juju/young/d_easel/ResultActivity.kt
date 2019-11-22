@@ -12,6 +12,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Environment
+import android.util.Log
+import org.jetbrains.anko.act
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -19,7 +21,7 @@ import java.util.*
 
 
 
-class ResultActivity : AppCompatActivity() {
+class ResultActivity : BaseActivity() {
 
     val realm = Realm.getDefaultInstance()
 
@@ -60,6 +62,11 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
         val intent = intent
 
+        Log.d("List","before " + actList.toString())
+        actList.add(this)
+
+        Log.d("List",actList.toString())
+
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val id = getIntent().getIntExtra("id",-1)
 
@@ -85,10 +92,20 @@ class ResultActivity : AppCompatActivity() {
             saveBitmaptoPNG(lines,"/D-easel/my_painting","DEASEL_${id}")
 
             var intent: Intent = Intent(this,MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
 
         }
     }
+
+    override fun onDestroy() {
+
+        Log.d("List","distroy"+ actList.toString())
+        super.onDestroy()
+        actList.remove(this)
+        realm.close() //인스턴스 해제
+    }
+
 
 
 }

@@ -7,7 +7,8 @@ import org.opencv.android.Utils
 import org.opencv.core.Mat
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View.OnUnhandledKeyEventListener
-import androidx.core.graphics.scale
+import android.widget.ImageButton
+import androidx.core.graphics.*
 
 
 //그림 그리는 거를 관리하는 클래스
@@ -24,25 +25,16 @@ class DrawLine : View
     var isBrush:Boolean = false
     var isSpoid:Boolean = false
 
-    constructor(context: Context, rect: Rect):super(context){
-        bitmap = Bitmap.createBitmap(rect.width(), rect.height(),Bitmap.Config.ARGB_8888)
-        //setmatrix 이용해서
-        canvas = Canvas(bitmap)
 
-        path = Path()
-        line = Line()
-        line?.setPen()
-        this.rect = rect
-    }
 
-    constructor(context: Context, rect: Rect , edge: Bitmap):super(context){
+    constructor(context: Context, rect: Rect , edge: Bitmap,imageButton: ImageButton):super(context){
 
         bitmap = edge.scale(rect.width(),rect.height(),true)
         //setmatrix 이용해서
         canvas = Canvas(bitmap)
 
         path = Path()
-        line = Line()
+        line = Line(imageButton)
         line?.setPen()
         this.rect = rect
     }
@@ -63,25 +55,34 @@ class DrawLine : View
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         var x: Float = event!!.getX()
         var y: Float = event!!.getY()
-        when (event.action and MotionEvent.ACTION_MASK) {
-            MotionEvent.ACTION_DOWN -> {
-                path?.reset()
-                path?.moveTo(x, y)
-                oldX = x
-                oldY = y
-                return true
-            }
-            MotionEvent.ACTION_MOVE -> {
-                var dx: Float = Math.abs(x - oldX)
-                var dy: Float = Math.abs(y - oldY)
-                if (dx >= 4 || dy >= 4) {
-                    path?.quadTo(oldX, oldY, x, y)
+        if(isSpoid) {
+            var color:Int = bitmap?.getPixel(x.toInt(),y.toInt())!!
+            if(color.alpha == 0)
+                color = Color.WHITE
+            line?.setLineColor(color)
+            isSpoid = false
+        }
+        else{
+            when (event.action and MotionEvent.ACTION_MASK) {
+                MotionEvent.ACTION_DOWN -> {
+                    path?.reset()
+                    path?.moveTo(x, y)
                     oldX = x
                     oldY = y
-                    canvas?.drawPath(path, line?.paint)
+                    return true
                 }
-                invalidate()
-                return true
+                MotionEvent.ACTION_MOVE -> {
+                    var dx: Float = Math.abs(x - oldX)
+                    var dy: Float = Math.abs(y - oldY)
+                    if (dx >= 4 || dy >= 4) {
+                        path?.quadTo(oldX, oldY, x, y)
+                        oldX = x
+                        oldY = y
+                        canvas?.drawPath(path, line?.paint)
+                    }
+                    invalidate()
+                    return true
+                }
             }
         }
         return false

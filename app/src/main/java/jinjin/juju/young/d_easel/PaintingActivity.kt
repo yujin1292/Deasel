@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import android.widget.FrameLayout
@@ -26,7 +27,8 @@ import java.io.ByteArrayOutputStream
 import java.lang.Thread.sleep
 
 
-class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
+
+class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
     val DIALOG_DEFAULT_ID = 100
     var drawLine:DrawLine? = null
     var rect:Rect? = null
@@ -46,6 +48,10 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         setContentView(R.layout.activity_painting)
 
+
+        Log.d("List","before " + actList.toString())
+        actList.add(this)
+        Log.d("List",actList.toString())
 
 
         //zoom view
@@ -90,19 +96,28 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
         pen_setting_btn.setOnClickListener {
             drawLine?.line?.setPen()
         }
+        brush_setting_btn.setOnClickListener {
+            drawLine?.line?.setBrush()
+        }
 
-        pen_setting_btn.setOnLongClickListener{
+        color_check.setOnClickListener{
 
             ColorPickerDialog.newBuilder()
                 .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
-                .setAllowPresets(false)
+                .setAllowPresets(true)
                 .setDialogId(DIALOG_DEFAULT_ID)
-                .setColor(Color.BLACK)
-                .setShowAlphaSlider(true)
+                .setColor(drawLine?.line?.color!!)
+                .setShowAlphaSlider(false)
                 .show(this)
 
 
-            true
+        }
+
+        spoid_btn.setOnClickListener {
+
+            drawLine?.isSpoid = true
+
+
         }
 
 
@@ -178,7 +193,7 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
                 var temp2  = temp.copy(temp.config, true)
 
-                drawLine = DrawLine(this, rect!! , temp2 )
+                drawLine = DrawLine(this, rect!! , temp2,color_check )
 
                 //그리기 뷰를 그리기 뷰 레이아웃에 넣기 -- 이렇게 하면 그리기 뷰가 화면에 보여지게 됨.
                 Canvas.addView(drawLine)
@@ -192,7 +207,6 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     override fun onColorSelected(dialogId: Int, color: Int) {
         //Todo
-        color_check.setBackgroundColor(color)
         drawLine?.line?.setLineColor(color)
         drawLine?.line?.setLineAlpha(color.alpha)
     }
@@ -204,4 +218,12 @@ class PaintingActivity : AppCompatActivity(), ColorPickerDialogListener {
     override fun onDialogDismissed(dialogld: Int) {
         //Todo..
     }
+    override fun onDestroy() {
+
+        Log.d("List","distroy"+ actList.toString())
+        super.onDestroy()
+        actList.remove(this)
+        realm.close() //인스턴스 해제
+    }
+
 }

@@ -1,5 +1,6 @@
 package jinjin.juju.young.d_easel
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,7 @@ import org.jetbrains.anko.alert
 import org.jetbrains.anko.noButton
 import org.jetbrains.anko.yesButton
 
-class DelMasterpieceActivity : AppCompatActivity() {
+class DelMasterpieceActivity : BaseActivity() {
 
     var realm = Realm.getDefaultInstance()
 
@@ -24,6 +25,10 @@ class DelMasterpieceActivity : AppCompatActivity() {
         delMasterpieceList.adapter = gridAdapter
         delMasterpieceList.choiceMode = GridView.CHOICE_MODE_MULTIPLE
 
+
+        Log.d("List","before " + actList.toString())
+        actList.add(this)
+        Log.d("List",actList.toString())
 
         delBtn.setOnClickListener {
 
@@ -66,5 +71,14 @@ class DelMasterpieceActivity : AppCompatActivity() {
     fun getCheckedImage(): SparseBooleanArray {
         return  delMasterpieceList.checkedItemPositions
     }
+
+    override fun onDestroy() {
+
+        Log.d("List","distroy"+ actList.toString())
+        super.onDestroy()
+        actList.remove(this)
+        realm.close() //인스턴스 해제
+    }
+
 }
 

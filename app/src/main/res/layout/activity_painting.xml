@@ -36,42 +36,61 @@
         android:layout_height="match_parent"
         android:layout_weight="10"/>
 
-    <SeekBar
-        android:id="@+id/pen_thickness"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:progress="10" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/pen_setting_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:src="@android:drawable/ic_menu_edit" />
+
+        <Button
+            android:id="@+id/brush_setting_btn"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:text="br" />
 
         <ImageButton
             android:id="@+id/eraser_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:src="@android:drawable/btn_dialog" />
 
-        <ImageButton
-            android:id="@+id/color_check"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="239dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Space
-            android:layout_width="154dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0" />
+            <SeekBar
+                android:id="@+id/pen_thickness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/spoid_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="spoid" />
+
+                <ImageButton
+                    android:id="@+id/color_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@mipmap/ic_launcher_round" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

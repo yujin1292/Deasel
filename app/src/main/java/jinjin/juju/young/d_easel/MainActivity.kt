@@ -27,6 +27,7 @@ import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.FileProvider
@@ -36,7 +37,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     var realm : Realm = Realm.getDefaultInstance()
 
 
@@ -53,6 +54,10 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d("List","before " + actList.toString())
+       // actList.add(this)
+        Log.d("List",actList.toString())
 
 
 //  Declare a new thread to do a preference check
@@ -150,10 +155,12 @@ class MainActivity : AppCompatActivity() {
         return 0
     }
     override fun onDestroy() {
-        super.onDestroy()
-        realm.close()
-    }
 
+        Log.d("List","distroy"+ actList.toString())
+        super.onDestroy()
+        actList.remove(this)
+        realm.close() //인스턴스 해제
+    }
 
 
 
