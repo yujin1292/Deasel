@@ -26,10 +26,14 @@ import android.media.ExifInterface
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Environment
+import android.os.Handler
+import android.os.Message
 import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.FileProvider
 import org.jetbrains.anko.longToast
@@ -37,6 +41,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.thread
 
 
 class MainActivity : BaseActivity() {
@@ -52,7 +57,9 @@ class MainActivity : BaseActivity() {
     private var mCurrentPhotoPath: String = ""
     private var original: Bitmap? = null
 
-
+    var logoview: ImageView? = null
+    private var mHandler: Handler? = null
+    private var logonum: Int = 0
 
     @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +76,49 @@ class MainActivity : BaseActivity() {
         //bgm.prepare();
         bgm!!.isLooping = true
         bgm!!.start()
+
+        //logo thread
+        @SuppressLint("HandlerLeak")
+        mHandler = object:Handler(){
+            override fun handleMessage(msg: Message?) {
+
+                logoview = findViewById(R.id.logo_view)
+
+                if(logonum==0){
+                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel0))
+                }
+                else if(logonum==1){
+                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel1))
+                }
+                else if(logonum==2){
+                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel2))
+                }
+                else if(logonum==3){
+                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel3))
+                }
+                else if(logonum==4){
+                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel4))
+                }
+                else if(logonum==5){
+                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel5))
+                }
+            }
+        }
+
+        thread(start = true){
+            while(true){
+                Thread.sleep(100)
+                mHandler?.sendEmptyMessage(logonum)
+                logonum++
+                if(logonum>5){
+                    Thread.sleep(100)
+                    logonum=0
+                }
+            }
+        }
+
+
+
 
 //  Declare a new thread to do a preference check
         val t = Thread(Runnable {
@@ -133,25 +183,56 @@ class MainActivity : BaseActivity() {
         }
 
 
-
         //마스터 피스 엑티비티 호출
         go_master.setOnClickListener { view ->
-            val intent :Intent  = Intent (this, MasterpieceActivity::class.java)
+            val intent: Intent = Intent(this, MasterpieceActivity::class.java)
             startActivity(intent)
-
         }
-
-
-        jinjinjarajujuyoung.setOnClickListener{view->
-            Toast.makeText(this, "진진자라주주영", Toast.LENGTH_SHORT).show()
+        go_master.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action and MotionEvent.ACTION_MASK) {
+                MotionEvent.ACTION_DOWN -> {
+                    go_master.setBackgroundResource(R.drawable.blue_ppu)
+                    return@setOnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    go_master.setBackgroundResource(R.drawable.blue)
+                    go_master.performClick()
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
+        }
+        get_pic.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action and MotionEvent.ACTION_MASK) {
+                MotionEvent.ACTION_DOWN -> {
+                    get_pic.setBackgroundResource(R.drawable.yellow_ppu)
+                    return@setOnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    get_pic.setBackgroundResource(R.drawable.yellow)
+                    get_pic.performClick()
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
+        }
+        take_pic.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action and MotionEvent.ACTION_MASK) {
+                MotionEvent.ACTION_DOWN -> {
+                    take_pic.setBackgroundResource(R.drawable.red_ppu)
+                    return@setOnTouchListener true
+                }
+                MotionEvent.ACTION_UP -> {
+                    take_pic.setBackgroundResource(R.drawable.red)
+                    take_pic.performClick()
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
         }
 
 
         //ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
-
-
-
-
 
 
     }

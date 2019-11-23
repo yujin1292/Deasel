@@ -27,6 +27,7 @@ class MasterpieceActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_masterpiece)
 
+
         val realmResults = realm.where<ImageDB>().findAll()
         val gridAdapter = MasterpieceListAdapter(realmResults!!)
         MasterpieceList.adapter = gridAdapter

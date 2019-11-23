@@ -1,48 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sketchppappa"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="D-Easel"
-        android:textAlignment="center"
-        android:textSize="36sp"
-
-        android:textStyle="bold|italic" />
-
-    <ImageButton
-        android:id="@+id/jinjinjarajujuyoung"
-        android:layout_width="match_parent"
-        android:layout_height="385dp"
-        android:background="@drawable/vila"
-         />
-
-    <Button
-        android:id="@+id/take_pic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:onClick="TakePicClicked"
-        android:text="촬영" />
-
-    <Button
-        android:id="@+id/get_pic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="GetPicClicked"
-        android:text="갤러리" />
+    <ImageView
+        android:id="@+id/logo_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="45dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/take_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39"
+        app:srcCompat="@drawable/cpv_btn_background" />
 
     <Button
         android:id="@+id/go_master"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="내작품" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="98dp"
+        android:background="@drawable/blue"
+        android:text="Coloring Book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/get_pic"
+        app:layout_constraintTop_toTopOf="parent"
+        android:stateListAnimator="@null"
+        />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/get_pic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="347dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="122dp"
+        android:background="@drawable/yellow"
+        android:onClick="GetPicClicked"
+        android:stateListAnimator="@null"
+        android:text="Album"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/go_master"
+        app:layout_constraintStart_toEndOf="@+id/take_pic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/take_pic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="397dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="71dp"
+        android:background="@drawable/red"
+        android:onClick="TakePicClicked"
+        android:stateListAnimator="@null"
+        android:text="Camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/get_pic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
