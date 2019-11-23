@@ -23,6 +23,7 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.media.ExifInterface
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Environment
 import android.preference.PreferenceManager
@@ -63,6 +64,11 @@ class MainActivity : BaseActivity() {
        // actList.add(this)
         Log.d("List",actList.toString())
 
+
+        bgm = MediaPlayer.create(this, R.raw.bgm)
+        //bgm.prepare();
+        bgm!!.isLooping = true
+        bgm!!.start()
 
 //  Declare a new thread to do a preference check
         val t = Thread(Runnable {
@@ -160,7 +166,14 @@ class MainActivity : BaseActivity() {
     }
     override fun onDestroy() {
 
-        Log.d("List","distroy"+ actList.toString())
+        if (bgm != null) { // 어플 종료 시 배경음악도 stop
+            if (bgm!!.isPlaying) {
+                bgm!!.stop()
+                bgm!!.release()
+                bgm = null
+            }
+        }
+
         super.onDestroy()
         actList.remove(this)
         realm.close() //인스턴스 해제
@@ -386,9 +399,25 @@ class MainActivity : BaseActivity() {
         )
     }
 
+    override fun onUserLeaveHint() {
+        bgm!!.pause()
+        super.onUserLeaveHint()
+    }
+    override fun onResume() {
+        bgm!!.start()
+        super.onResume()
+    }
     override fun onBackPressed() {
         //2초 이내에 뒤로가기 버튼을 재 클릭 시 앱 종료
         if (System.currentTimeMillis() - lastTimeBackPressed < 2000) {
+            if (bgm != null) { // 어플 종료 시 배경음악도 stop
+                if (bgm!!.isPlaying) {
+                    bgm!!.stop()
+                    bgm!!.release()
+                    bgm = null
+                }
+            }
+
             finish()
             return
         }
@@ -399,7 +428,9 @@ class MainActivity : BaseActivity() {
         lastTimeBackPressed = System.currentTimeMillis()
     }
 
-
+    companion object {
+        private var bgm: MediaPlayer? = null
+    }
 }
 
 
