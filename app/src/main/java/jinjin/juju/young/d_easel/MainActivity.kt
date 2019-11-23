@@ -164,23 +164,6 @@ class MainActivity : BaseActivity() {
         }
         return 0
     }
-    override fun onDestroy() {
-
-        if (bgm != null) { // 어플 종료 시 배경음악도 stop
-            if (bgm!!.isPlaying) {
-                bgm!!.stop()
-                bgm!!.release()
-                bgm = null
-            }
-        }
-
-        super.onDestroy()
-        actList.remove(this)
-        realm.close() //인스턴스 해제
-    }
-
-
-
     //버튼 리스너
     fun TakePicClicked(view: View) {
         //카메라 열고 파일 처리.
@@ -237,8 +220,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
-
     fun goPreview(string: String) {
 
 
@@ -264,8 +245,6 @@ class MainActivity : BaseActivity() {
         startActivity(intent2)
 
     }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -374,7 +353,6 @@ class MainActivity : BaseActivity() {
 
 
     }
-
     fun getImagePathFromURI(contentUri: Uri?): String? {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(contentUri!!, proj, null, null, null)
@@ -388,8 +366,6 @@ class MainActivity : BaseActivity() {
             return imgPath
         }
     }
-
-
     fun rotateImage(source: Bitmap, angle: Int): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(angle.toFloat())
@@ -399,10 +375,7 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    override fun onUserLeaveHint() {
-        bgm!!.pause()
-        super.onUserLeaveHint()
-    }
+
     override fun onResume() {
         bgm!!.start()
         super.onResume()
@@ -427,9 +400,23 @@ class MainActivity : BaseActivity() {
 
         lastTimeBackPressed = System.currentTimeMillis()
     }
+    override fun onDestroy() {
+
+        if (bgm != null) { // 어플 종료 시 배경음악도 stop
+            if (bgm!!.isPlaying) {
+                bgm!!.stop()
+                bgm!!.release()
+                bgm = null
+            }
+        }
+
+        super.onDestroy()
+        actList.remove(this)
+        realm.close() //인스턴스 해제
+    }
 
     companion object {
-        private var bgm: MediaPlayer? = null
+       var bgm: MediaPlayer? = null
     }
 }
 
