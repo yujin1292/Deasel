@@ -31,6 +31,7 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.FileProvider
+import org.jetbrains.anko.longToast
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -38,6 +39,9 @@ import java.util.*
 
 
 class MainActivity : BaseActivity() {
+    private var lastTimeBackPressed: Long = 0
+
+
     var realm : Realm = Realm.getDefaultInstance()
 
 
@@ -381,6 +385,20 @@ class MainActivity : BaseActivity() {
             matrix, true
         )
     }
+
+    override fun onBackPressed() {
+        //2초 이내에 뒤로가기 버튼을 재 클릭 시 앱 종료
+        if (System.currentTimeMillis() - lastTimeBackPressed < 2000) {
+            finish()
+            return
+        }
+        //'뒤로' 버튼 한번 클릭 시 메시지
+        longToast(" '뒤로' 버튼을 한번 더 누르시면 앱이 종료됩니다.")
+        //lastTimeBackPressed에 '뒤로'버튼이 눌린 시간을 기록
+
+        lastTimeBackPressed = System.currentTimeMillis()
+    }
+
 
 }
 

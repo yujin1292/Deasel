@@ -9,10 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.SeekBar
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.alpha
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
@@ -25,9 +21,18 @@ import java.lang.Thread.sleep
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
-
+import android.net.Uri
+import android.os.Environment
+import android.widget.*
+import kotlinx.android.synthetic.main.activity_delmasterpiece.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.noButton
+import org.jetbrains.anko.yesButton
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
@@ -127,12 +132,13 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         var container = findViewById<FrameLayout>(R.id.Frame)
         result_btn.setOnClickListener {
+
             //뷰 내용 캡쳐해서 ByteArray로 변환
 
             //캡처 준비
             zoomView.zoomTo(1.0f,0f,0f)
             container.buildDrawingCache()
-           // sleep(3)
+
             //캡처
             var captureView = container.drawingCache
             //바이트 어레이로 변환
@@ -151,10 +157,22 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                 realm.commitTransaction()
             }
 
-            //결과 액티비티에 결과 이미지 전달
-            var intent:Intent = Intent(this,ResultActivity::class.java)
-            intent.putExtra("id", id)
-            startActivity(intent)
+
+
+            alert("갤러리에도 저장하시겠습니까?") {
+
+                positiveButton("네"){
+
+                    saveBitmaptoPNG(sendBitmap,"/D-easel/my_painting","DEASEL_${id}")
+                    longToast("갤러리에도 저장했습니다!")
+                }
+                negativeButton("아니요"){
+
+                    longToast("저장했습니다!")
+                }
+            }.show()
+
+
         }
 
 
@@ -275,10 +293,45 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         drawLine?.line?.setLineAlpha(color.alpha)
     }
 
+
+    fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) {
+        val format1 = SimpleDateFormat("MM-dd HH:mm:ss")
+        val time = Date()
+        val time1 = format1.format(time)
+
+        val ex_stroage = Environment.getExternalStorageDirectory().absolutePath
+        val folder_name = "/"+folder +"/"
+        val file_name  = name +"-"+time1+".png"
+        val string_path  = ex_stroage+folder_name
+
+        var file_path : File
+
+
+        val newBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
+        val canvas = Canvas(newBitmap)
+        canvas.drawColor(Color.WHITE)
+        canvas.drawBitmap(bitmap, 0f, 0f ,null)
+
+
+
+        file_path = File(string_path)
+        if( !file_path.isDirectory){
+            file_path.mkdirs()
+        }
+        val pathname = string_path + file_name
+        val out : FileOutputStream = FileOutputStream(pathname)
+        newBitmap?.compress(Bitmap.CompressFormat.PNG, 100, out) // out 위치에 PNG로 저장
+        out.close()
+        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://"+pathname)))
+
+    }
+
     /*
     * @brif : Color picker dismiss 호출되는 리스너
     * @param dialogld : 종료된 대화상자 고유아이디
     */
+
+
     override fun onDialogDismissed(dialogld: Int) {
         //Todo..
     }
@@ -290,4 +343,17 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         realm.close() //인스턴스 해제
     }
 
+    override fun onBackPressed() {
+
+        alert(" 정말 나가시겠습니까? ") {
+
+            positiveButton("네"){
+                super.onBackPressed()
+            }
+            negativeButton("아니요"){
+
+            }
+        }.show()
+
+    }
 }

@@ -18,7 +18,6 @@
         <activity android:name=".DelMasterpieceActivity"/>
         <activity android:name=".PaintingActivity" />
         <activity android:name=".MasterpieceActivity" />
-        <activity android:name=".ResultActivity" />
         <activity android:name=".PreviewActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

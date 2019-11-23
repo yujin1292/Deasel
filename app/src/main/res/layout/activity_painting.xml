@@ -68,7 +68,7 @@
                 android:id="@+id/pen_thickness"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:max="51"
+                android:max="50"
                 android:progress="10" />
 
             <LinearLayout
