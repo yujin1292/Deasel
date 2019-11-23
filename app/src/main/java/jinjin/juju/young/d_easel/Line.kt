@@ -11,14 +11,17 @@ class Line { // 선에 대한 정보
     var width: Float = 10F
     var alpha: Int = 255
     var imageButton:ImageButton? = null
+
     constructor(imageButton: ImageButton){
         this.imageButton = imageButton
     }
+
     fun setLineColor(color: Int) {
         this.color = color
         this.alpha = 255
         this.setLine()
-        imageButton?.setBackgroundColor(color)
+        //imageButton?.setBackgroundColor(color)
+        imageButton?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
     }
 
@@ -33,6 +36,7 @@ class Line { // 선에 대한 정보
     }
 
     fun setPen() {
+
         paint = Paint()
         alpha = 255
         paint?.isAntiAlias = true
@@ -43,6 +47,7 @@ class Line { // 선에 대한 정보
         paint?.strokeJoin = Paint.Join.ROUND
         paint?.style = Paint.Style.STROKE
         paint?.strokeCap = Paint.Cap.ROUND
+
     }
 
     fun setLine() {
@@ -64,7 +69,7 @@ class Line { // 선에 대한 정보
         paint?.isAntiAlias = true
     }
     fun setErase() {
-        paint?.setXfermode(PorterDuffXfermode(PorterDuff.Mode.CLEAR))
+        paint?.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
 }

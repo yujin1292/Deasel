@@ -3,10 +3,7 @@ import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.Rect
+import android.graphics.*
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +22,11 @@ import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_painting.*
 import java.io.ByteArrayOutputStream
 import java.lang.Thread.sleep
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 
@@ -68,7 +70,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         val zoomView = ZoomView(this)
         zoomView.addView(v)
         zoomView.layoutParams = layoutParams
-        zoomView.maxZoom = 4f // 줌 Max 배율 설정  1f 로 설정하면 줌 안됩니다.
+        zoomView.maxZoom = 5f // 줌 Max 배율 설정  1f 로 설정하면 줌 안됩니다.
 
         val zoomFrame = findViewById<View>(R.id.Frame) as FrameLayout
         zoomFrame.addView(zoomView)
@@ -83,6 +85,8 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         //id로 db에서 찾아냄
         canvasImage = realm.where<ImageDB>().equalTo("id",id).findFirst()!!
+
+        color_check.scaleType = ImageView.ScaleType.CENTER
 
 
         //이미지를 가져와서 바꿈
@@ -157,7 +161,67 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         pen_thickness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+
                 drawLine?.line?.setLineWidth(p1.toFloat())
+
+                when (p1){
+                    1->color_check.setImageDrawable(getDrawable(R.drawable.one))
+                    2->color_check.setImageDrawable(getDrawable(R.drawable.two))
+                    3->color_check.setImageDrawable(getDrawable(R.drawable.three))
+                    4->color_check.setImageDrawable(getDrawable(R.drawable.four))
+                    5->color_check.setImageDrawable(getDrawable(R.drawable.five))
+                    6->color_check.setImageDrawable(getDrawable(R.drawable.six))
+                    7->color_check.setImageDrawable(getDrawable(R.drawable.seven))
+                    8->color_check.setImageDrawable(getDrawable(R.drawable.eight))
+                    9->color_check.setImageDrawable(getDrawable(R.drawable.nine))
+
+                    10->color_check.setImageDrawable(getDrawable(R.drawable.ten))
+                    11->color_check.setImageDrawable(getDrawable(R.drawable.eleven))
+                    12->color_check.setImageDrawable(getDrawable(R.drawable.twleve))
+                    13->color_check.setImageDrawable(getDrawable(R.drawable.thirteen))
+                    14->color_check.setImageDrawable(getDrawable(R.drawable.fourteen))
+                    15->color_check.setImageDrawable(getDrawable(R.drawable.fifteen))
+                    16->color_check.setImageDrawable(getDrawable(R.drawable.sixteen))
+                    17->color_check.setImageDrawable(getDrawable(R.drawable.seventeen))
+                    18->color_check.setImageDrawable(getDrawable(R.drawable.eighteen))
+                    19->color_check.setImageDrawable(getDrawable(R.drawable.nineteen))
+
+                    21->color_check.setImageDrawable(getDrawable(R.drawable.twentyone))
+                    22->color_check.setImageDrawable(getDrawable(R.drawable.twentytwo))
+                    23->color_check.setImageDrawable(getDrawable(R.drawable.twentytrhee))
+                    24->color_check.setImageDrawable(getDrawable(R.drawable.twentyfour))
+                    25->color_check.setImageDrawable(getDrawable(R.drawable.twentyfive))
+                    26->color_check.setImageDrawable(getDrawable(R.drawable.twentysix))
+                    27->color_check.setImageDrawable(getDrawable(R.drawable.twentyseven))
+                    28->color_check.setImageDrawable(getDrawable(R.drawable.twentyeight))
+                    29->color_check.setImageDrawable(getDrawable(R.drawable.twentynine))
+
+                    30->color_check.setImageDrawable(getDrawable(R.drawable.thirty))
+                    31 ->color_check.setImageDrawable(getDrawable(R.drawable.thirtyone))
+                    32->color_check.setImageDrawable(getDrawable(R.drawable.thirtytwo))
+                    33->color_check.setImageDrawable(getDrawable(R.drawable.thirtythree))
+                    34->color_check.setImageDrawable(getDrawable(R.drawable.thirtyfour))
+                    35->color_check.setImageDrawable(getDrawable(R.drawable.thryfive))
+                    36->color_check.setImageDrawable(getDrawable(R.drawable.thirtysix))
+                    37->color_check.setImageDrawable(getDrawable(R.drawable.thirtyseven))
+                    38->color_check.setImageDrawable(getDrawable(R.drawable.thirtyeight))
+                    39->color_check.setImageDrawable(getDrawable(R.drawable.thirtynine))
+
+                    40->color_check.setImageDrawable(getDrawable(R.drawable.fourty))
+                    41->color_check.setImageDrawable(getDrawable(R.drawable.fourtyone))
+                    42->color_check.setImageDrawable(getDrawable(R.drawable.fourty))
+                    43->color_check.setImageDrawable(getDrawable(R.drawable.fourtythree))
+                    44->color_check.setImageDrawable(getDrawable(R.drawable.fourtyfour))
+                    45->color_check.setImageDrawable(getDrawable(R.drawable.fourtyfive))
+                    46->color_check.setImageDrawable(getDrawable(R.drawable.fourtysix))
+                    47->color_check.setImageDrawable(getDrawable(R.drawable.fourtyseven))
+                    48->color_check.setImageDrawable(getDrawable(R.drawable.fourtyeight))
+                    49->color_check.setImageDrawable(getDrawable(R.drawable.fourtynine))
+                    50->color_check.setImageDrawable(getDrawable(R.drawable.fifty))
+                }
+
+
+
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {
             }

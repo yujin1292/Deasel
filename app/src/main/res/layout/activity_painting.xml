@@ -38,7 +38,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="75dp"
         android:orientation="horizontal">
 
         <ImageButton
@@ -67,7 +67,8 @@
             <SeekBar
                 android:id="@+id/pen_thickness"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:max="51"
                 android:progress="10" />
 
             <LinearLayout
@@ -86,7 +87,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@mipmap/ic_launcher_round" />
+                    android:scaleType="center"
+                    android:src="@drawable/ten" />
 
             </LinearLayout>
 
