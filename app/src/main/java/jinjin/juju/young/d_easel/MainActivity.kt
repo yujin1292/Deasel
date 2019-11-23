@@ -67,10 +67,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d("List","before " + actList.toString())
-       // actList.add(this)
-        Log.d("List",actList.toString())
-
 
         bgm = MediaPlayer.create(this, R.raw.bgm)
         //bgm.prepare();
@@ -107,11 +103,11 @@ class MainActivity : BaseActivity() {
 
         thread(start = true){
             while(true){
-                Thread.sleep(100)
+                Thread.sleep(150)
                 mHandler?.sendEmptyMessage(logonum)
                 logonum++
                 if(logonum>5){
-                    Thread.sleep(100)
+                    Thread.sleep(500)
                     logonum=0
                 }
             }
@@ -120,7 +116,7 @@ class MainActivity : BaseActivity() {
 
 
 
-//  Declare a new thread to do a preference check
+        // Intro thread
         val t = Thread(Runnable {
             //  Initialize SharedPreferences
             val getPrefs = PreferenceManager
@@ -230,9 +226,6 @@ class MainActivity : BaseActivity() {
             }
             return@setOnTouchListener false
         }
-
-
-        //ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
 
 
     }

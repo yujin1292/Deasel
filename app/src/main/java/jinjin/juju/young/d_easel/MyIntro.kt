@@ -18,37 +18,38 @@ class MyIntro : AppIntro2() {
         val first_fragment = AppIntroFragment.newInstance(
             "직접 찍은 사진으로 그림을 그려보세요!",
             "카메라버튼을 누르고 사진을 촬영하거나  갤러리 버튼을 눌러보세요",
-            R.drawable.paper,
-            Color.parseColor("#3F51B5")
+            R.drawable.temp ,
+            Color.parseColor("#969696")
         )
         val second_fragment = AppIntroFragment.newInstance(
             "원하는 배경화면을 선택하세요",
             "숫자가 커질수록 상세합니다!",
-            R.drawable.paper,
-            Color.parseColor("#3F51B5")
+            R.drawable.vila,
+            Color.parseColor("#969696")
         )
         val third_fragment = AppIntroFragment.newInstance(
             "내 작품에서 그림을 선택해 색칠하세요!",
             "second page",
-            R.drawable.b,
-            Color.parseColor("#3F51B5")
+            R.drawable.deasel5,
+            Color.parseColor("#969696")
         )
         val fourth_fragment = AppIntroFragment.newInstance(
             "꾹 누르면 삭제할수 있어요",
             "third page\n접근을 허용해주세요!",
-            R.drawable.vila,
-            Color.parseColor("#3F51B5")
+            R.drawable.deasel5,
+            Color.parseColor("#969696")
         )
         val fifth_fragment = AppIntroFragment.newInstance(
             "이제 접근을 허용해주세요",
             "Show me what you got",
-            R.drawable.icon,
-            Color.parseColor("#3F51B5")
+            R.drawable.deasel5,
+            Color.parseColor("#969696")
         )
 
 
         // Add your slide's fragments here
         // AppIntro will automatically generate the dots indicator and buttons.
+        addSlide(help_first.newInstance(R.layout.help_first_layout))
         addSlide(first_fragment)
         addSlide(second_fragment)
         addSlide(third_fragment)
@@ -64,7 +65,7 @@ class MyIntro : AppIntro2() {
         // OPTIONAL METHODS
 
         // Override bar/separator color
-        setBarColor(Color.parseColor("#3F51B5"))
+        setBarColor(Color.parseColor("#51E7DCFF"))
         //setSeparatorColor(Color.parseColor("#2196F3"));
 
         // SHOW or HIDE the statusbar
