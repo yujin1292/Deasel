@@ -26,7 +26,9 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.jetbrains.anko.longToast
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
@@ -35,6 +37,8 @@ import kotlin.concurrent.thread
 class MainActivity : BaseActivity() {
     private var lastTimeBackPressed: Long = 0
 
+
+    var tempuri : Uri? = null
 
     var realm : Realm = Realm.getDefaultInstance()
 
@@ -363,18 +367,19 @@ class MainActivity : BaseActivity() {
 
                 var cropImage_ =  original!!.copy(original!!.config, true)
 
-                val temp = getImageUri(this, cropImage_)
-
-             //   CropImage.activity(temp).start(this)
 
 
+                tempuri =getImageUri(this, cropImage_)
 
-                CropImage.activity(temp)
+
+
+
+                CropImage.activity(tempuri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setBorderLineColor(Color.WHITE)
                     .setGuidelinesColor(Color.WHITE)
                     .setActivityMenuIconColor(Color.WHITE)
-                    .setRotationDegrees(15)
+                    .setRotationDegrees(90)
                     .start(this)
 
 
@@ -413,16 +418,15 @@ class MainActivity : BaseActivity() {
 
                     var cropImage_ =  original!!.copy(original!!.config, true)
 
-                    val temp = getImageUri(this, cropImage_)
 
+                    tempuri =getImageUri(this, cropImage_)
 
-
-                    CropImage.activity(temp)
+                    CropImage.activity(tempuri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setBorderLineColor(Color.WHITE)
                         .setGuidelinesColor(Color.WHITE)
                         .setActivityMenuIconColor(Color.WHITE)
-                        .setRotationDegrees(15)
+                        .setRotationDegrees(90)
                         .start(this)
 
 
@@ -446,6 +450,9 @@ class MainActivity : BaseActivity() {
                 val options = BitmapFactory.Options()
                 options.inSampleSize = 2
                 original = BitmapFactory.decodeFile(path, options)
+
+                val file = File(tempuri?.path)
+                file.delete()
 
 
                 goPreview()
@@ -471,6 +478,7 @@ class MainActivity : BaseActivity() {
             return imgPath
         }
     }
+
     fun rotateImage(source: Bitmap, angle: Int): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(angle.toFloat())
