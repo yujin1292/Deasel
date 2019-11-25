@@ -391,7 +391,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                 "share_image_" + System.currentTimeMillis() + ".png"
             )
             val out = FileOutputStream(file)
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
             out.close()
             bmpUri = FileProvider.getUriForFile(this,"jinjin.juju.young.d_easel.fileprovider",file)
         } catch (e: IOException) {
@@ -400,6 +399,5 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         return bmpUri
     }
-
 
 }
