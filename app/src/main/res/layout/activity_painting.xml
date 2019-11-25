@@ -18,6 +18,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="0" />
 
+        <Button
+            android:id="@+id/insta_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="instagram" />
+
         <ImageButton
             android:id="@+id/result_btn"
             android:layout_width="110dp"

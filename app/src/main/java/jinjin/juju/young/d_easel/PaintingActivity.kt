@@ -18,15 +18,21 @@ import java.io.ByteArrayOutputStream
 import android.net.Uri
 import android.os.Environment
 import android.widget.*
+import androidx.core.content.FileProvider
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.longToast
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.provider.MediaStore
 
 
 class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
+
     val DIALOG_DEFAULT_ID = 100
     var drawLine:DrawLine? = null
     var rect:Rect? = null
@@ -46,11 +52,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         setContentView(R.layout.activity_painting)
 
-
-        Log.d("List","before " + actList.toString())
         actList.add(this)
-        Log.d("List",actList.toString())
-
 
         //zoom view
         val v = (getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
@@ -71,9 +73,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         val zoomFrame = findViewById<View>(R.id.Frame) as FrameLayout
         zoomFrame.addView(zoomView)
 
-        //zoom veiw
-
-
 
         //intent로 이미지 정보 전달받아서 배경에 넣기
         val intent = intent
@@ -88,7 +87,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         //이미지를 가져와서 바꿈
         backgroundimage = BitmapFactory.decodeByteArray(canvasImage.background, 0, canvasImage.background.size)
         background = findViewById<ImageView>(R.id.backgroundView)
-        //backgroundView.setImageBitmap(backgroundimage)
+
 
         eraser_btn.setOnClickListener {
             drawLine?.line?.setErase()
@@ -99,7 +98,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         brush_setting_btn.setOnClickListener {
             drawLine?.line?.setBrush()
         }
-
         color_check.setOnClickListener{
 
             ColorPickerDialog.newBuilder()
@@ -112,15 +110,9 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
 
         }
-
         spoid_btn.setOnClickListener {
-
             drawLine?.isSpoid = true
-
-
         }
-
-
         var container = findViewById<FrameLayout>(R.id.Frame)
         result_btn.setOnClickListener {
 
@@ -165,9 +157,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
 
         }
-
-
-
         pen_thickness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
 
@@ -239,10 +228,27 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             }
 
         })
+        insta_btn.setOnClickListener {
+            //뷰 내용 캡쳐해서 ByteArray로 변환
 
+            //캡처 준비
+            zoomView.zoomTo(1.0f,0f,0f)
+            container.buildDrawingCache()
+
+            //캡처
+            var captureView = container.drawingCache
+            //바이트 어레이로 변환
+            val sendBitmap = captureView
+            val stream = ByteArrayOutputStream()
+            sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val byteArray = stream.toByteArray()
+
+
+            val filename = saveBitmaptoPNG(sendBitmap,"/D-easel/my_painting","DEASEL_${id}")
+
+            goInsta(filename)
+        }
     }
-
-
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 
@@ -276,16 +282,12 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         super.onWindowFocusChanged(hasFocus)
     }
-
-
     override fun onColorSelected(dialogId: Int, color: Int) {
         //Todo
         drawLine?.line?.setLineColor(color)
         drawLine?.line?.setLineAlpha(color.alpha)
     }
-
-
-    fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) {
+    fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) : String {
         val format1 = SimpleDateFormat("MM-dd HH:mm:ss")
         val time = Date()
         val time1 = format1.format(time)
@@ -315,14 +317,9 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         out.close()
         sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://"+pathname)))
 
+        return pathname
+
     }
-
-    /*
-    * @brif : Color picker dismiss 호출되는 리스너
-    * @param dialogld : 종료된 대화상자 고유아이디
-    */
-
-
     override fun onDialogDismissed(dialogld: Int) {
         //Todo..
     }
@@ -333,7 +330,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         actList.remove(this)
         realm.close() //인스턴스 해제
     }
-
     override fun onBackPressed() {
 
         alert(" 정말 나가시겠습니까? ") {
@@ -346,5 +342,28 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             }
         }.show()
 
+    }
+    private fun goInsta(imagePath:String){
+         var intent = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
+        if (intent != null)
+        {
+
+            var shareIntent = Intent()
+            shareIntent.setAction(Intent.ACTION_SEND)
+            shareIntent.setPackage("com.instagram.android")
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), imagePath, "I am Happy", "Share happy !")));
+            shareIntent.setType("image/jpeg")
+
+            startActivity(shareIntent)
+        }
+        else
+        {
+            // bring user to the market to download the app.
+            // or let them choose an app?
+            intent = Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("market://details?id="+"com.instagram.android"));
+            startActivity(intent);
+        }
     }
 }

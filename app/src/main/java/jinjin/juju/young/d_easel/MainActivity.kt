@@ -374,6 +374,7 @@ class MainActivity : BaseActivity() {
                     .setBorderLineColor(Color.WHITE)
                     .setGuidelinesColor(Color.WHITE)
                     .setActivityMenuIconColor(Color.WHITE)
+                    .setRotationDegrees(15)
                     .start(this)
 
 
@@ -414,22 +415,14 @@ class MainActivity : BaseActivity() {
 
                     val temp = getImageUri(this, cropImage_)
 
-                   // CropImage.activity(temp).start(this)
 
-                /*    CropImage.activity(temp)
+
+                    CropImage.activity(temp)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setBorderLineColor(Color.WHITE)
                         .setGuidelinesColor(Color.WHITE)
                         .setActivityMenuIconColor(Color.WHITE)
-                        .start(this)
-*/
-
-
-
-                    CropImage.activity(temp)
-                        .setActivityMenuIconColor(Color.GREEN)
-                        .setAllowRotation(true)
-                        .setActivityTitle("Title")
+                        .setRotationDegrees(15)
                         .start(this)
 
 
