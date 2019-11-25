@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.graphics.Matrix
+import android.graphics.*
 import android.os.Bundle
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -370,12 +367,16 @@ class MainActivity : BaseActivity() {
 
              //   CropImage.activity(temp).start(this)
 
+
+
                 CropImage.activity(temp)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setBorderLineColor(Color.WHITE)
                     .setGuidelinesColor(Color.WHITE)
                     .setActivityMenuIconColor(Color.WHITE)
                     .start(this)
+
+
 
             }
         }
@@ -415,14 +416,21 @@ class MainActivity : BaseActivity() {
 
                    // CropImage.activity(temp).start(this)
 
-                    CropImage.activity(temp)
+                /*    CropImage.activity(temp)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setBorderLineColor(Color.WHITE)
                         .setGuidelinesColor(Color.WHITE)
                         .setActivityMenuIconColor(Color.WHITE)
                         .start(this)
+*/
 
 
+
+                    CropImage.activity(temp)
+                        .setActivityMenuIconColor(Color.GREEN)
+                        .setAllowRotation(true)
+                        .setActivityTitle("Title")
+                        .start(this)
 
 
                 }
