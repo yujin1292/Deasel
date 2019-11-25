@@ -376,9 +376,9 @@ class MainActivity : BaseActivity() {
                 original = rotatedBitmap
 
 
-                var cropImage =  original!!.copy(original!!.config, true)
+                var cropImage_ =  original!!.copy(original!!.config, true)
 
-                val temp = getImageUri(this, cropImage)
+                val temp = getImageUri(this, cropImage_)
 
              //   CropImage.activity(temp).start(this)
 
@@ -421,9 +421,9 @@ class MainActivity : BaseActivity() {
 
                     original = rotatedBitmap
 
-                    var cropImage =  original!!.copy(original!!.config, true)
+                    var cropImage_ =  original!!.copy(original!!.config, true)
 
-                    val temp = getImageUri(this, cropImage)
+                    val temp = getImageUri(this, cropImage_)
 
                    // CropImage.activity(temp).start(this)
 
