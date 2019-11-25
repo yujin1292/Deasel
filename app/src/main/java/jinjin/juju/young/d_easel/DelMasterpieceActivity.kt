@@ -3,7 +3,6 @@ import android.os.Bundle
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.widget.GridView
-import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_delmasterpiece.*

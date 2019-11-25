@@ -10,12 +10,9 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_masterpiece.*
-import kotlinx.android.synthetic.main.selection.*
-import org.jetbrains.anko.act
 
 
 class MasterpieceActivity : BaseActivity() {

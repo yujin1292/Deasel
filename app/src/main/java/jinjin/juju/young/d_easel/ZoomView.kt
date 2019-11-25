@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.Matrix
 import android.graphics.Paint
 import android.view.MotionEvent
-import android.view.View
 import android.widget.FrameLayout
 
 /**

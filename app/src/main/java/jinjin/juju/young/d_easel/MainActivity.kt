@@ -1,28 +1,18 @@
 package jinjin.juju.young.d_easel
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Matrix
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import io.realm.Realm
 import io.realm.kotlin.where
-
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.ByteArrayOutputStream
-import android.preference.PreferenceManager.getDefaultSharedPreferences
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.media.ExifInterface
 import android.media.MediaPlayer
 import android.net.Uri
@@ -31,11 +21,9 @@ import android.os.Handler
 import android.os.Message
 import android.preference.PreferenceManager
 import android.provider.MediaStore
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.FileProvider
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -149,7 +137,6 @@ class MainActivity : BaseActivity() {
 
         // Start the thread
         t.start()
-
 
 
         realm = Realm.getDefaultInstance()
@@ -311,6 +298,7 @@ class MainActivity : BaseActivity() {
         startActivity(intent2)
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

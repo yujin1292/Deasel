@@ -3,10 +3,6 @@ import android.content.Context
 import android.graphics.*
 import android.view.MotionEvent
 import android.view.View
-import org.opencv.android.Utils
-import org.opencv.core.Mat
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.View.OnUnhandledKeyEventListener
 import android.widget.ImageButton
 import androidx.core.graphics.*
 

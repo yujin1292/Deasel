@@ -1,7 +1,5 @@
 package jinjin.juju.young.d_easel;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
