@@ -335,11 +335,6 @@ public class PreviewActivity extends BaseActivity {
         getactList().remove(this);
         realm.close();
     }
-
-
-
 }
-
-
 
 
