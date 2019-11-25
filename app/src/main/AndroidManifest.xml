@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-feature android:name="android.hardware.camera2" />
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -14,8 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MyIntro"></activity>
-        <activity android:name=".DelMasterpieceActivity"/>
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+
+        <activity android:name=".MyIntro" />
+        <activity android:name=".DelMasterpieceActivity" />
         <activity android:name=".PaintingActivity" />
         <activity android:name=".MasterpieceActivity" />
         <activity android:name=".PreviewActivity" />

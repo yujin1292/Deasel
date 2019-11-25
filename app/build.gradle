@@ -48,6 +48,8 @@ dependencies {
     implementation 'io.realm:android-adapters:2.1.1'
     implementation 'com.jaredrummler:colorpicker:1.0.1'
     implementation 'com.github.AppIntro:AppIntro:4.2.3'
+
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
     implementation "org.jetbrains.anko:anko-commons:0.10.8"
     implementation "org.jetbrains.anko:anko-design:0.10.8"
 }

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.Matrix
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -36,6 +37,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.FileProvider
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import org.jetbrains.anko.longToast
 import java.io.File
 import java.io.IOException
@@ -50,7 +53,7 @@ class MainActivity : BaseActivity() {
 
     var realm : Realm = Realm.getDefaultInstance()
 
-
+    private val  REQUEST_IMAGE_CROP = 789
     private val REQUEST_SELECT_IMAGE = 456
     private val REQUEST_TAKE_PHOTO = 123
 
@@ -294,27 +297,16 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun goPreview(string: String) {
+    fun goPreview() {
 
 
         val intent2 = Intent(this, PreviewActivity::class.java)
-        intent2.putExtra("where", string)
 
-        if(string.equals("From Camera")){
 
-            val stream2 = ByteArrayOutputStream()
-            original?.compress(Bitmap.CompressFormat.JPEG, 60, stream2)
-            val bytes2 = stream2.toByteArray()
-            intent2.putExtra("image", bytes2)
-
-        }
-        else{
-
-            val stream2 = ByteArrayOutputStream()
-            original?.compress(Bitmap.CompressFormat.JPEG, 60, stream2)
-            val bytes2 = stream2.toByteArray()
-            intent2.putExtra("image", bytes2)
-        }
+        val stream2 = ByteArrayOutputStream()
+        original?.compress(Bitmap.CompressFormat.JPEG, 60, stream2)
+        val bytes2 = stream2.toByteArray()
+        intent2.putExtra("image", bytes2)
 
         startActivity(intent2)
 
@@ -343,8 +335,9 @@ class MainActivity : BaseActivity() {
                 ExifInterface.ORIENTATION_NORMAL -> rotatedBitmap2 = temp!!
 
                 else -> rotatedBitmap2 = temp!!
-            }
 
+
+            }
 
             // 저장명 설정
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -354,13 +347,13 @@ class MainActivity : BaseActivity() {
             val uri = Uri.parse(imageSaveUri)
             sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,uri))
 
-            //저장한 이미지 다시가져오기
+            // 저장한 이미지 다시가져오기
             val path = getImagePathFromURI(uri)
             val options = BitmapFactory.Options()
             options.inSampleSize = 2
             original = BitmapFactory.decodeFile(path, options)
 
-            //회전 확인
+            // 회전 확인
             val ei : ExifInterface = ExifInterface(path)
             val orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION , ExifInterface.ORIENTATION_UNDEFINED)
             var rotatedBitmap : Bitmap? = null
@@ -381,7 +374,21 @@ class MainActivity : BaseActivity() {
                 }
 
                 original = rotatedBitmap
-                goPreview("From Camera")
+
+
+                var cropImage =  original!!.copy(original!!.config, true)
+
+                val temp = getImageUri(this, cropImage)
+
+             //   CropImage.activity(temp).start(this)
+
+                CropImage.activity(temp)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setBorderLineColor(Color.WHITE)
+                    .setGuidelinesColor(Color.WHITE)
+                    .setActivityMenuIconColor(Color.WHITE)
+                    .start(this)
+
             }
         }
 
@@ -414,7 +421,22 @@ class MainActivity : BaseActivity() {
 
                     original = rotatedBitmap
 
-                    goPreview("From Camera")
+                    var cropImage =  original!!.copy(original!!.config, true)
+
+                    val temp = getImageUri(this, cropImage)
+
+                   // CropImage.activity(temp).start(this)
+
+                    CropImage.activity(temp)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setBorderLineColor(Color.WHITE)
+                        .setGuidelinesColor(Color.WHITE)
+                        .setActivityMenuIconColor(Color.WHITE)
+                        .start(this)
+
+
+
+
                 }
 
 
@@ -424,6 +446,26 @@ class MainActivity : BaseActivity() {
 
         }
 
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
+            var result = CropImage.getActivityResult(data)
+
+
+            if (resultCode == RESULT_OK) {
+                var resultUri = result.getUri()
+                val path = getImagePathFromURI(resultUri)
+                val options = BitmapFactory.Options()
+                options.inSampleSize = 2
+                original = BitmapFactory.decodeFile(path, options)
+
+
+                goPreview()
+            }
+            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                var error = result.getError()
+
+        }
+    }
 
 
     }
@@ -447,6 +489,14 @@ class MainActivity : BaseActivity() {
             source, 0, 0, source.width, source.height,
             matrix, true
         )
+    }
+
+
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
 
 
