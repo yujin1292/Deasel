@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/coloring0" />
+        app:srcCompat="@drawable/cb0" />
 
     <GridView
         android:id="@+id/MasterpieceList"

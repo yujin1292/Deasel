@@ -47,26 +47,41 @@ class MasterpieceActivity : BaseActivity() {
                 var logoview = findViewById<ImageView>(R.id.coloring_logo)
 
                 when (logonum) {
-                    0 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring0))
-                    1 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring1))
-                    2 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring2))
-                    3 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring3))
-                    4 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring4))
-                    5 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring5))
-                    6 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring6))
+                    0 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb0))
+                    1 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb1))
+                    2 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb2))
+                    3 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb3))
+                    4 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb4))
+                    5 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb5))
+                    6 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb6))
+                    7 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb7))
+                    8 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb8))
+                    9 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb9))
                 }
             }
         }
 
         thread(start = true){
+
+            var forward :Boolean  = true
             while(true){
                 Thread.sleep(100)
                 mHandler?.sendEmptyMessage(logonum)
-                logonum++
-                if(logonum>6){
-                    Thread.sleep(100)
-                    logonum=0
+                if(forward){
+                    logonum++
+                    if(logonum>9){ //logonum == 10
+                        Thread.sleep(100)
+                        forward = false
+                    }
                 }
+                else{
+                    logonum--
+                    if(logonum<0){ //logonum == -1 되면
+                        Thread.sleep(100)
+                        forward = true
+                    }
+                }
+
             }
         }
 

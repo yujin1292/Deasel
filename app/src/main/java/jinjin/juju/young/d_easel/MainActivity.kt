@@ -2,8 +2,6 @@ package jinjin.juju.young.d_easel
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.PendingIntent.getActivity
-import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import android.os.Bundle
@@ -27,10 +25,10 @@ import androidx.core.content.FileProvider
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.thread
@@ -39,6 +37,8 @@ import kotlin.concurrent.thread
 class MainActivity : BaseActivity() {
 
     private var lastTimeBackPressed: Long = 0
+
+    var music:Boolean = false
 
 
     var tempuri : Uri? = null
@@ -66,6 +66,7 @@ class MainActivity : BaseActivity() {
         bgm = MediaPlayer.create(this, R.raw.bgm)
         //bgm.prepare();
         bgm!!.isLooping = true
+
         bgm!!.start()
 
         //logo thread
@@ -97,13 +98,25 @@ class MainActivity : BaseActivity() {
         }
 
         thread(start = true){
+
+            var forward :Boolean  = true
+
             while(true){
                 Thread.sleep(150)
                 mHandler?.sendEmptyMessage(logonum)
-                logonum++
-                if(logonum>5){
-                    Thread.sleep(500)
-                    logonum=0
+                if(forward){
+                    logonum++
+                    if(logonum>5){
+                        Thread.sleep(100)
+                        forward = false
+                    }
+                }
+                else{
+                    logonum--
+                    if(logonum<0){ //logonum == -1 되면
+                        Thread.sleep(100)
+                        forward = true
+                    }
                 }
             }
         }
@@ -221,6 +234,25 @@ class MainActivity : BaseActivity() {
             return@setOnTouchListener false
         }
 
+
+
+        music_btn.setOnClickListener{
+            if(music){
+
+                bgm!!.start()
+                music = !music
+                music_btn.setBackgroundColor(Color.parseColor("#D8FF4848"))
+                toast("BGM ON")
+            }
+            else{
+
+                bgm!!.pause()
+                music = !music
+
+                music_btn.setBackgroundColor(Color.parseColor("#D84860FF"))
+                toast("BGM OFF")
+            }
+        }
 
     }
 
