@@ -2,6 +2,7 @@ package jinjin.juju.young.d_easel
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
@@ -18,6 +19,7 @@ import android.os.Handler
 import android.os.Message
 import android.preference.PreferenceManager
 import android.provider.MediaStore
+import android.provider.MediaStore.Images
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
@@ -237,8 +239,8 @@ class MainActivity : BaseActivity() {
     fun GetPicClicked(view: View) {
 
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        intent.data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        intent.type = Images.Media.CONTENT_TYPE
+        intent.data = Images.Media.EXTERNAL_CONTENT_URI
         startActivityForResult(intent, REQUEST_SELECT_IMAGE)
 
     }
@@ -305,7 +307,7 @@ class MainActivity : BaseActivity() {
 
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode === Activity.RESULT_OK){
             val file = File(mCurrentPhotoPath)
-            val temp = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
+            val temp = Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
             // original = temp
 
 
@@ -332,7 +334,7 @@ class MainActivity : BaseActivity() {
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             val imageFileName = "DEASEL_" + timeStamp + "_"
             // 이미지 저장
-            val imageSaveUri = MediaStore.Images.Media.insertImage(contentResolver,rotatedBitmap2,imageFileName,"saved from d-easel")
+            val imageSaveUri = Images.Media.insertImage(contentResolver,rotatedBitmap2,imageFileName,"saved from d-easel")
             val uri = Uri.parse(imageSaveUri)
             sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,uri))
 
@@ -373,6 +375,7 @@ class MainActivity : BaseActivity() {
 
 
                 CropImage.activity(tempuri)
+                    .setInitialCropWindowPaddingRatio(0f)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setBorderLineColor(Color.WHITE)
                     .setGuidelinesColor(Color.WHITE)
@@ -420,6 +423,7 @@ class MainActivity : BaseActivity() {
                     tempuri = getLocalBitmapUri(cropImage_)
 
                     CropImage.activity(tempuri)
+                        .setInitialCropWindowPaddingRatio(0f)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setBorderLineColor(Color.WHITE)
                         .setGuidelinesColor(Color.WHITE)
@@ -443,13 +447,10 @@ class MainActivity : BaseActivity() {
 
             if (resultCode == RESULT_OK) {
                 var resultUri = result.getUri()
-                val path = getImagePathFromURI(resultUri)
-                val options = BitmapFactory.Options()
-                options.inSampleSize = 2
-                original = BitmapFactory.decodeFile(path, options)
 
-                val file = File(tempuri?.path)
-                file.delete()
+				var  bm = Images.Media.getBitmap(getContentResolver(), resultUri)
+
+                original = bm
 
 
                 goPreview()
@@ -463,12 +464,12 @@ class MainActivity : BaseActivity() {
 
     }
     fun getImagePathFromURI(contentUri: Uri?): String? {
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val proj = arrayOf(Images.Media.DATA)
         val cursor = contentResolver.query(contentUri!!, proj, null, null, null)
         if (cursor == null) {
             return contentUri.path
         } else {
-            val idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            val idx = cursor.getColumnIndexOrThrow(Images.Media.DATA)
             cursor.moveToFirst()
             val imgPath = cursor.getString(idx)
             cursor.close()
@@ -483,14 +484,6 @@ class MainActivity : BaseActivity() {
             source, 0, 0, source.width, source.height,
             matrix, true
         )
-    }
-
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
     }
 
     fun getLocalBitmapUri(bmp: Bitmap): Uri? {
