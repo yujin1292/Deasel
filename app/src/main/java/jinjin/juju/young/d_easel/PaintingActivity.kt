@@ -304,7 +304,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         drawLine?.line?.setLineColor(color)
         drawLine?.line?.setLineAlpha(color.alpha)
     }
-    fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) : String {
+    fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) : String  {
         val format1 = SimpleDateFormat("MM-dd HH:mm:ss")
         val time = Date()
         val time1 = format1.format(time)

@@ -13,8 +13,12 @@
             android:layout_width="match_parent"
             android:layout_height="114dp" android:id="@+id/textView2" android:layout_weight="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
     <GridView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="1" android:id="@+id/MasterpieceList"
-            android:numColumns="auto_fit"/>
+        android:id="@+id/MasterpieceList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:numColumns="auto_fit"
+        tools:listitem="@layout/my_masterpiece" />
 </LinearLayout>
