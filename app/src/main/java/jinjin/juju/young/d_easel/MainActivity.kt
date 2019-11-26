@@ -24,6 +24,7 @@ import android.widget.ImageView
 import androidx.core.content.FileProvider
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import io.realm.RealmResults
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import java.io.File
@@ -56,18 +57,52 @@ class MainActivity : BaseActivity() {
 
 
 
+
     @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Realm.init(applicationContext)
+        realm = Realm.getDefaultInstance()
 
         bgm = MediaPlayer.create(this, R.raw.bgm)
         //bgm.prepare();
         bgm!!.isLooping = true
 
-        bgm!!.start()
+        val id = 100
+        var musicdb =  realm.where<MusicDB>().equalTo("id",id).findFirst()
+
+        if(musicdb == null){
+            realm.beginTransaction()
+
+            realm.createObject(MusicDB::class.java,100)
+
+            realm.commitTransaction()
+            //musicdb= newMusicDB
+            textView.setText("null")
+
+        }
+        musicdb =  realm.where<MusicDB>().equalTo("id",id).findFirst()
+       // music = musicdb?.switch!!
+
+
+
+        if(musicdb!!.switch) {
+            bgm!!.start()
+            music_btn.setBackgroundResource(R.drawable.music_on)
+
+        }
+
+        else{
+            music_btn.setBackgroundResource(R.drawable.music_off)
+
+        }
+
+      //  textView.setText(music.toString())
+
+      //  textView.setText(music.toString())
 
         //logo thread
         @SuppressLint("HandlerLeak")
@@ -156,7 +191,6 @@ class MainActivity : BaseActivity() {
         t.start()
 
 
-        realm = Realm.getDefaultInstance()
 
         var realmResults = realm.where<ImageDB>().findAll()
         if(realmResults.isEmpty()){
@@ -237,20 +271,46 @@ class MainActivity : BaseActivity() {
 
 
         music_btn.setOnClickListener{
-            if(music){
+            if(musicdb!!.switch == false){
 
                 bgm!!.start()
                 music = !music
-                music_btn.setBackgroundColor(Color.parseColor("#D8FF4848"))
+
+                val id = 100
+
+                realm.beginTransaction()
+
+                //textView.setText( updateMusic?.switch.toString())
+
+
+                musicdb?.switch = true
+
+
+                realm.commitTransaction()
+                textView.setText( musicdb?.switch.toString())
+                music_btn.setBackgroundResource(R.drawable.music_on)
                 toast("BGM ON")
+
             }
+
             else{
 
                 bgm!!.pause()
                 music = !music
 
-                music_btn.setBackgroundColor(Color.parseColor("#D84860FF"))
+                val id = 100
+
+
+                realm.beginTransaction()
+
+                musicdb?.switch = false
+
+                realm.commitTransaction()
+
+                textView.setText( musicdb?.switch.toString())
+                music_btn.setBackgroundResource(R.drawable.music_off)
                 toast("BGM OFF")
+
             }
         }
 
@@ -538,7 +598,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onResume() {
-        bgm!!.start()
+        //bgm!!.start()
         super.onResume()
     }
     override fun onBackPressed() {

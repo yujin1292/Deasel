@@ -57,6 +57,12 @@ class MasterpieceActivity : BaseActivity() {
                     7 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb7))
                     8 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb8))
                     9 -> logoview?.setImageDrawable(getDrawable(R.drawable.cb9))
+                    10-> logoview?.setImageDrawable(getDrawable(R.drawable.cb10))
+                    11-> logoview?.setImageDrawable(getDrawable(R.drawable.cb11))
+                    12-> logoview?.setImageDrawable(getDrawable(R.drawable.cb12))
+                    13-> logoview?.setImageDrawable(getDrawable(R.drawable.cb13))
+                    14-> logoview?.setImageDrawable(getDrawable(R.drawable.cb14))
+                    15-> logoview?.setImageDrawable(getDrawable(R.drawable.cb15))
                 }
             }
         }
@@ -69,7 +75,7 @@ class MasterpieceActivity : BaseActivity() {
                 mHandler?.sendEmptyMessage(logonum)
                 if(forward){
                     logonum++
-                    if(logonum>9){ //logonum == 10
+                    if(logonum>16){ //logonum == 10
                         Thread.sleep(100)
                         forward = false
                     }
