@@ -208,10 +208,9 @@ class MainActivity : BaseActivity() {
         t.start()
 
 
-/*
 
-        var realmResults = realm?.where<ImageDB>().findAll()
-        if(realmResults.isEmpty()){
+        var realmResults = realm?.where<ImageDB>()?.findAll()
+        if(realmResults!!.isEmpty()){
 
             realm?.beginTransaction()
 
@@ -223,6 +222,7 @@ class MainActivity : BaseActivity() {
             val byteArray = stream.toByteArray()
             newImage?.image = byteArray
             newImage?.background = byteArray
+            newImage?.lines= byteArray
             realm?.commitTransaction()
 
 
@@ -232,12 +232,12 @@ class MainActivity : BaseActivity() {
             val stream2 = ByteArrayOutputStream()
             sendBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2)
             val byteArray2 = stream2.toByteArray()
-            newImage2.image = byteArray2
-            newImage2.background=byteArray2
-            realm.commitTransaction()
+            newImage2?.image = byteArray2
+            newImage2?.lines = byteArray2
+            newImage2?.background=byteArray2
+            realm?.commitTransaction()
         }
 
-*/
 
         //마스터 피스 엑티비티 호출
         go_master.setOnClickListener { view ->
@@ -339,14 +339,14 @@ class MainActivity : BaseActivity() {
 
     }
 
-/*    fun nextId():Int
+    fun nextId():Int
     {
         val maxid = realm?.where<ImageDB>()?.max("id")
         if(maxid!=null){
             return maxid.toInt()+1
         }
         return 0
-    }*/
+    }
 
 
     @Throws(IOException::class)

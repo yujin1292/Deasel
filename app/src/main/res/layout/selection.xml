@@ -10,7 +10,8 @@
         android:id="@+id/pop_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="30dp"
         android:background="#FFFFFF"
         android:scaleType="center"
         app:srcCompat="@drawable/b" />
@@ -23,16 +24,19 @@
         <Button
             android:id="@+id/pop_close"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="close" />
+            android:background="@drawable/close_btn"
+            android:shadowColor="#00FF0000" />
 
         <Button
             android:id="@+id/pop_ok"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="start" />
+            android:background="@drawable/coloring_btn" />
     </LinearLayout>
 
 </LinearLayout>
