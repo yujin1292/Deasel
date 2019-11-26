@@ -37,14 +37,13 @@ import kotlin.concurrent.thread
 
 
 class MainActivity : BaseActivity() {
+
     private var lastTimeBackPressed: Long = 0
 
 
     var tempuri : Uri? = null
-
     var realm : Realm = Realm.getDefaultInstance()
 
-    private val  REQUEST_IMAGE_CROP = 789
     private val REQUEST_SELECT_IMAGE = 456
     private val REQUEST_TAKE_PHOTO = 123
 
@@ -54,6 +53,8 @@ class MainActivity : BaseActivity() {
     var logoview: ImageView? = null
     private var mHandler: Handler? = null
     private var logonum: Int = 0
+
+
 
     @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -546,6 +547,7 @@ class MainActivity : BaseActivity() {
     companion object {
        var bgm: MediaPlayer? = null
     }
+
 }
 
 

@@ -1,9 +1,12 @@
 package jinjin.juju.young.d_easel
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.transition.Slide
 import android.transition.TransitionManager
 import android.util.Log
@@ -13,9 +16,13 @@ import android.widget.*
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.activity_masterpiece.*
+import kotlin.concurrent.thread
 
 
 class MasterpieceActivity : BaseActivity() {
+
+    private var mHandler: Handler? = null
+    private var logonum: Int = 0
 
     var realm = Realm.getDefaultInstance()
     private val SELECT = 100
@@ -30,9 +37,40 @@ class MasterpieceActivity : BaseActivity() {
         MasterpieceList.adapter = gridAdapter
 
 
-        Log.d("List","before " + actList.toString())
         actList.add(this)
-        Log.d("List",actList.toString())
+
+        //logo thread
+        @SuppressLint("HandlerLeak")
+        mHandler = object: Handler() {
+            override fun handleMessage(msg: Message?) {
+
+                var logoview = findViewById<ImageView>(R.id.coloring_logo)
+
+                when (logonum) {
+                    0 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring0))
+                    1 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring1))
+                    2 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring2))
+                    3 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring3))
+                    4 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring4))
+                    5 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring5))
+                    6 -> logoview?.setImageDrawable(getDrawable(R.drawable.coloring6))
+                }
+            }
+        }
+
+        thread(start = true){
+            while(true){
+                Thread.sleep(100)
+                mHandler?.sendEmptyMessage(logonum)
+                logonum++
+                if(logonum>6){
+                    Thread.sleep(100)
+                    logonum=0
+                }
+            }
+        }
+
+
 
         //리스트에서 아이템 선택시,,해당 이미지 정보 넘겨서 페인팅 액티비티에 전달
         MasterpieceList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
