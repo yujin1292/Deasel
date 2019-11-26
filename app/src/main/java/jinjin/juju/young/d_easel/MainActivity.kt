@@ -369,9 +369,7 @@ class MainActivity : BaseActivity() {
 
 
 
-                tempuri =getImageUri(this, cropImage_)
-
-
+                tempuri = getLocalBitmapUri(cropImage_)
 
 
                 CropImage.activity(tempuri)
@@ -419,7 +417,7 @@ class MainActivity : BaseActivity() {
                     var cropImage_ =  original!!.copy(original!!.config, true)
 
 
-                    tempuri =getImageUri(this, cropImage_)
+                    tempuri = getLocalBitmapUri(cropImage_)
 
                     CropImage.activity(tempuri)
                         .setGuidelines(CropImageView.Guidelines.ON)
@@ -428,7 +426,6 @@ class MainActivity : BaseActivity() {
                         .setActivityMenuIconColor(Color.WHITE)
                         .setRotationDegrees(90)
                         .start(this)
-
 
                 }
 
@@ -496,6 +493,23 @@ class MainActivity : BaseActivity() {
         return Uri.parse(path)
     }
 
+    fun getLocalBitmapUri(bmp: Bitmap): Uri? {
+        var bmpUri: Uri? = null
+        try {
+            var file = File(Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_DOWNLOADS), "share_image_" + System.currentTimeMillis() + ".png")
+            file.getParentFile().mkdirs()
+            var out = FileOutputStream(file)
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out)
+            out.close()
+            bmpUri = Uri.fromFile(file)
+           // bmpUri = FileProvider.getUriForFile(this,"jinjin.juju.young.d_easel.fileprovider",file)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return bmpUri
+    }
 
     override fun onResume() {
         bgm!!.start()
