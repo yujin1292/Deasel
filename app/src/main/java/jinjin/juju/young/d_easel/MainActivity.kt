@@ -22,8 +22,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.FileProvider
+import com.facebook.stetho.Stetho
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.RealmResults
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
@@ -43,7 +45,8 @@ class MainActivity : BaseActivity() {
 
 
     var tempuri : Uri? = null
-    var realm : Realm = Realm.getDefaultInstance()
+    var realm : Realm? = null
+
 
     private val REQUEST_SELECT_IMAGE = 456
     private val REQUEST_TAKE_PHOTO = 123
@@ -57,6 +60,7 @@ class MainActivity : BaseActivity() {
 
 
 
+    val id = 100
 
     @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,32 +68,46 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Realm.init(applicationContext)
         realm = Realm.getDefaultInstance()
+
+
+        val provider = RealmInspectorModulesProvider.builder(this)
+            .withDeleteIfMigrationNeeded(true)
+            .build()
+
+         Stetho.initialize(Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(provider)
+                .build())
+
 
         bgm = MediaPlayer.create(this, R.raw.bgm)
         //bgm.prepare();
         bgm!!.isLooping = true
 
-        val id = 100
-        var musicdb =  realm.where<MusicDB>().equalTo("id",id).findFirst()
+        var musicdb =  realm?.where<MusicDB>()?.equalTo("id",id)?.findFirst()
 
         if(musicdb == null){
-            realm.beginTransaction()
 
-            realm.createObject(MusicDB::class.java,100)
+            var newMusicDB = MusicDB()
+            newMusicDB.init()
 
-            realm.commitTransaction()
-            //musicdb= newMusicDB
-            textView.setText("null")
+            realm?.beginTransaction()
+
+            realm?.copyToRealm(newMusicDB)
+
+            realm?.commitTransaction()
+
+
 
         }
-        musicdb =  realm.where<MusicDB>().equalTo("id",id).findFirst()
+        musicdb =  realm?.where<MusicDB>()?.equalTo("id",id)?.findFirst()
        // music = musicdb?.switch!!
 
 
 
-        if(musicdb!!.switch) {
+
+        if(musicdb?.is_on.equals("on")) {
             bgm!!.start()
             music_btn.setBackgroundResource(R.drawable.music_on)
 
@@ -100,7 +118,6 @@ class MainActivity : BaseActivity() {
 
         }
 
-      //  textView.setText(music.toString())
 
       //  textView.setText(music.toString())
 
@@ -191,25 +208,26 @@ class MainActivity : BaseActivity() {
         t.start()
 
 
+/*
 
-        var realmResults = realm.where<ImageDB>().findAll()
+        var realmResults = realm?.where<ImageDB>().findAll()
         if(realmResults.isEmpty()){
 
-            realm.beginTransaction()
+            realm?.beginTransaction()
 
 
-            val newImage = realm.createObject(ImageDB::class.java, nextId())
+            val newImage = realm?.createObject(ImageDB::class.java, nextId())
             val sendBitmap = BitmapFactory.decodeResource(resources,R.drawable.hs)
             val stream = ByteArrayOutputStream()
             sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             val byteArray = stream.toByteArray()
-            newImage.image = byteArray
-            newImage.background = byteArray
-            realm.commitTransaction()
+            newImage?.image = byteArray
+            newImage?.background = byteArray
+            realm?.commitTransaction()
 
 
-            realm.beginTransaction()
-            val newImage2 = realm.createObject(ImageDB::class.java, nextId())
+            realm?.beginTransaction()
+            val newImage2 = realm?.createObject(ImageDB::class.java, nextId())
             val sendBitmap2 = BitmapFactory.decodeResource(resources,R.drawable.b)
             val stream2 = ByteArrayOutputStream()
             sendBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2)
@@ -219,6 +237,7 @@ class MainActivity : BaseActivity() {
             realm.commitTransaction()
         }
 
+*/
 
         //마스터 피스 엑티비티 호출
         go_master.setOnClickListener { view ->
@@ -253,6 +272,13 @@ class MainActivity : BaseActivity() {
             }
             return@setOnTouchListener false
         }
+        get_pic.setOnClickListener {
+
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = Images.Media.CONTENT_TYPE
+            intent.data = Images.Media.EXTERNAL_CONTENT_URI
+            startActivityForResult(intent, REQUEST_SELECT_IMAGE)
+        }
         take_pic.setOnTouchListener { view, motionEvent ->
             when (motionEvent.action and MotionEvent.ACTION_MASK) {
                 MotionEvent.ACTION_DOWN -> {
@@ -267,27 +293,27 @@ class MainActivity : BaseActivity() {
             }
             return@setOnTouchListener false
         }
+        take_pic.setOnClickListener {
 
+            dispatchTakePictureIntent()
+        }
 
 
         music_btn.setOnClickListener{
-            if(musicdb!!.switch == false){
+            if(musicdb?.is_on.equals("off")){
 
                 bgm!!.start()
                 music = !music
 
-                val id = 100
 
-                realm.beginTransaction()
+                realm?.beginTransaction()
 
                 //textView.setText( updateMusic?.switch.toString())
 
+                musicdb?.is_on = "on"
 
-                musicdb?.switch = true
 
-
-                realm.commitTransaction()
-                textView.setText( musicdb?.switch.toString())
+                realm?.commitTransaction()
                 music_btn.setBackgroundResource(R.drawable.music_on)
                 toast("BGM ON")
 
@@ -298,16 +324,13 @@ class MainActivity : BaseActivity() {
                 bgm!!.pause()
                 music = !music
 
-                val id = 100
 
+                realm?.beginTransaction()
 
-                realm.beginTransaction()
+                musicdb?.is_on = "off"
 
-                musicdb?.switch = false
+                realm?.commitTransaction()
 
-                realm.commitTransaction()
-
-                textView.setText( musicdb?.switch.toString())
                 music_btn.setBackgroundResource(R.drawable.music_off)
                 toast("BGM OFF")
 
@@ -316,27 +339,14 @@ class MainActivity : BaseActivity() {
 
     }
 
-    fun nextId():Int
+/*    fun nextId():Int
     {
-        val maxid = realm.where<ImageDB>().max("id")
+        val maxid = realm?.where<ImageDB>()?.max("id")
         if(maxid!=null){
             return maxid.toInt()+1
         }
         return 0
-    }
-    //버튼 리스너
-    fun TakePicClicked(view: View) {
-        //카메라 열고 파일 처리.
-        dispatchTakePictureIntent()
-    }
-    fun GetPicClicked(view: View) {
-
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = Images.Media.CONTENT_TYPE
-        intent.data = Images.Media.EXTERNAL_CONTENT_URI
-        startActivityForResult(intent, REQUEST_SELECT_IMAGE)
-
-    }
+    }*/
 
 
     @Throws(IOException::class)
@@ -539,9 +549,9 @@ class MainActivity : BaseActivity() {
 
 
             if (resultCode == RESULT_OK) {
-                var resultUri = result.getUri()
+                var resultUri = result.uri
 
-				var  bm = Images.Media.getBitmap(getContentResolver(), resultUri)
+				var  bm = Images.Media.getBitmap(contentResolver, resultUri)
 
                 original = bm
 
@@ -549,7 +559,7 @@ class MainActivity : BaseActivity() {
                 goPreview()
             }
             else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                var error = result.getError()
+                var error = result.error
 
         }
     }
@@ -584,7 +594,7 @@ class MainActivity : BaseActivity() {
         try {
             var file = File(Environment.getExternalStoragePublicDirectory(
             Environment.DIRECTORY_DOWNLOADS), "share_image_" + System.currentTimeMillis() + ".png")
-            file.getParentFile().mkdirs()
+            file.parentFile.mkdirs()
             var out = FileOutputStream(file)
             bmp.compress(Bitmap.CompressFormat.PNG, 100, out)
             out.close()
@@ -597,10 +607,6 @@ class MainActivity : BaseActivity() {
         return bmpUri
     }
 
-    override fun onResume() {
-        //bgm!!.start()
-        super.onResume()
-    }
     override fun onBackPressed() {
         //2초 이내에 뒤로가기 버튼을 재 클릭 시 앱 종료
         if (System.currentTimeMillis() - lastTimeBackPressed < 2000) {
@@ -633,7 +639,7 @@ class MainActivity : BaseActivity() {
 
         super.onDestroy()
         actList.remove(this)
-        realm.close() //인스턴스 해제
+        realm?.close() //인스턴스 해제
     }
 
     companion object {
