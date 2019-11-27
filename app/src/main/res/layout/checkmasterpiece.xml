@@ -16,6 +16,8 @@
         android:id="@+id/delmasterpieceImage"
         android:layout_width="201dp"
         android:layout_height="204dp"
-        android:background="@drawable/paper"
+        android:background="@drawable/sketchppappa2"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/sample1" />
+
 </jinjin.juju.young.d_easel.CheckableLayout>
