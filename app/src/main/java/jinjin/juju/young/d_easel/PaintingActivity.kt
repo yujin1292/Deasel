@@ -90,12 +90,28 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         eraser_btn.setOnClickListener {
             drawLine?.line?.setErase()
+
+            spoid_btn.setImageResource(R.drawable.spoid_icon)
+            pen_setting_btn.setImageResource(R.drawable.pencil_icon)
+            eraser_btn.setImageResource(R.drawable.eraser_icon2)
+            brush_setting_btn.setImageResource(R.drawable.brush_icon)
+
         }
         pen_setting_btn.setOnClickListener {
             drawLine?.line?.setPen()
+
+            spoid_btn.setImageResource(R.drawable.spoid_icon)
+            pen_setting_btn.setImageResource(R.drawable.pencil_icon2)
+            eraser_btn.setImageResource(R.drawable.eraser_icon)
+            brush_setting_btn.setImageResource(R.drawable.brush_icon)
         }
         brush_setting_btn.setOnClickListener {
             drawLine?.line?.setBrush()
+
+            spoid_btn.setImageResource(R.drawable.spoid_icon)
+            pen_setting_btn.setImageResource(R.drawable.pencil_icon)
+            eraser_btn.setImageResource(R.drawable.eraser_icon)
+            brush_setting_btn.setImageResource(R.drawable.brush_icon2)
         }
         color_check.setOnClickListener{
 
@@ -111,6 +127,11 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         }
         spoid_btn.setOnClickListener {
             drawLine?.isSpoid = true
+
+            spoid_btn.setImageResource(R.drawable.spoid_icon2)
+            pen_setting_btn.setImageResource(R.drawable.pencil_icon)
+            eraser_btn.setImageResource(R.drawable.eraser_icon)
+            brush_setting_btn.setImageResource(R.drawable.brush_icon)
         }
         var container = findViewById<FrameLayout>(R.id.Frame)
         result_btn.setOnClickListener {

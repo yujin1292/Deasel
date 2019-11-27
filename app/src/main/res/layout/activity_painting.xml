@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".PaintingActivity" android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context=".PaintingActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="84dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="74dp"
+            android:layout_width="272dp"
             android:layout_height="wrap_content"
             android:layout_weight="0" />
 
-        <Button
+        <ImageButton
             android:id="@+id/insta_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="fitCenter"
+            android:src="@drawable/instagram_icon"
             android:text="instagram" />
 
         <ImageButton
             android:id="@+id/result_btn"
             android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:src="@android:drawable/ic_menu_save" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="fitCenter"
+            android:src="@drawable/save_icon" />
 
     </LinearLayout>
 
     <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
 
         android:id="@+id/Frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="10"/>
+        android:layout_height="663dp"
+        android:layout_weight="10" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,21 +54,48 @@
 
         <ImageButton
             android:id="@+id/pen_setting_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_edit" />
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:stateListAnimator="@null"
 
-        <Button
+            android:src="@drawable/pencil_icon"
+            tools:src="@drawable/pencil_icon" />
+
+        <ImageButton
             android:id="@+id/brush_setting_btn"
-            android:layout_width="56dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:text="br" />
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:stateListAnimator="@null"
+
+            app:srcCompat="@drawable/brush_icon" />
 
         <ImageButton
             android:id="@+id/eraser_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/btn_dialog" />
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:stateListAnimator="@null"
+
+            android:src="@drawable/eraser_icon" />
+
+        <ImageButton
+            android:id="@+id/spoid_btn"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:stateListAnimator="@null"
+
+            app:srcCompat="@drawable/spoid_icon" />
 
         <LinearLayout
             android:layout_width="239dp"
@@ -76,24 +107,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:max="50"
-                android:progress="10" />
+                android:progress="10"
+                android:progressTint="#000000"
+                android:thumb="@drawable/heart_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/spoid_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="spoid" />
-
                 <ImageButton
                     android:id="@+id/color_check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
+                    android:stateListAnimator="@null"
                     android:scaleType="center"
                     android:src="@drawable/ten" />
 

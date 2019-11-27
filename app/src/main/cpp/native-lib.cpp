@@ -51,4 +51,17 @@ Java_jinjin_juju_young_d_1easel_PreviewActivity_MeanShiftFilteringJNI(JNIEnv *en
     cvtColor(outputMat, outputMat,cv::COLOR_Luv2BGR);
 
 
+}extern "C"
+JNIEXPORT void JNICALL
+Java_jinjin_juju_young_d_1easel_PreviewActivity_GaussianBlurJNI(JNIEnv *env, jobject thiz,
+                                                                jlong input_image,
+                                                                jlong output_image, jint sp
+                                                                ) {
+    // TODO: implement GaussianBlurJNI()
+    cv::Mat &inputMat = *(cv::Mat *) input_image;
+    cv::Mat &outputMat = *(cv::Mat *) output_image;
+
+    GaussianBlur(inputMat, outputMat, Size(3, 3), 0);
+
+
 }

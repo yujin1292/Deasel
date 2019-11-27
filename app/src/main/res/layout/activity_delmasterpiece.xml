@@ -8,25 +8,35 @@
         tools:context=".DelMasterpieceActivity" android:orientation="vertical">
 
     <TextView
-            android:text="select delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/textView3"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-    <GridView
-            android:layout_width="match_parent"
-            android:layout_height="489dp"
-            android:numColumns="auto_fit"
-            android:id="@+id/delMasterpieceList"
-            android:choiceMode="multipleChoiceModal"
-            tools:listitem="@layout/checkmasterpiece">
-    </GridView>
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="삭제할 스케치를 선택하세요"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <LinearLayout
-            android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/delMasterpieceList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:choiceMode="multipleChoiceModal"
+            android:numColumns="auto_fit"
+            tools:listitem="@layout/checkmasterpiece">
+
+        </GridView>
+
         <Button
-                android:text="Delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/delBtn" android:layout_weight="1"/>
+            android:id="@+id/delBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete" />
+
     </LinearLayout>
+
 </LinearLayout>

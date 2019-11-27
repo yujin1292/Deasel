@@ -5,7 +5,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
 import androidx.core.graphics.*
-
+import kotlinx.android.synthetic.main.activity_painting.view.*
 
 //그림 그리는 거를 관리하는 클래스
 
@@ -56,7 +56,25 @@ class DrawLine : View
             if(color.alpha == 0)
                 color = Color.WHITE
             line?.setLineColor(color)
+/*
+
+            line?.setPen()
+            val spoid_btn2 = findViewById<ImageButton>(R.id.spoid_btn)
+            val pen_btn2 = findViewById<ImageButton>(R.id.pen_setting_btn)
+            val brush_btn2= findViewById<ImageButton>(R.id.brush_setting_btn)
+            val eraser_btn2 = findViewById<ImageButton>(R.id.eraser_btn)
+
+
+            spoid_btn2.setImageResource(R.drawable.spoid_icon)
+            pen_btn2.setImageResource(R.drawable.pencil_icon2)
+            brush_btn2.setImageResource(R.drawable.brush_icon)
+            eraser_btn2.setImageResource(R.drawable.eraser_icon)
+*/
+
+
             isSpoid = false
+
+
         }
         else{
             when (event.action and MotionEvent.ACTION_MASK) {

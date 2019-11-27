@@ -36,7 +36,6 @@ public class PreviewActivity extends BaseActivity {
 
     private ImageView meanshift;
     private ImageView canvas;
-    private TextView textView;
 
     private boolean mIsOpenCVReady = false;
     private int SELECT = 100;
@@ -46,18 +45,20 @@ public class PreviewActivity extends BaseActivity {
 
     public native void MeanShiftFilteringJNI(long inputImage,  long outputImage,  double sp, double sr);
 
+
+    public native void GaussianBlurJNI(long inputImage,  long outputImage,  int sp);
+
     static {
         System.loadLibrary("opencv_java4");
         System.loadLibrary("native-lib");
     }
-    public void ProcessingUsingJNL(double i, double j ){
+    public void ProcessingUsingMeanShift(double i, double j ){
 
 
         if (!mIsOpenCVReady) {
             return;
         }
         if( i == 0 ){
-            textView.setText("original img");
             meanshift_p = original_p.copy(original_p.getConfig(),true);
             meanshift.setImageBitmap(meanshift_p);
         }
@@ -65,7 +66,6 @@ public class PreviewActivity extends BaseActivity {
 
             double sp = i;
             double sr = j;
-            textView.setText("sp : " + sp + " sr : " + sr);
 
             //mean shift 연산
             Mat src = new Mat();
@@ -107,7 +107,56 @@ public class PreviewActivity extends BaseActivity {
 
     }
 
+    public void ProcessingUsingGaussain(int i){
 
+        if (!mIsOpenCVReady) {
+            return;
+        }
+        if( i == 0 ){
+            meanshift_p = original_p.copy(original_p.getConfig(),true);
+            meanshift.setImageBitmap(meanshift_p);
+        }
+        else{
+
+
+            // 가우시안 블러링
+            Mat src = new Mat();
+            Utils.bitmapToMat(original_p, src);
+            Mat mean = new Mat();
+            GaussianBlurJNI(src.getNativeObjAddr(), mean.getNativeObjAddr(), i);
+            Utils.matToBitmap(mean, meanshift_p);
+
+            // 처리한 이미지 변경
+            meanshift.setImageBitmap(meanshift_p);
+
+        }
+
+        //edge detect 연산 후 canvas_p에 저장
+        Mat src2 = new Mat();
+        Utils.bitmapToMat(meanshift_p, src2);
+        Mat edge = new Mat();
+        detectEdgeJNI(src2.getNativeObjAddr(), edge.getNativeObjAddr(), 75, 175);
+        Utils.matToBitmap(edge, canvas_p);
+
+        canvas.setImageBitmap(canvas_p);
+
+
+        int sW = canvas_p.getWidth();
+        int sH = canvas_p.getHeight();
+
+        int[] pixels = new int[sW*sH];
+        canvas_p.getPixels(pixels, 0, sW, 0, 0, sW, sH);
+        for (int jj =0 ;jj < pixels.length; jj++) {
+            if (pixels[jj] == Color.WHITE)
+                pixels[jj] = Color.TRANSPARENT;
+        }
+
+        canvas_p_a  = Bitmap.createBitmap(pixels, 0, sW, sW, sH, Bitmap.Config.ARGB_8888);
+
+        //처리한 이미지로 변경
+        canvas.setImageBitmap(canvas_p_a);
+
+    }
 
 
     @Override
@@ -133,7 +182,6 @@ public class PreviewActivity extends BaseActivity {
 
         meanshift = findViewById(R.id.mean_shift);
         canvas = findViewById(R.id.edge_canvas);
-        textView = findViewById(R.id.where);
 
         Intent intent = getIntent();
 
@@ -151,12 +199,11 @@ public class PreviewActivity extends BaseActivity {
             // 카피
             canvas_p = original_p.copy(original_p.getConfig(),true);
             meanshift_p = original_p.copy(original_p.getConfig(),true);
-            textView.setText(s);
 
             meanshift.setImageBitmap(meanshift_p);
 
             //이미지 처리
-            ProcessingUsingJNL(3, 20.0);
+            ProcessingUsingMeanShift(3, 20.0);
 
 
         }
@@ -173,7 +220,7 @@ public class PreviewActivity extends BaseActivity {
                     @Override public void run()
                     { // TODOAuto-generated method stub
                         if(original_p != null){
-                            ProcessingUsingJNL(0, 20.0);
+                            ProcessingUsingMeanShift(0, 20.0);
                         }
                         dlg.dismiss();
                     }
@@ -193,7 +240,7 @@ public class PreviewActivity extends BaseActivity {
                     @Override public void run()
                     { // TODOAuto-generated method stub
                         if(original_p != null){
-                            ProcessingUsingJNL(3, 20.0);
+                            ProcessingUsingMeanShift(3, 20.0);
                         }
                         dlg.dismiss();
                     }
@@ -212,7 +259,7 @@ public class PreviewActivity extends BaseActivity {
                     @Override public void run()
                     { // TODOAuto-generated method stub
                         if(original_p != null){
-                            ProcessingUsingJNL(6, 20.0);
+                            ProcessingUsingMeanShift(6, 20.0);
                         }
                         dlg.dismiss();
                     }
@@ -224,20 +271,23 @@ public class PreviewActivity extends BaseActivity {
 
         Button buttonC = findViewById(R.id.button_c);
         buttonC.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dlg.show();
-                new Thread(new Runnable() {
-                    @Override public void run()
-                    { // TODOAuto-generated method stub
-                        if(original_p != null){
-                            ProcessingUsingJNL(9 ,20.0);
-                        }
-                        dlg.dismiss();
-                    }
-                }).start();
 
-            }
+             @Override
+             public void onClick(View view) {
+                 dlg.show();
+                 new Thread(new Runnable() {
+                     @Override public void run()
+                     { // TODOAuto-generated method stub
+                         if(original_p != null){
+                             ProcessingUsingMeanShift(9.0 ,20.0);
+                         }
+                         dlg.dismiss();
+                     }
+                 }).start();
+
+
+     }
+
         }) ;
 
 
@@ -250,7 +300,7 @@ public class PreviewActivity extends BaseActivity {
                     @Override public void run()
                     { // TODOAuto-generated method stub
                         if(original_p != null){
-                            ProcessingUsingJNL(12, 20.0);
+                            ProcessingUsingMeanShift(12, 20.0);
                         }
                         dlg.dismiss();
                     }
@@ -260,6 +310,24 @@ public class PreviewActivity extends BaseActivity {
             }
         }) ;
 
+
+        Button buttonG = findViewById(R.id.button_g);
+        buttonG.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dlg.show();
+                new Thread(new Runnable() {
+                    @Override public void run()
+                    { // TODOAuto-generated method stub
+                        if(original_p != null){
+                            ProcessingUsingGaussain(3);
+                        }
+                        dlg.dismiss();
+                    }
+                }).start();
+            }
+        }) ;
 
         // start 버튼
 
