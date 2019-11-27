@@ -160,20 +160,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                 realm.commitTransaction()
             }
 
-
-
-            alert("갤러리에도 저장하시겠습니까?") {
-
-                positiveButton("네"){
-
-                    saveBitmaptoPNG(sendBitmap,"/D-easel/my_painting","DEASEL_${id}")
-                    longToast("갤러리에도 저장했습니다!")
-                }
-                negativeButton("아니요"){
-
-                    longToast("저장했습니다!")
-                }
-            }.show()
+            longToast("저장했습니다!")
 
 
         }
@@ -248,44 +235,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             }
 
         })
-        insta_btn.setOnClickListener {
 
-          /*  //뷰 내용 캡쳐해서 ByteArray로 변환
-
-            //캡처 준비
-            zoomView.zoomTo(1.0f,0f,0f)
-            container.buildDrawingCache()
-
-            //캡처
-            var captureView = container.drawingCache
-            //바이트 어레이로 변환
-            val stream = ByteArrayOutputStream()
-            captureView.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            val byteArray = stream.toByteArray()
-
-
-            //데이터베이스에 이미지 업데이트
-            if(id!=-1){
-                realm.beginTransaction()
-                var updateImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
-                updateImage?.lines = byteArray
-                updateImage?.image = byteArray
-                realm.commitTransaction()
-            }
-
-            // 흰바탕 깔기
-            val sendBitmap = Bitmap.createBitmap(captureView.width, captureView.height, captureView.config)
-            val canvas = Canvas(sendBitmap)
-            canvas.drawColor(Color.WHITE)
-            canvas.drawBitmap(captureView, 0f, 0f ,null)
-
-            var bmpUri = getLocalBitmapUri(sendBitmap)
-
-            if (bmpUri != null) {
-                goInsta(bmpUri)
-            }*/
-
-        }
         share_btn.setOnClickListener{
             //뷰 내용 캡쳐해서 ByteArray로 변환
 
@@ -353,39 +303,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         drawLine?.line?.setLineColor(color)
         drawLine?.line?.setLineAlpha(color.alpha)
     }
-    fun saveBitmaptoPNG(bitmap:Bitmap , folder : String , name : String) : String  {
-        val format1 = SimpleDateFormat("MM-dd HH:mm:ss")
-        val time = Date()
-        val time1 = format1.format(time)
-
-        val ex_stroage = Environment.getExternalStorageDirectory().absolutePath
-        val folder_name = "/"+folder +"/"
-        val file_name  = name +"-"+time1+".png"
-        val string_path  = ex_stroage+folder_name
-
-        var file_path : File
-
-
-        val newBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
-        val canvas = Canvas(newBitmap)
-        canvas.drawColor(Color.WHITE)
-        canvas.drawBitmap(bitmap, 0f, 0f ,null)
-
-
-
-        file_path = File(string_path)
-        if( !file_path.isDirectory){
-            file_path.mkdirs()
-        }
-        val pathname = string_path + file_name
-        val out : FileOutputStream = FileOutputStream(pathname)
-        newBitmap?.compress(Bitmap.CompressFormat.PNG, 100, out) // out 위치에 PNG로 저장
-        out.close()
-        sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://"+pathname)))
-
-        return pathname
-
-    }
     override fun onDialogDismissed(dialogld: Int) {
         //Todo..
     }
@@ -408,46 +325,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             }
         }.show()
 
-    }
-    private fun goInsta(uri: Uri){
-        var intent = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
-        if (intent != null)
-        {
-
-            var shareIntent = Intent()
-            shareIntent.setAction(Intent.ACTION_SEND)
-            shareIntent.setPackage("com.instagram.android")
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            shareIntent.setType("image/jpeg")
-
-            startActivity(shareIntent)
-        }
-        else
-        {
-            // bring user to the market to download the app.
-            // or let them choose an app?
-            intent = Intent(Intent.ACTION_VIEW)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.setData(Uri.parse("market://details?id="+"com.instagram.android"))
-            startActivity(intent)
-        }
-    }
-    fun getLocalBitmapUri(bmp: Bitmap): Uri? {
-        var bmpUri: Uri? = null
-        try {
-            val file = File(
-                getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                "share_image_" + System.currentTimeMillis() + ".png"
-            )
-            val out = FileOutputStream(file)
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, out)
-            out.close()
-            bmpUri = FileProvider.getUriForFile(this,"jinjin.juju.young.d_easel.fileprovider",file)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        return bmpUri
     }
 
 }

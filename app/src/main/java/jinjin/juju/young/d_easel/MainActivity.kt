@@ -210,15 +210,15 @@ class MainActivity : BaseActivity() {
 
 
         var realmResults = realm?.where<ImageDB>()?.findAll()
-       /* if(realmResults!!.isEmpty()){
+        if(realmResults!!.isEmpty()){
 
-            //sample 1
+          //sample 1
             realm?.beginTransaction()
 
             val newImage = realm?.createObject(ImageDB::class.java, nextId())
             val sendBitmap = BitmapFactory.decodeResource(resources,R.drawable.sample1)
             val stream = ByteArrayOutputStream()
-            sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            sendBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             val byteArray = stream.toByteArray()
 
             newImage?.image = byteArray
@@ -226,16 +226,18 @@ class MainActivity : BaseActivity() {
 
             newImage?.background = byteArray
 
+
             //lines 투명 값
-            val stream11 = ByteArrayOutputStream()
-            val temp = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
+
+            val line1 = ByteArrayOutputStream()
+            val temp1 = Bitmap.createBitmap(
+                sendBitmap.width,
+                sendBitmap.height,
                 Bitmap.Config.ARGB_8888
             )
-            temp.compress(Bitmap.CompressFormat.PNG, 100, stream11)
-            val byteline = stream11.toByteArray()
-            newImage?.lines = byteline
+            temp1.compress(Bitmap.CompressFormat.PNG, 100, line1)
+            val bytes1 = line1.toByteArray()
+            newImage?.lines = bytes1
 
             realm?.commitTransaction()
 
@@ -245,21 +247,22 @@ class MainActivity : BaseActivity() {
             val newImage2 = realm?.createObject(ImageDB::class.java, nextId())
             val sendBitmap2 = BitmapFactory.decodeResource(resources,R.drawable.sample2)
             val stream2 = ByteArrayOutputStream()
-            sendBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2)
+            sendBitmap2.compress(Bitmap.CompressFormat.PNG, 100, stream2)
             val byteArray2 = stream2.toByteArray()
             newImage2?.image = byteArray2
             newImage2?.background=byteArray2
 
             //lines 투명 값
-            val stream22 = ByteArrayOutputStream()
+
+            val line2 = ByteArrayOutputStream()
             val temp2 = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
+                sendBitmap2.width,
+                sendBitmap2.height,
                 Bitmap.Config.ARGB_8888
             )
-            temp2.compress(Bitmap.CompressFormat.PNG, 100, stream22)
-            val byteline2 = stream11.toByteArray()
-            newImage?.lines = byteline2
+            temp2.compress(Bitmap.CompressFormat.PNG, 100, line2)
+            val bytes2 = line2.toByteArray()
+            newImage2?.lines = bytes2
 
             realm?.commitTransaction()
 
@@ -270,21 +273,22 @@ class MainActivity : BaseActivity() {
             val newImage3 = realm?.createObject(ImageDB::class.java, nextId())
             val sendBitmap3 = BitmapFactory.decodeResource(resources,R.drawable.sample3)
             val stream3 = ByteArrayOutputStream()
-            sendBitmap3.compress(Bitmap.CompressFormat.PNG, 100, stream2)
+            sendBitmap3.compress(Bitmap.CompressFormat.PNG, 100, stream3)
             val byteArray3 = stream3.toByteArray()
             newImage3?.image = byteArray3
             newImage3?.background=byteArray3
-
             //lines 투명 값
-            val stream33 = ByteArrayOutputStream()
+
+            val line3 = ByteArrayOutputStream()
             val temp3 = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
+                sendBitmap3.width,
+                sendBitmap3.height,
                 Bitmap.Config.ARGB_8888
             )
-            temp3.compress(Bitmap.CompressFormat.PNG, 100, stream33)
-            val byteline3 = stream11.toByteArray()
-            newImage3?.lines = byteline3
+            temp3.compress(Bitmap.CompressFormat.PNG, 100, line3)
+            val bytes3 = line3.toByteArray()
+            newImage3?.lines = bytes3
+
 
             realm?.commitTransaction()
 
@@ -293,26 +297,26 @@ class MainActivity : BaseActivity() {
             val newImage4 = realm?.createObject(ImageDB::class.java, nextId())
             val sendBitmap4 = BitmapFactory.decodeResource(resources,R.drawable.sample4)
             val stream4 = ByteArrayOutputStream()
-            sendBitmap4.compress(Bitmap.CompressFormat.JPEG, 100, stream4)
-            val byteArray4 = stream3.toByteArray()
+            sendBitmap4.compress(Bitmap.CompressFormat.PNG, 100, stream4)
+            val byteArray4 = stream4.toByteArray()
             newImage4?.image = byteArray4
             newImage4?.background=byteArray4
-
             //lines 투명 값
-            val stream44 = ByteArrayOutputStream()
+
+            val line4 = ByteArrayOutputStream()
             val temp4 = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
+                sendBitmap4.width,
+                sendBitmap4.height,
                 Bitmap.Config.ARGB_8888
             )
-            temp4.compress(Bitmap.CompressFormat.PNG, 100, stream44)
-            val byteline4 = stream11.toByteArray()
-            newImage4?.lines = byteline4
+            temp4.compress(Bitmap.CompressFormat.PNG, 100, line4)
+            val bytes4 = line4.toByteArray()
+            newImage4?.lines = bytes4
 
             realm?.commitTransaction()
 
 
-        }*/
+        }
 
 
         //마스터 피스 엑티비티 호출
