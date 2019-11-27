@@ -15,9 +15,14 @@
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="272dp"
+            android:layout_width="123dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/share_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0" />
+            android:text="share" />
 
         <ImageButton
             android:id="@+id/insta_btn"
@@ -33,7 +38,6 @@
             android:id="@+id/result_btn"
             android:layout_width="110dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:scaleType="fitCenter"
             android:src="@drawable/save_icon" />

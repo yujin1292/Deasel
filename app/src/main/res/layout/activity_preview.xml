@@ -10,51 +10,78 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
+        android:layout_height="50dp"
         android:orientation="horizontal">
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_o"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="원본" />
+            android:background="@drawable/origin" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="G" />
+            android:background="@drawable/pre1" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="A" />
+            android:background="@drawable/pre2" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="B" />
+            android:background="@drawable/pre3" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="C" />
+            android:background="@drawable/pre4" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_d"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="D" />
+            android:background="@drawable/pre5" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ImageView
@@ -62,21 +89,59 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:layout_weight="1" />
+        android:layout_weight="20" />
 
-    <ImageView
-        android:id="@+id/edge_canvas"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:background="@drawable/paper" />
+        android:layout_weight="20">
 
-    <Button
-        android:id="@+id/start_btn"
+        <ImageView
+            android:id="@+id/background_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/sketchppappa2" />
+
+        <ImageView
+            android:id="@+id/edge_canvas"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        android:text="START" />
+        <Button
+            android:id="@+id/start_btn"
+            android:layout_width="263dp"
+            android:layout_height="60dp"
+
+            android:background="@drawable/start_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

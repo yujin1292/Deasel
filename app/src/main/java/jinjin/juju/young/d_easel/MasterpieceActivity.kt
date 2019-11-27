@@ -97,8 +97,6 @@ class MasterpieceActivity : BaseActivity() {
         MasterpieceList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
 
-
-
             val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
             // Inflate a custom view using layout inflater

@@ -250,7 +250,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         })
         insta_btn.setOnClickListener {
 
-            //뷰 내용 캡쳐해서 ByteArray로 변환
+          /*  //뷰 내용 캡쳐해서 ByteArray로 변환
 
             //캡처 준비
             zoomView.zoomTo(1.0f,0f,0f)
@@ -283,8 +283,36 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
             if (bmpUri != null) {
                 goInsta(bmpUri)
+            }*/
+
+        }
+        share_btn.setOnClickListener{
+            //뷰 내용 캡쳐해서 ByteArray로 변환
+
+            //캡처 준비
+            zoomView.zoomTo(1.0f,0f,0f)
+            container.buildDrawingCache()
+
+            //캡처
+            var captureView = container.drawingCache
+            //바이트 어레이로 변환
+            val stream = ByteArrayOutputStream()
+            captureView.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            val byteArray = stream.toByteArray()
+
+
+            //데이터베이스에 이미지 업데이트
+            if(id!=-1){
+                realm.beginTransaction()
+                var updateImage = realm.where<ImageDB>().equalTo("id",id).findFirst()
+                updateImage?.lines = byteArray
+                updateImage?.image = byteArray
+                realm.commitTransaction()
             }
 
+            val intent = Intent(this, SharePopUpActivity::class.java)
+            intent.putExtra("id", id)
+            startActivity(intent)
         }
     }
 

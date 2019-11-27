@@ -29,7 +29,7 @@ class DelMasterpieceActivity : BaseActivity() {
         actList.add(this)
         Log.d("List",actList.toString())
 
-        delBtn.setOnClickListener {
+        delbtn.setOnClickListener {
 
             var checkeditems = getCheckedImage()
             var cnt = gridAdapter.count
