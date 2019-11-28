@@ -55,7 +55,6 @@ class MyIntro : AppIntro2() {
         addSlide(fourth_fragment)
         addSlide(fifth_fragment)
 
-
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest
 
