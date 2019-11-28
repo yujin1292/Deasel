@@ -9,19 +9,18 @@
     tools:context=".PaintingActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal">
 
         <Space
-            android:layout_width="123dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content" />
 
         <ImageButton
             android:id="@+id/share_btn"
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
@@ -30,8 +29,9 @@
 
         <ImageButton
             android:id="@+id/result_btn"
-            android:layout_width="110dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:scaleType="fitCenter"
             android:src="@drawable/save_icon" />
@@ -43,90 +43,104 @@
         android:id="@+id/Frame"
         android:layout_width="match_parent"
         android:layout_height="663dp"
-        android:layout_weight="10" />
+        android:layout_weight="10" >
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/color_check"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="center"
+            android:src="@drawable/ten"
+            android:stateListAnimator="@null" />
+
+        <SeekBar
+            android:id="@+id/pen_thickness"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:max="50"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:progress="10"
+            android:progressTint="#000000"
+            android:thumb="@drawable/heart_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/pen_setting_btn"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            android:src="@drawable/pencil_icon2"
 
+            android:scaleType="fitXY"
+            android:src="@drawable/pencil_icon2"
             android:stateListAnimator="@null"
             tools:src="@drawable/pencil_icon2" />
 
         <ImageButton
             android:id="@+id/brush_setting_btn"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            android:stateListAnimator="@null"
 
+            android:paddingRight="15dp"
+            android:scaleType="fitXY"
+            android:stateListAnimator="@null"
             app:srcCompat="@drawable/brush_icon" />
 
         <ImageButton
-            android:id="@+id/eraser_btn"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            android:stateListAnimator="@null"
-
-            android:src="@drawable/eraser_icon" />
-
-        <ImageButton
             android:id="@+id/spoid_btn"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            android:stateListAnimator="@null"
 
+            android:scaleType="fitXY"
+            android:stateListAnimator="@null"
             app:srcCompat="@drawable/spoid_icon" />
 
-        <LinearLayout
-            android:layout_width="239dp"
+        <ImageButton
+            android:id="@+id/eraser_btn"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
 
-            <SeekBar
-                android:id="@+id/pen_thickness"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:max="50"
-                android:progress="10"
-                android:progressTint="#000000"
-                android:thumb="@drawable/heart_icon" />
+            android:scaleType="fitXY"
+            android:src="@drawable/eraser_icon"
+            android:stateListAnimator="@null" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/all_clear_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/eraser_icon2" />
 
-                <ImageButton
-                    android:id="@+id/color_check"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="#FFFFFF"
-                    android:stateListAnimator="@null"
-                    android:scaleType="center"
-                    android:src="@drawable/ten" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/color_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/icon" />
 
     </LinearLayout>
 </LinearLayout>
