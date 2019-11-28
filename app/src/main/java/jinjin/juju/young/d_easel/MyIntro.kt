@@ -49,7 +49,6 @@ class MyIntro : AppIntro2() {
 
         // Add your slide's fragments here
         // AppIntro will automatically generate the dots indicator and buttons.
-        addSlide(help_first.newInstance(R.layout.help_first_layout))
         addSlide(first_fragment)
         addSlide(second_fragment)
         addSlide(third_fragment)

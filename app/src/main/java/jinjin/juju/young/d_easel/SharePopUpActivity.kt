@@ -17,6 +17,7 @@ import android.view.Window
 import androidx.core.content.FileProvider
 import io.realm.Realm
 import io.realm.kotlin.where
+import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -75,6 +76,7 @@ class SharePopUpActivity : Activity() {
         canvas.drawBitmap(image, 0f, 0f ,null)
 
         saveBitmaptoPNG(sendBitmap,"/D-easel/my_painting","DEASEL_${id}")
+        toast("저장되었습니다!")
         finish()
     }
 
@@ -123,15 +125,15 @@ class SharePopUpActivity : Activity() {
 
     }
     private fun goInsta(uri: Uri){
-        var intent = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
+        var intent = packageManager.getLaunchIntentForPackage("com.instagram.android")
         if (intent != null)
         {
 
             var shareIntent = Intent()
-            shareIntent.setAction(Intent.ACTION_SEND)
+            shareIntent.action = Intent.ACTION_SEND
             shareIntent.setPackage("com.instagram.android")
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            shareIntent.setType("image/jpeg")
+            shareIntent.type = "image/jpeg"
 
             startActivity(shareIntent)
         }

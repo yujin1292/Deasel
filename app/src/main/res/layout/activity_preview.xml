@@ -13,75 +13,54 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="wrap_content" />
-
         <Button
             android:id="@+id/button_o"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/origin" />
-
-        <Space
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_g"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre1" />
-
-        <Space
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre2" />
-
-        <Space
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre3" />
-
-        <Space
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre4" />
-
-        <Space
-            android:layout_width="5dp"
-            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/button_d"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/pre5" />
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <ImageView

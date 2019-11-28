@@ -18,21 +18,15 @@
             android:layout_width="123dp"
             android:layout_height="wrap_content" />
 
-        <Button
+        <ImageButton
             android:id="@+id/share_btn"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="share" />
-
-        <ImageButton
-            android:id="@+id/insta_btn"
-            android:layout_width="95dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:scaleType="fitCenter"
-            android:src="@drawable/instagram_icon"
-            android:text="instagram" />
+            android:src="@drawable/share_btn" />
 
         <ImageButton
             android:id="@+id/result_btn"
@@ -63,10 +57,10 @@
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:scaleType="centerCrop"
-            android:stateListAnimator="@null"
+            android:src="@drawable/pencil_icon2"
 
-            android:src="@drawable/pencil_icon"
-            tools:src="@drawable/pencil_icon" />
+            android:stateListAnimator="@null"
+            tools:src="@drawable/pencil_icon2" />
 
         <ImageButton
             android:id="@+id/brush_setting_btn"
