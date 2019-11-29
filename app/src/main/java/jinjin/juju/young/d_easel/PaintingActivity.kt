@@ -19,6 +19,7 @@ import android.widget.*
 import kotlinx.android.synthetic.main.zoom_item.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 
 
 class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
@@ -160,9 +161,14 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
 
                 drawLine?.line?.setLineWidth(p1.toFloat())
+                var pp :Int
+                if(p1 > 25)
+                    pp = p1-15
+                else
+                    pp = p1-5
 
-                when (p1 - 10){
-                    -9, -8,-7,-6,-5, -4,-3,-2,-1 -> color_check.setImageDrawable(getDrawable(R.drawable.one))
+                when (pp){
+
                     1->color_check.setImageDrawable(getDrawable(R.drawable.one))
                     2->color_check.setImageDrawable(getDrawable(R.drawable.two))
                     3->color_check.setImageDrawable(getDrawable(R.drawable.three))
@@ -200,6 +206,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                     33->color_check.setImageDrawable(getDrawable(R.drawable.thirtythree))
                     34->color_check.setImageDrawable(getDrawable(R.drawable.thirtyfour))
                     35->color_check.setImageDrawable(getDrawable(R.drawable.thryfive))
+
                     36->color_check.setImageDrawable(getDrawable(R.drawable.thirtysix))
                     37->color_check.setImageDrawable(getDrawable(R.drawable.thirtyseven))
                     38->color_check.setImageDrawable(getDrawable(R.drawable.thirtyeight))
@@ -216,6 +223,8 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                     48->color_check.setImageDrawable(getDrawable(R.drawable.fourtyeight))
                     49->color_check.setImageDrawable(getDrawable(R.drawable.fourtynine))
                     50->color_check.setImageDrawable(getDrawable(R.drawable.fifty))
+
+                    else-> color_check.setImageDrawable(getDrawable(R.drawable.one))
                 }
 
 
@@ -225,6 +234,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             }
 
             override fun onStopTrackingTouch(p0: SeekBar?) {
+
             }
 
         })
