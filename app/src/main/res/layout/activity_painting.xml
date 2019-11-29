@@ -66,7 +66,7 @@
             android:id="@+id/pen_thickness"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:max="50"
+            android:max="100"
             android:paddingTop="15dp"
             android:paddingBottom="10dp"
             android:progress="10"
