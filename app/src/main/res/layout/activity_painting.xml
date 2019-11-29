@@ -59,7 +59,7 @@
             android:backgroundTint="#FFFFFF"
             android:clickable="false"
             android:scaleType="center"
-            android:src="@drawable/ten"
+            android:src="@drawable/five"
             android:stateListAnimator="@null" />
 
         <SeekBar

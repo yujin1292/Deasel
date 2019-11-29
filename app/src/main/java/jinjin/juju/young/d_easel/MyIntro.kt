@@ -16,34 +16,34 @@ class MyIntro : AppIntro2() {
 
 
         val first_fragment = AppIntroFragment.newInstance(
-            "직접 찍은 사진으로 그림을 그려보세요!",
-            "카메라버튼을 누르고 사진을 촬영하거나  갤러리 버튼을 눌러보세요",
-            R.drawable.temp ,
-            Color.parseColor("#969696")
+            "♡원하는 사진을 나만의 감각으로 색칠해 보세요♡",
+            "카메라버튼을 누르고 사진을 촬영하거나 갤러리 버튼을 눌러 원하는 사진을 선택하세요!",
+            R.drawable.one_intro ,
+            Color.parseColor(R.color.colorPlum.toString())
         )
         val second_fragment = AppIntroFragment.newInstance(
-            "원하는 배경화면을 선택하세요",
-            "숫자가 커질수록 상세합니다!",
-            R.drawable.vila,
-            Color.parseColor("#969696")
+            "♡원하는 스케치북을 선택하세요♡",
+            "ㄷ,ㅣ,ㅈ,ㅔ,ㄹ 버튼을 이용해 원하는 도안을 고르세요!",
+            R.drawable.two_intro,
+            Color.parseColor(R.color.colorPlum.toString())
         )
         val third_fragment = AppIntroFragment.newInstance(
-            "내 작품에서 그림을 선택해 색칠하세요!",
-            "second page",
-            R.drawable.deasel5,
-            Color.parseColor("#969696")
+            "♡Coloring Book에서 그리던 그림을 확인할 수 있어요♡",
+            "그림을 클릭하면 이어서 그릴 수 있어요!",
+            R.drawable.three_intro,
+            Color.parseColor(R.color.colorPlum.toString())
         )
         val fourth_fragment = AppIntroFragment.newInstance(
-            "꾹 누르면 삭제할수 있어요",
-            "third page\n접근을 허용해주세요!",
-            R.drawable.deasel5,
-            Color.parseColor("#969696")
+            "♡꾹 누르면 삭제할수 있어요♡",
+            "coloring-book에서 선택할 수 있어요!",
+            R.drawable.four_intro,
+            Color.parseColor(R.color.colorPlum.toString())
         )
         val fifth_fragment = AppIntroFragment.newInstance(
-            "이제 접근을 허용해주세요",
-            "Show me what you got",
-            R.drawable.deasel5,
-            Color.parseColor("#969696")
+            "♡이제 접근을 허용해주세요♡",
+            "접근을 허용하지 않으면 D-Easel을 이용할 수 없어요",
+            R.drawable.five_intro,
+            Color.parseColor(R.color.colorPlum.toString())
         )
 
 
@@ -64,7 +64,7 @@ class MyIntro : AppIntro2() {
         // OPTIONAL METHODS
 
         // Override bar/separator color
-        setBarColor(Color.parseColor("#51E7DCFF"))
+        setBarColor(Color.parseColor(R.color.colorThistle.toString()))
         //setSeparatorColor(Color.parseColor("#2196F3"));
 
         // SHOW or HIDE the statusbar

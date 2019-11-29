@@ -159,15 +159,21 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         }
         pen_thickness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                if( p1 <=2)
-                    drawLine?.line?.setLineWidth(3f)
-                else
-                    drawLine?.line?.setLineWidth(p1.toFloat())
                 var pp :Int
-                if(p1 > 25)
-                    pp = p1-15
-                else
-                    pp = p1-5
+
+                if( p1 <=2) {
+                    drawLine?.line?.setLineWidth(3f)
+                    pp = 3
+                }
+                else {
+                    drawLine?.line?.setLineWidth(p1.toFloat())
+
+                    if(p1 > 25)
+                        pp = p1-15
+                    else
+                        pp = p1-5
+
+                }
 
                 when (pp){
 
@@ -192,6 +198,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                     18->color_check.setImageDrawable(getDrawable(R.drawable.eighteen))
                     19->color_check.setImageDrawable(getDrawable(R.drawable.nineteen))
 
+                    20-> color_check.setImageDrawable(getDrawable(R.drawable.twenty))
                     21->color_check.setImageDrawable(getDrawable(R.drawable.twentyone))
                     22->color_check.setImageDrawable(getDrawable(R.drawable.twentytwo))
                     23->color_check.setImageDrawable(getDrawable(R.drawable.twentytrhee))
