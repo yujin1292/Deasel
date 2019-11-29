@@ -76,7 +76,7 @@ class SharePopUpActivity : Activity() {
         canvas.drawBitmap(image, 0f, 0f ,null)
 
         saveBitmaptoPNG(sendBitmap,"/D-easel/my_painting","DEASEL_${id}")
-        toast("저장되었습니다!")
+        toast("갤러리에 저장되었습니다!")
         finish()
     }
 
@@ -146,7 +146,7 @@ class SharePopUpActivity : Activity() {
             // or let them choose an app?
             intent = Intent(Intent.ACTION_VIEW)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.setData(Uri.parse("market://details?id="+"com.instagram.android"))
+            intent.data = Uri.parse("market://details?id="+"com.instagram.android")
             startActivity(intent)
         }
     }

@@ -20,7 +20,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/background_paper"
             android:layout_width="160dp"
             android:layout_height="180dp"
             android:scaleType="fitXY"

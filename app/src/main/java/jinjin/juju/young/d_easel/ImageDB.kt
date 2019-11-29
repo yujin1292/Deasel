@@ -14,9 +14,8 @@ open class ImageDB :RealmObject(){
     var background : ByteArray = ByteArray(0)
     //meanshift 영상
     var mean_shift : ByteArray =  ByteArray(0)
-    // 그림 그린것 엣지랑 같이 캡처
+    // 직접 그린 그림 이미지
     var lines : ByteArray = ByteArray(0)
 
-
-
 }
+
