@@ -52,11 +52,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/color_check"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:backgroundTint="#FFFFFF"
+            android:clickable="false"
             android:scaleType="center"
             android:src="@drawable/ten"
             android:stateListAnimator="@null" />
@@ -139,8 +140,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#FFFFFF"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/icon" />
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/color_pick_icon" />
 
     </LinearLayout>
 </LinearLayout>

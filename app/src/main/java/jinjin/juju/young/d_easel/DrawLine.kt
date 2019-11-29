@@ -4,6 +4,7 @@ import android.graphics.*
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.core.graphics.*
 import kotlinx.android.synthetic.main.activity_painting.*
 
@@ -23,7 +24,7 @@ class DrawLine : View
 
     var pContext:Context? = null
 
-    constructor(context: Context, rect: Rect , edge: Bitmap,imageButton: ImageButton):super(context){
+    constructor(context: Context, rect: Rect , edge: Bitmap,imageView: ImageView):super(context){
         pContext = context
 
         bitmap = edge.scale(rect.width(),rect.height(),true)
@@ -31,7 +32,7 @@ class DrawLine : View
         canvas = Canvas(bitmap)
 
         path = Path()
-        line = Line(imageButton)
+        line = Line(imageView)
         line?.setPen()
         this.rect = rect
     }

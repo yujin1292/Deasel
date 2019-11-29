@@ -3,17 +3,19 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import android.media.Image
 import android.widget.ImageButton
+import android.widget.ImageView
 
 class Line { // 선에 대한 정보
     var paint: Paint? = null
     var color: Int = Color.BLACK
     var width: Float = 10F
     var alpha: Int = 255
-    var imageButton:ImageButton? = null
+    var imageView:ImageView ?= null
 
-    constructor(imageButton: ImageButton){
-        this.imageButton = imageButton
+    constructor(imageView : ImageView){
+        this.imageView = imageView
     }
 
     fun setLineColor(color: Int) {
@@ -21,7 +23,7 @@ class Line { // 선에 대한 정보
         this.alpha = 255
         this.setLine()
         //imageButton?.setBackgroundColor(color)
-        imageButton?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        imageView?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
     }
 

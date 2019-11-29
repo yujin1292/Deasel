@@ -3,6 +3,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
+import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ import android.net.Uri
 import android.os.Environment
 import android.widget.*
 import androidx.core.content.FileProvider
+import kotlinx.android.synthetic.main.zoom_item.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.longToast
 import java.io.File
@@ -90,7 +92,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
 
         eraser_btn.setOnClickListener {
             drawLine?.line?.setErase()
-
+            drawLine?.isSpoid = false
             spoid_btn.setImageResource(R.drawable.spoid_icon)
             pen_setting_btn.setImageResource(R.drawable.pencil_icon)
             eraser_btn.setImageResource(R.drawable.eraser_icon2)
@@ -99,7 +101,7 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         }
         pen_setting_btn.setOnClickListener {
             drawLine?.line?.setPen()
-
+            drawLine?.isSpoid = false
             spoid_btn.setImageResource(R.drawable.spoid_icon)
             pen_setting_btn.setImageResource(R.drawable.pencil_icon2)
             eraser_btn.setImageResource(R.drawable.eraser_icon)
@@ -107,14 +109,15 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         }
         brush_setting_btn.setOnClickListener {
             drawLine?.line?.setBrush()
-
+            drawLine?.isSpoid = false
             spoid_btn.setImageResource(R.drawable.spoid_icon)
             pen_setting_btn.setImageResource(R.drawable.pencil_icon)
             eraser_btn.setImageResource(R.drawable.eraser_icon)
             brush_setting_btn.setImageResource(R.drawable.brush_icon2)
         }
-        color_check.setOnClickListener{
 
+        color_pic.setOnClickListener{
+            drawLine?.isSpoid = false
             ColorPickerDialog.newBuilder()
                 .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
                 .setAllowPresets(true)
@@ -122,8 +125,6 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
                 .setColor(drawLine?.line?.color!!)
                 .setShowAlphaSlider(false)
                 .show(this)
-
-
         }
         spoid_btn.setOnClickListener {
             drawLine?.isSpoid = true
@@ -263,6 +264,34 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             val intent = Intent(this, SharePopUpActivity::class.java)
             intent.putExtra("id", id)
             startActivity(intent)
+        }
+        all_clear_btn.setOnClickListener{
+
+            var preWidth = drawLine?.line?.width
+            var preColor = drawLine?.line?.color
+
+            Canvas.removeAllViews()
+            //그리기 뷰 레이아웃의 넓이와 높이를 찾아서 Rect 변수 생성.
+            rect = Rect(
+                0, 0,
+                Canvas.measuredWidth, Canvas.measuredHeight
+            )
+            //그리기 뷰 초기화..
+
+            //지금까지 그린걸 추가해서 그리기뷰 생성해야 지울수있음
+            var temp = Bitmap.createBitmap(rect?.width()!!,rect?.height()!!,Bitmap.Config.ARGB_8888)
+
+            drawLine = DrawLine(this, rect!! , temp, color_check)
+            drawLine?.line?.setLineColor(preColor!!)
+            drawLine?.line?.setLineWidth(preWidth!!)
+            //그리기 뷰를 그리기 뷰 레이아웃에 넣기 -- 이렇게 하면 그리기 뷰가 화면에 보여지게 됨.
+            Canvas.addView(drawLine)
+            drawLine?.isSpoid = false
+            spoid_btn.setImageResource(R.drawable.spoid_icon)
+            pen_setting_btn.setImageResource(R.drawable.pencil_icon2)
+            eraser_btn.setImageResource(R.drawable.eraser_icon)
+            brush_setting_btn.setImageResource(R.drawable.brush_icon)
+
         }
     }
 
