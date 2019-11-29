@@ -161,24 +161,14 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 var pp :Int
 
-                if( p1 <=2) {
-                    drawLine?.line?.setLineWidth(3f)
-                    pp = 3
-                }
-                else {
-                    drawLine?.line?.setLineWidth(p1.toFloat())
+                drawLine?.line?.setLineWidth(p1.toFloat())
 
-                    if(p1 > 25)
-                        pp = p1-15
-                    else
-                        pp = p1-5
-
-                }
+                pp = p1/2
 
                 when (pp){
 
-                    1->color_check.setImageDrawable(getDrawable(R.drawable.one))
-                    2->color_check.setImageDrawable(getDrawable(R.drawable.two))
+                    1->color_check.setImageDrawable(getDrawable(R.drawable.three))
+                    2->color_check.setImageDrawable(getDrawable(R.drawable.three))
                     3->color_check.setImageDrawable(getDrawable(R.drawable.three))
                     4->color_check.setImageDrawable(getDrawable(R.drawable.four))
                     5->color_check.setImageDrawable(getDrawable(R.drawable.five))
