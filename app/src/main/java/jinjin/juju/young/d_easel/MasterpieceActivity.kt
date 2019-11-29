@@ -45,7 +45,7 @@ class MasterpieceActivity : BaseActivity() {
 
                 positiveButton("네"){
                     realm.close()
-                    val dialog = progressDialog(message = "Please wait a bit…", title = "Fetching data")
+                    val dialog = progressDialog(message = "사진을 불러오는 중이에요", title = "조금만 기다려주세요!")
                     dialog.show()
                     Thread(Runnable {
                         // TODOAuto-generated method stub
