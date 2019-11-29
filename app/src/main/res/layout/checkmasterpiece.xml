@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <jinjin.juju.young.d_easel.CheckableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:descendantFocusability="blocksDescendants">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:descendantFocusability="blocksDescendants">
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="25dp"
         android:layout_height="wrap_content"
+        android:buttonTint="#BAD1AFF8"
+        android:buttonTintMode="src_in"
         android:clickable="false"
         android:focusable="false" />
 
-    <ImageView
-        android:id="@+id/delmasterpieceImage"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:background="@drawable/sketchppappa2"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/sample1" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="160dp"
+            android:layout_height="180dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/sketchppappa2" />
+
+        <ImageView
+            android:id="@+id/delmasterpieceImage"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="10dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/sample1" />
+
+    </FrameLayout>
 
 </jinjin.juju.young.d_easel.CheckableLayout>

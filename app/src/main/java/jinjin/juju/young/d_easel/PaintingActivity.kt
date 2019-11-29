@@ -159,8 +159,10 @@ class PaintingActivity : BaseActivity(), ColorPickerDialogListener {
         }
         pen_thickness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-
-                drawLine?.line?.setLineWidth(p1.toFloat())
+                if( p1 <=2)
+                    drawLine?.line?.setLineWidth(3f)
+                else
+                    drawLine?.line?.setLineWidth(p1.toFloat())
                 var pp :Int
                 if(p1 > 25)
                     pp = p1-15

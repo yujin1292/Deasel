@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#eeeeee"
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="wrap_content">
 
     <!-- 타이틀바 -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        android:background="#FCFFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/share_title" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="53dp"
-            android:background="#ADFFE2FC"
-            android:gravity="center"
-            android:text="Share"
-            android:textColor="#FF8E72"
-            android:textSize="20sp" />
-    </LinearLayout>
     <!-- //end 타이틀바 -->
 
     <!-- Notice -->
     <!-- Notice -->
-
-    <View
-        android:background="#66bdbdbd"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
 
     <!-- 닫기 버튼 -->
     <LinearLayout
@@ -63,10 +53,9 @@
     <Button
         android:id="@+id/close_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:onClick="closeClick"
-        android:text="close" />
+        android:layout_height="50dp"
+        android:background="@drawable/close_pop"
+        android:onClick="closeClick" />
     <!--// 닫기 버튼 -->
 </LinearLayout>
 
