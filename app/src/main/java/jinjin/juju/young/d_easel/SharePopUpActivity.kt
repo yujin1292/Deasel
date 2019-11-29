@@ -80,6 +80,9 @@ class SharePopUpActivity : Activity() {
         finish()
     }
 
+    fun closeClick(v:View){
+        finish()
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         //바깥레이어 클릭시 안닫히게
