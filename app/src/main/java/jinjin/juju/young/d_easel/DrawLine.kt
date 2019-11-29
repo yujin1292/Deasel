@@ -4,8 +4,9 @@ import android.graphics.*
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.core.graphics.*
-import kotlinx.android.synthetic.main.activity_painting.view.*
+import kotlinx.android.synthetic.main.activity_painting.*
 
 //그림 그리는 거를 관리하는 클래스
 
@@ -21,16 +22,17 @@ class DrawLine : View
     var isBrush:Boolean = false
     var isSpoid:Boolean = false
 
+    var pContext:Context? = null
 
-
-    constructor(context: Context, rect: Rect , edge: Bitmap,imageButton: ImageButton):super(context){
+    constructor(context: Context, rect: Rect , edge: Bitmap,imageView: ImageView):super(context){
+        pContext = context
 
         bitmap = edge.scale(rect.width(),rect.height(),true)
         //setmatrix 이용해서
         canvas = Canvas(bitmap)
 
         path = Path()
-        line = Line(imageButton)
+        line = Line(imageView)
         line?.setPen()
         this.rect = rect
     }
@@ -49,28 +51,19 @@ class DrawLine : View
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        var x: Float = event!!.getX()
-        var y: Float = event!!.getY()
+        var x: Float = event!!.x
+        var y: Float = event.y
         if(isSpoid) {
             var color:Int = bitmap?.getPixel(x.toInt(),y.toInt())!!
             if(color.alpha == 0)
                 color = Color.WHITE
             line?.setLineColor(color)
-/*
-
             line?.setPen()
-            val spoid_btn2 = findViewById<ImageButton>(R.id.spoid_btn)
-            val pen_btn2 = findViewById<ImageButton>(R.id.pen_setting_btn)
-            val brush_btn2= findViewById<ImageButton>(R.id.brush_setting_btn)
-            val eraser_btn2 = findViewById<ImageButton>(R.id.eraser_btn)
 
-
-            spoid_btn2.setImageResource(R.drawable.spoid_icon)
-            pen_btn2.setImageResource(R.drawable.pencil_icon2)
-            brush_btn2.setImageResource(R.drawable.brush_icon)
-            eraser_btn2.setImageResource(R.drawable.eraser_icon)
-*/
-
+            (pContext as PaintingActivity).spoid_btn.setImageResource(R.drawable.spoid_icon)
+            (pContext as PaintingActivity).pen_setting_btn.setImageResource(R.drawable.pencil_icon2)
+            (pContext as PaintingActivity).eraser_btn.setImageResource(R.drawable.eraser_icon)
+            (pContext as PaintingActivity).brush_setting_btn.setImageResource(R.drawable.brush_icon)
 
             isSpoid = false
 

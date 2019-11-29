@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:choiceMode="multipleChoiceModal"
-            android:numColumns="auto_fit"
+            android:numColumns="2"
+            android:padding="10dp"
             tools:listitem="@layout/checkmasterpiece">
 
         </GridView>

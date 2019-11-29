@@ -81,6 +81,37 @@ class MainActivity : BaseActivity() {
                 .build())
 
 
+        // Intro thread
+        val t = Thread(Runnable {
+            //  Initialize SharedPreferences
+            val getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(baseContext)
+
+            //  Create a new boolean and preference and set it to true
+            val isFirstStart = getPrefs.getBoolean("firstStart", true)
+
+            //  If the activity has never started before...
+            if (isFirstStart) {
+
+                //  Launch app intro
+                val i = Intent(this@MainActivity, MyIntro::class.java)
+
+                runOnUiThread { startActivity(i) }
+
+                //  Make a new preferences editor
+                val e = getPrefs.edit()
+
+                //  Edit preference to make it false because we don't want this to run again
+                e.putBoolean("firstStart", false)
+
+                //  Apply changes
+                e.apply()
+            }
+        })
+
+        // Start the thread
+        t.start()
+
         bgm = MediaPlayer.create(this, R.raw.bgm)
         //bgm.prepare();
         bgm!!.isLooping = true
@@ -176,143 +207,15 @@ class MainActivity : BaseActivity() {
 
 
 
-        // Intro thread
-        val t = Thread(Runnable {
-            //  Initialize SharedPreferences
-            val getPrefs = PreferenceManager
-                .getDefaultSharedPreferences(baseContext)
-
-            //  Create a new boolean and preference and set it to true
-            val isFirstStart = getPrefs.getBoolean("firstStart", true)
-
-            //  If the activity has never started before...
-            if (isFirstStart) {
-
-                //  Launch app intro
-                val i = Intent(this@MainActivity, MyIntro::class.java)
-
-                runOnUiThread { startActivity(i) }
-
-                //  Make a new preferences editor
-                val e = getPrefs.edit()
-
-                //  Edit preference to make it false because we don't want this to run again
-                e.putBoolean("firstStart", false)
-
-                //  Apply changes
-                e.apply()
-            }
-        })
-
-        // Start the thread
-        t.start()
-
 
 
         var realmResults = realm?.where<ImageDB>()?.findAll()
-       /* if(realmResults!!.isEmpty()){
-
-            //sample 1
-            realm?.beginTransaction()
-
-            val newImage = realm?.createObject(ImageDB::class.java, nextId())
-            val sendBitmap = BitmapFactory.decodeResource(resources,R.drawable.sample1)
-            val stream = ByteArrayOutputStream()
-            sendBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            val byteArray = stream.toByteArray()
-
-            newImage?.image = byteArray
+        if(realmResults!!.isEmpty()){
 
 
-            newImage?.background = byteArray
-
-            //lines 투명 값
-            val stream11 = ByteArrayOutputStream()
-            val temp = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
-                Bitmap.Config.ARGB_8888
-            )
-            temp.compress(Bitmap.CompressFormat.PNG, 100, stream11)
-            val byteline = stream11.toByteArray()
-            newImage?.lines = byteline
-
-            realm?.commitTransaction()
 
 
-            // sample 2
-            realm?.beginTransaction()
-            val newImage2 = realm?.createObject(ImageDB::class.java, nextId())
-            val sendBitmap2 = BitmapFactory.decodeResource(resources,R.drawable.sample2)
-            val stream2 = ByteArrayOutputStream()
-            sendBitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2)
-            val byteArray2 = stream2.toByteArray()
-            newImage2?.image = byteArray2
-            newImage2?.background=byteArray2
-
-            //lines 투명 값
-            val stream22 = ByteArrayOutputStream()
-            val temp2 = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
-                Bitmap.Config.ARGB_8888
-            )
-            temp2.compress(Bitmap.CompressFormat.PNG, 100, stream22)
-            val byteline2 = stream11.toByteArray()
-            newImage?.lines = byteline2
-
-            realm?.commitTransaction()
-
-
-            // sample 3
-
-            realm?.beginTransaction()
-            val newImage3 = realm?.createObject(ImageDB::class.java, nextId())
-            val sendBitmap3 = BitmapFactory.decodeResource(resources,R.drawable.sample3)
-            val stream3 = ByteArrayOutputStream()
-            sendBitmap3.compress(Bitmap.CompressFormat.PNG, 100, stream2)
-            val byteArray3 = stream3.toByteArray()
-            newImage3?.image = byteArray3
-            newImage3?.background=byteArray3
-
-            //lines 투명 값
-            val stream33 = ByteArrayOutputStream()
-            val temp3 = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
-                Bitmap.Config.ARGB_8888
-            )
-            temp3.compress(Bitmap.CompressFormat.PNG, 100, stream33)
-            val byteline3 = stream11.toByteArray()
-            newImage3?.lines = byteline3
-
-            realm?.commitTransaction()
-
-
-            realm?.beginTransaction()
-            val newImage4 = realm?.createObject(ImageDB::class.java, nextId())
-            val sendBitmap4 = BitmapFactory.decodeResource(resources,R.drawable.sample4)
-            val stream4 = ByteArrayOutputStream()
-            sendBitmap4.compress(Bitmap.CompressFormat.JPEG, 100, stream4)
-            val byteArray4 = stream3.toByteArray()
-            newImage4?.image = byteArray4
-            newImage4?.background=byteArray4
-
-            //lines 투명 값
-            val stream44 = ByteArrayOutputStream()
-            val temp4 = Bitmap.createBitmap(
-                sendBitmap.getWidth(),
-                sendBitmap.getHeight(),
-                Bitmap.Config.ARGB_8888
-            )
-            temp4.compress(Bitmap.CompressFormat.PNG, 100, stream44)
-            val byteline4 = stream11.toByteArray()
-            newImage4?.lines = byteline4
-
-            realm?.commitTransaction()
-
-
-        }*/
+        }
 
 
         //마스터 피스 엑티비티 호출
