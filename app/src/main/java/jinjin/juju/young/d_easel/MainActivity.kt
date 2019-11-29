@@ -113,6 +113,9 @@ class MainActivity : BaseActivity() {
                 //  Apply changes
                 e.apply()
             }
+
+
+
         })
 
         // Start the thread
@@ -155,13 +158,6 @@ class MainActivity : BaseActivity() {
 
         }
 
-        if( (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
-                || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) ){
-
-
-        }
-        else
-            permission_btn.isGone = true
 
 
       //  textView.setText(music.toString())
@@ -644,6 +640,20 @@ class MainActivity : BaseActivity() {
        var bgm: MediaPlayer? = null
     }
 
+    @SuppressLint("MissingSuperCall")
+    override fun onResume() {
+
+
+        if( (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+            || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) ){
+
+
+        }
+        else
+            permission_btn.isGone = true
+
+        super.onResume()
+    }
 }
 
 
