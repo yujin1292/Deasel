@@ -1,8 +1,10 @@
 package jinjin.juju.young.d_easel
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.*
 import android.os.Bundle
 import io.realm.Realm
@@ -21,7 +23,10 @@ import android.provider.MediaStore.Images
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isGone
 import com.facebook.stetho.Stetho
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -47,7 +52,8 @@ class MainActivity : BaseActivity() {
     var tempuri : Uri? = null
     var realm : Realm? = null
 
-
+    private var permissionsRequired = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val PERMISSION_CALLBACK_CONSTANT = 987
     private val REQUEST_SELECT_IMAGE = 456
     private val REQUEST_TAKE_PHOTO = 123
 
@@ -148,6 +154,14 @@ class MainActivity : BaseActivity() {
             music_btn.setBackgroundResource(R.drawable.music_off)
 
         }
+
+        if( (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+                || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) ){
+
+
+        }
+        else
+            permission_btn.isGone = true
 
 
       //  textView.setText(music.toString())
@@ -277,7 +291,12 @@ class MainActivity : BaseActivity() {
             dispatchTakePictureIntent()
         }
 
+        permission_btn.setOnClickListener{
 
+            ActivityCompat.requestPermissions(this, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+            permission_btn.isGone = true
+
+        }
         music_btn.setOnClickListener{
             if(musicdb?.is_on.equals("off")){
 
