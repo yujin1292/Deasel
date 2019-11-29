@@ -130,9 +130,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:backgroundTint="#FFFFFF"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/eraser_icon2" />
+            android:stateListAnimator="@null"
+            app:srcCompat="@drawable/all_clear_btn" />
 
         <ImageButton
             android:id="@+id/color_pic"
