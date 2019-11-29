@@ -159,6 +159,12 @@ class MainActivity : BaseActivity() {
         }
 
 
+        if( (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+            || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) ){
+
+        }
+        else
+            permission_btn.isGone = true
 
       //  textView.setText(music.toString())
 
