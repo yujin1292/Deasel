@@ -14,13 +14,14 @@ import android.widget.FrameLayout
  */
 class ZoomView(context: Context) : FrameLayout(context) {
 
+
     //flag
     internal var flag = true
 
     // zooming
     var zoom = 1.0f
         internal set
-    internal var maxZoom = 2.0f
+    internal var maxZoom = 3.0f
     internal var smoothZoom = 1.0f
     internal var zoomX: Float = 0.toFloat()
     internal var zoomY: Float = 0.toFloat()
@@ -116,6 +117,7 @@ class ZoomView(context: Context) : FrameLayout(context) {
         if (listener != null) {
             listener!!.onZoomStarted(smoothZoom, x, y)
         }
+        invalidate()
     }
 
     fun setListner(listener: ZoomViewListener) {
@@ -125,11 +127,14 @@ class ZoomView(context: Context) : FrameLayout(context) {
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         // single touch
         if (ev.pointerCount == 1) {
+
             processSingleTouchEvent(ev)
         }
 
         // // double touch
         if (ev.pointerCount == 2) {
+            DrawLine.path?.reset()
+
             processDoubleTouchEvent(ev)
         }
 
@@ -189,6 +194,7 @@ class ZoomView(context: Context) : FrameLayout(context) {
                 lx = 0f
                 ly = 0f
                 scrolling = false
+
             }
 
             MotionEvent.ACTION_MOVE -> if (scrolling) {
@@ -199,6 +205,7 @@ class ZoomView(context: Context) : FrameLayout(context) {
                 }
                 smoothZoomX -= dx / zoom
                 smoothZoomY -= dy / zoom
+                DrawLine.path?.reset()
                 return
             }
 
@@ -208,6 +215,8 @@ class ZoomView(context: Context) : FrameLayout(context) {
                 if (l < 30.0f) {
                     // check double tap
                     if (System.currentTimeMillis() - lastTapTime < 500) {
+
+                        DrawLine.path?.reset()
                         if (smoothZoom == 1.0f) {
                             smoothZoomTo(maxZoom, x, y)
                         } else {
@@ -222,6 +231,7 @@ class ZoomView(context: Context) : FrameLayout(context) {
                     lastTapTime = System.currentTimeMillis()
 
                     performClick()
+
                 }
 
             else -> {
@@ -235,6 +245,7 @@ class ZoomView(context: Context) : FrameLayout(context) {
 
         super.dispatchTouchEvent(ev)
     }
+
 
     private fun processDoubleTouchEvent(ev: MotionEvent) {
         val x1 = ev.getX(0)
@@ -261,6 +272,7 @@ class ZoomView(context: Context) : FrameLayout(context) {
             MotionEvent.ACTION_DOWN -> {
                 startd = d
                 pinching = false
+                DrawLine.path?.reset()
             }
 
             MotionEvent.ACTION_MOVE -> if (pinching || ld > 30.0f) {
@@ -272,10 +284,20 @@ class ZoomView(context: Context) : FrameLayout(context) {
                     zoomX - dxk / zoom,
                     zoomY - dyk / zoom
                 )
+                DrawLine.path?.reset()
+                invalidate()
             }
 
-            MotionEvent.ACTION_UP -> pinching = false
-            else -> pinching = false
+            MotionEvent.ACTION_UP -> {
+                pinching = false
+                DrawLine.path?.reset()
+
+            }
+            else -> {
+                pinching = false
+                DrawLine.path?.reset()
+
+            }
         }
 
         ev.action = MotionEvent.ACTION_CANCEL
