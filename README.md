@@ -22,6 +22,6 @@ Embedded Software II (EA0030 (1)) [2nd Semester]
 
 - https://github.com/opencv/opencv/releases 에서 다운받아 C:\OpenCV\Android-sdk 경로에 압축을 푼다 
 - CmakeList.txt 에서 
-    set(pathPROJECT ***C:/Users/sofod/AndroidStudioProjects/Deasel-github***)
+    set(pathPROJECT ***C:/Users/sofod/AndroidStudioProjects/Deasel-github***) 부분을  
     프로젝트를 저장한 경로로 설정 
      
