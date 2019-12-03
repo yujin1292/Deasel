@@ -4,7 +4,7 @@ Embedded Software II (EA0030 (1)) [2nd Semester]
 
 이유진 장희영 유연주 박민주
   
-  
+----------------------------------------------------------------------------------------
   
 **직접 찍은** 사진을 컬러링 할 수 있는 프로그램  
 :+1: AppIntro Opensource 사용 ( https://github.com/AppIntro/AppIntro )  
