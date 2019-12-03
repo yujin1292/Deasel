@@ -14,3 +14,14 @@ Embedded Software II (EA0030 (1)) [2nd Semester]
 :+1: 원하는 도안을 선택하여 컬러링  
 :+1: 도안을 길게 누르면 삭제 화면으로 전환  
 :+1: 인스타그램, 갤러리에 저장 가능   
+
+
+--------------------------------------------------------------------------------------------
+
+사전 설정 및 실행방법 
+
+- https://github.com/opencv/opencv/releases 에서 다운받아 C:\OpenCV\Android-sdk 경로에 압축을 푼다 
+- CmakeList.txt 에서 
+    set(pathPROJECT ***C:/Users/sofod/AndroidStudioProjects/Deasel-github***)
+    프로젝트를 저장한 경로로 설정 
+     
