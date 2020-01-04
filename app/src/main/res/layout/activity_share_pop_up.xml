@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -21,6 +20,7 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/share_title"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/share_title"
@@ -48,8 +48,8 @@
             android:gravity="center"
             android:onClick="instaClick"
             android:padding="16dp"
-            android:textColor="#ff7a00"
             android:stateListAnimator="@null"
+            android:textColor="#ff7a00"
             android:textSize="15sp" />
 
         <TextView
@@ -74,9 +74,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="5dp"
-            android:stateListAnimator="@null"
             android:background="@drawable/gal_btn"
-            android:onClick="gallaryClick" />
+            android:onClick="gallaryClick"
+            android:stateListAnimator="@null" />
 
         <TextView
             android:id="@+id/textView2"
@@ -93,6 +93,7 @@
         android:layout_height="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/close_pop"
         android:onClick="closeClick" />
 
