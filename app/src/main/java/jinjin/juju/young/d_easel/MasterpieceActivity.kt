@@ -45,7 +45,7 @@ class MasterpieceActivity : BaseActivity() {
         val realmResults = realm.where<ImageDB>().findAll()
         if( realmResults.isEmpty()){
 
-            alert("샘플 이미지를 불러오시겠습니까? ") {
+            alert("샘플이미지를 불러오시겠습니까? ") {
 
                 positiveButton("네"){
                     realm.close()

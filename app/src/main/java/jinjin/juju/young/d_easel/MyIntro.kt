@@ -16,35 +16,31 @@ class MyIntro : AppIntro2() {
 
 
         val first_fragment = AppIntroFragment.newInstance(
-            " 원하는 사진을 나만의 감각으로 색칠해 보세요\n♡",
-            "카메라버튼을 누르고 사진을 촬영하거나 \n갤러리 버튼을 눌러 원하는 사진을 선택하세요!",
+            "CHOOSE",
+            "카메라버튼을 누르고 사진을 촬영하거나 \n갤러리 버튼을 눌러 원하는 사진을 선택하세요",
             R.drawable.one_intro ,
             Color.parseColor("#FFDDA0DD")
         )
         val second_fragment = AppIntroFragment.newInstance(
-            " 원하는 스케치북을 선택하세요 \n" +
-                    "♡",
-            " ㄷ , ㅣ , ㅈ , ㅔ , ㄹ  버튼을 이용해\n원하는 도안을 고르세요"  ,
+            "SELECT",
+            " 원본, ㄷ , ㅣ , ㅈ , ㅔ , ㄹ  버튼을 이용해\n원하는 도안을 고르세요"  ,
             R.drawable.two_intro,
             Color.parseColor("#FFDDA0DD")
         )
         val third_fragment = AppIntroFragment.newInstance(
-            "Coloring Book에서 그리던 그림을 확인할 수 있어요\n" +
-                    "♡ ",
+            "COLORING BOOK",
             "그림을 클릭하면 이어서 그릴 수 있어요!",
             R.drawable.three_intro,
             Color.parseColor("#FFDDA0DD")
         )
         val fourth_fragment = AppIntroFragment.newInstance(
-            "그림을 꾹 누르면 \n 삭제할수 있어요\n" +
-                    "♡",
+            "DELETE",
             "Coloring Book 메뉴 에서 선택할 수 있어요!",
             R.drawable.four_intro,
             Color.parseColor("#FFDDA0DD")
         )
         val fifth_fragment = AppIntroFragment.newInstance(
-            " 이제 접근을 허용해주세요 \n" +
-                    "♡",
+            " 이제 접근을 허용해주세요",
             "접근을 허용하지 않으면 D-Easel을 이용할 수 없어요",
             R.drawable.five_intro,
             Color.parseColor("#FFDDA0DD")
