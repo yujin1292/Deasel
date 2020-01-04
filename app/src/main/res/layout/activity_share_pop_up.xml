@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:background="#FFFFFF"
     android:orientation="vertical">
 
@@ -42,17 +43,20 @@
             android:id="@+id/insta_btn"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="5dp"
             android:background="@drawable/instagram_icon"
             android:gravity="center"
             android:onClick="instaClick"
             android:padding="16dp"
             android:textColor="#ff7a00"
+            android:stateListAnimator="@null"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Instagram" />
 
     </LinearLayout>
@@ -69,6 +73,8 @@
             android:id="@+id/gallary_btn"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="5dp"
+            android:stateListAnimator="@null"
             android:background="@drawable/gal_btn"
             android:onClick="gallaryClick" />
 
