@@ -9,14 +9,6 @@
     android:orientation="vertical"
     tools:context=".MasterpieceActivity">
 
-    <ImageView
-        android:id="@+id/coloring_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/cb0" />
-
     <GridView
         android:id="@+id/MasterpieceList"
         android:layout_width="match_parent"

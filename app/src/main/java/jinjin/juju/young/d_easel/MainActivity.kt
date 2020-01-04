@@ -27,6 +27,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isGone
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 import com.facebook.stetho.Stetho
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -168,59 +171,12 @@ class MainActivity : BaseActivity() {
 
       //  textView.setText(music.toString())
 
-        //logo thread
-        @SuppressLint("HandlerLeak")
-        mHandler = object:Handler(){
-            override fun handleMessage(msg: Message?) {
-
-                logoview = findViewById(R.id.logo_view)
-
-                if(logonum==0){
-                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel0))
-                }
-                else if(logonum==1){
-                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel1))
-                }
-                else if(logonum==2){
-                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel2))
-                }
-                else if(logonum==3){
-                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel3))
-                }
-                else if(logonum==4){
-                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel4))
-                }
-                else if(logonum==5){
-                    logoview?.setImageDrawable(getDrawable(R.drawable.deasel5))
-                }
-            }
-        }
-
-        thread(start = true){
-
-            var forward :Boolean  = true
-
-            while(true){
-                Thread.sleep(150)
-                mHandler?.sendEmptyMessage(logonum)
-                if(forward){
-                    logonum++
-                    if(logonum>5){
-                        Thread.sleep(100)
-                        forward = false
-                    }
-                }
-                else{
-                    logonum--
-                    if(logonum<0){ //logonum == -1 되면
-                        Thread.sleep(100)
-                        forward = true
-                    }
-                }
-            }
-        }
 
 
+        val logoView  = findViewById<ImageView>(R.id.logo_view)
+        val gifImage = GlideDrawableImageViewTarget(logoView)
+        Glide.with(this).load(R.raw.deasel)
+            .into(gifImage)
 
 
 

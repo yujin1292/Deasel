@@ -11,52 +11,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_o"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:background="@drawable/origin" />
 
         <Button
             android:id="@+id/button_g"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre1" />
 
         <Button
             android:id="@+id/button_a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre2" />
 
         <Button
             android:id="@+id/button_b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre3" />
 
         <Button
             android:id="@+id/button_c"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/pre4" />
 
         <Button
             android:id="@+id/button_d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/pre5" />
@@ -112,8 +114,8 @@
 
         <Button
             android:id="@+id/start_btn"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
 
             android:layout_marginBottom="20dp"
             android:background="@drawable/start_btn"
