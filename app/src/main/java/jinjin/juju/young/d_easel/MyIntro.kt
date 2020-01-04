@@ -29,13 +29,13 @@ class MyIntro : AppIntro2() {
         )
         val third_fragment = AppIntroFragment.newInstance(
             "COLORING BOOK",
-            "그림을 클릭하면 이어서 그릴 수 있어요!",
+            "그림을 클릭하면 이어서 그릴 수 있어요",
             R.drawable.three_intro,
             Color.parseColor("#FFDDA0DD")
         )
         val fourth_fragment = AppIntroFragment.newInstance(
             "DELETE",
-            "Coloring Book 메뉴 에서 선택할 수 있어요!",
+            "Coloring Book 메뉴 에서 선택할 수 있어요",
             R.drawable.four_intro,
             Color.parseColor("#FFDDA0DD")
         )
