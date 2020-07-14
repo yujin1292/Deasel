@@ -1,8 +1,5 @@
 # Deasel
-
 Embedded Software II (EA0030 (1)) [2nd Semester]
-
-이유진 장희영 유연주 박민주
   
 ----------------------------------------------------------------------------------------
   
@@ -15,6 +12,12 @@ Embedded Software II (EA0030 (1)) [2nd Semester]
 :+1: 도안을 길게 누르면 삭제 화면으로 전환  
 :+1: 인스타그램, 갤러리에 저장 가능   
 
+--------------------------------------------------------------------------------------------
+# 실행 사진
+
+![cap1](https://user-images.githubusercontent.com/27190708/87394341-9faaa000-c5ea-11ea-91f3-45b39da0a55f.png)
+![cap2](https://user-images.githubusercontent.com/27190708/87394367-a9cc9e80-c5ea-11ea-9230-20226a43b814.png)
+
 
 --------------------------------------------------------------------------------------------
 
@@ -24,4 +27,7 @@ Embedded Software II (EA0030 (1)) [2nd Semester]
 - CmakeList.txt 에서 
     set(pathPROJECT ***C:/Users/sofod/AndroidStudioProjects/Deasel-github***) 부분을  
     프로젝트를 저장한 경로로 설정 
-     
+ 
+ 
+# Contributor
+이유진 장희영 유연주 박민주
