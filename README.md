@@ -21,7 +21,7 @@ Embedded Software II (EA0030 (1)) [2nd Semester]
 
 --------------------------------------------------------------------------------------------
 
-사전 설정 및 실행방법 
+## 사전 설정 및 실행방법 
 
 - OpenCv sdk 를 https://github.com/opencv/opencv/releases 에서 다운받아 C:\OpenCV\Android-sdk 경로에 압축을 푼다 
 - CmakeList.txt 에서 
